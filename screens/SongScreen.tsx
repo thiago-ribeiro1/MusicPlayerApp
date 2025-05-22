@@ -157,7 +157,7 @@ const SongScreen = () => {
           </View>
 
           {/* Tempo atual / duração */}
-          <View style={tw`flex-row justify-between w-10/12 mt-3 mb-6`}>
+          <View style={tw`flex-row justify-between w-11/12 mt-3 mb-6`}>
             <Text style={tw`text-white text-xs`}>{parseDuration(progress.position)}</Text>
             <Text style={tw`text-white text-xs`}>{parseDuration(progress.duration)}</Text>
           </View>
