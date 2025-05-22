@@ -15,6 +15,8 @@ import StackNavigator from './navigators/StackNavigator';
 import Wrapper from './components/Wrapper';
 import { setupPlayerIfNeeded } from './services/trackPlayerSetup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+//teste
+import { getAllSongs } from './services/MusicScanner';
 
 const App = () => {
   const [isPermissionGranted, setIsPermissionGranted] = useState(false);
@@ -65,6 +67,16 @@ const App = () => {
         ]);
       }
     }
+  }, []);
+
+  //teste
+  useEffect(() => {
+    async function loadSongs() {
+      const songs = await getAllSongs();
+      console.log('🎵 Músicas carregadas:', songs.length);
+      console.log(songs.slice(0, 3)); // Exibe apenas as 3 primeiras no log
+    }
+    loadSongs();
   }, []);
 
   useEffect(() => {

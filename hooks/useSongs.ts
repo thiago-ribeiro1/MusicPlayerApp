@@ -1,11 +1,7 @@
-import {create} from 'zustand';
-import {
-  getAll,
-  SortSongFields,
-  SortSongOrder,
-} from 'react-native-get-music-files';
+import { create } from 'zustand';
+import { getAllSongs, Song as NativeSong } from '../services/MusicScanner';
 
-import type {SongType} from '../types';
+import type { SongType } from '../types';
 
 type UseSongsType = {
   songs: SongType[];
@@ -15,20 +11,26 @@ type UseSongsType = {
 export const useSongs = create<UseSongsType>(set => ({
   songs: [],
   getSongs: async () => {
-    const songsOrError = await getAll({
-      limit: 55,
-      coverQuality: 100, // melhor qualidade da capa
-      minSongDuration: 10000, // só músicas com mais de 10 segundos
-      sortBy: SortSongFields.TITLE,
-      sortOrder: SortSongOrder.ASC, // ordem crescente (opcional)
-    });
+    try {
+      const nativeSongs = await getAllSongs();
 
-    if (typeof songsOrError === 'string') {
-      console.error('Error fetching songs:', songsOrError);
+      const mappedSongs: SongType[] = nativeSongs.map((song, index) => ({
+        url: song.uri,
+        title: song.title || 'Unknown',
+        album: '', // pode ser adicionado no Kotlin depois
+        artist: song.artist || 'Unknown',
+        duration: song.duration || 0,
+        genre: '', // pode ser adicionado no futuro
+        cover: song.cover
+          ? `data:image/png;base64,${song.cover.trim()}`
+          : '',
+      }));
+
+      set({ songs: mappedSongs });
+      return mappedSongs;
+    } catch (error) {
+      console.error('Erro ao carregar músicas:', error);
       return false;
     }
-
-    set({songs: songsOrError});
-    return songsOrError;
   },
 }));

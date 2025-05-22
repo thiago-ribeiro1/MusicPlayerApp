@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, TextInput, Pressable, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
@@ -11,10 +11,14 @@ import { TabsHeader } from '../components/TabsHeader';
 import styles from '../styles/SongsScreenStyle';
 
 const SongsScreen = () => {
-  const { songs } = useSongs();
+  const { songs, getSongs } = useSongs(); 
   const navigation = useNavigation<any>();
   const [searchText, setSearchText] = useState('');
   const [activeTab, setActiveTab] = useState<'SONGS' | 'ALBUMS' | 'PLAYLISTS' | 'FOLDERS'>('SONGS');
+
+  useEffect(() => {
+    getSongs(); // ✅ Carrega músicas reais do dispositivo ao abrir a home
+  }, []);
 
   const handleSearch = (text: string) => {
     setSearchText(text);
