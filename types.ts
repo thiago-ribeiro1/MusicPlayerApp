@@ -1,4 +1,5 @@
 export type SongType = {
+  id: string;
   url: string;
   title: string;
   album: string;

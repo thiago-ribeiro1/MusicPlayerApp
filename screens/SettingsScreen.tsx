@@ -31,7 +31,6 @@ const SettingsScreen = () => {
             >
               <Text style={tw`text-white`}>Remove</Text>
             </Pressable>
-
         </View>
       </View>
 

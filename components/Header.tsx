@@ -85,29 +85,6 @@ const Header = ({
           </Pressable>
         )}
       </View>
-      {/* {showBackButton ? (
-        <>
-          {favourites
-            .map(favourite => favourite.url)
-            .includes(activeTrack?.url) ? (
-            <Pressable onPress={removeFromFavourites}>
-              <FilledHeartIcon color={'white'} size={24} fill={'red'} />
-            </Pressable>
-          ) : (
-            <Pressable onPress={addToFavourites}>
-              <EmptyHeartIcon color={'white'} size={24} />
-            </Pressable>
-          )}
-        </>
-      ) : (
-        <Pressable
-          onPress={() => {
-            // @ts-ignore
-            navigation.navigate('Settings');
-          }}>
-          <Cog8ToothIcon color={'white'} size={24} />
-        </Pressable>
-      )} */}
     </View>
   );
 };

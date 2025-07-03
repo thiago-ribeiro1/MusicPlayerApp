@@ -1,36 +1,61 @@
 import { create } from 'zustand';
-import { getAllSongs, Song as NativeSong } from '../services/MusicScanner';
-
+import { getSongsPaginated, Song as NativeSong } from '../services/MusicScanner';
+import TrackPlayer from 'react-native-track-player';
 import type { SongType } from '../types';
+import { saveBase64ToFile } from '../services/saveBase64ToFile'; 
 
 type UseSongsType = {
   songs: SongType[];
-  getSongs: () => Promise<SongType[] | false>;
+  offset: number;
+  isLoading: boolean;
+  loadMoreSongs: () => Promise<SongType[]>;
+  resetSongs: () => void;
 };
 
-export const useSongs = create<UseSongsType>(set => ({
+export const useSongs = create<UseSongsType>((set, get) => ({
   songs: [],
-  getSongs: async () => {
-    try {
-      const nativeSongs = await getAllSongs();
+  offset: 0,
+  isLoading: false,
 
-      const mappedSongs: SongType[] = nativeSongs.map((song, index) => ({
-        url: song.uri,
-        title: song.title || 'Unknown',
-        album: '', // pode ser adicionado no Kotlin depois
-        artist: song.artist || 'Unknown',
-        duration: song.duration || 0,
-        genre: '', // pode ser adicionado no futuro
-        cover: song.cover
-          ? `data:image/png;base64,${song.cover.trim()}`
-          : '',
-      }));
+  loadMoreSongs: async () => {
+  const { offset, songs } = get();
+  set({ isLoading: true });
 
-      set({ songs: mappedSongs });
-      return mappedSongs;
-    } catch (error) {
-      console.error('Erro ao carregar músicas:', error);
-      return false;
-    }
-  },
+  const nativeSongs = await getSongsPaginated(offset, 10);
+
+    // Salva as capas em disco
+    const mapped = await Promise.all(
+      nativeSongs.map(async (song) => {
+        let coverPath = '';
+        if (song.cover) {
+          try {
+            coverPath = await saveBase64ToFile(song.cover.trim(), `${song.id}_${Date.now()}`)  // Salva como file://
+          } catch (err) {
+            console.warn(`Erro ao salvar capa da música ${song.title}:`, err);
+          }
+        }
+
+        return {
+          id: song.id,
+          url: song.uri,
+          title: song.title || 'Unknown',
+          album: '',
+          artist: song.artist || 'Unknown',
+          duration: song.duration || 0,
+          genre: '',
+          cover: coverPath, // Caminho do arquivo salvo
+        };
+      })
+    );
+
+  set({
+    songs: [...songs, ...mapped],
+    offset: offset + 10,
+    isLoading: false,
+  });
+
+  return mapped; 
+},
+
+  resetSongs: () => set({ songs: [], offset: 0 }),
 }));

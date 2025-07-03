@@ -10,12 +10,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import MarqueeView from 'react-native-marquee-view';
 import type { SongType } from '../types';
+import { useSongs } from '../hooks/useSongs';
 import {FontsStyle} from '../styles/FontsStyle';
 
 const Player = () => {
   const activeTrack = useActiveTrack() as SongType;
   const playbackState = usePlaybackState();
   const navigation = useNavigation();
+  const { songs } = useSongs();
+
+  const currentSong = songs.find(s => s.url === activeTrack?.url || s.url === activeTrack?.id);
 
   const [wasClicked, setWasClicked] = useState(false);
 
@@ -64,8 +68,8 @@ const Player = () => {
       <View style={tw`flex-row items-center gap-x-3`}>
         <Image
           source={
-            activeTrack.cover
-              ? { uri: activeTrack.cover }
+            currentSong?.cover
+              ? { uri: currentSong.cover }
               : require('../assets/song-cover.png')
           }
           style={tw`w-12 h-12 rounded-xl`}

@@ -20,6 +20,8 @@ const SongScreen = () => {
   const progress = useProgress();
   const navigation = useNavigation();
 
+  const currentSong = songs.find(s => s.url === activeTrack?.url || s.url === activeTrack?.id);
+
   const [localTrack, setLocalTrack] = useState<SongType | null>(null);
   const [shuffleMode, setShuffleMode] = useState(false);
   const [repeatMode, setRepeatMode] = useState(false);
@@ -117,11 +119,18 @@ const handleSkipToPrevious = useCallback(async () => {
       {track ? (
         <>
           <Image
-            source={track.cover ? { uri: track.cover } : require('../assets/song-cover.png')}
+            source={
+              track?.cover
+                ? { uri: track.cover }
+                : currentSong?.cover
+                ? { uri: currentSong.cover }
+                : require('../assets/song-cover.png')
+            }
             style={tw`absolute w-full h-full`}
             blurRadius={40}
             resizeMode="cover"
           />
+          
           <View style={tw`absolute w-full h-full bg-black/30`} />
           <Wrapper backgroundColor="transparent">
             <StatusBar backgroundColor="#000" barStyle="light-content" translucent />
@@ -131,7 +140,13 @@ const handleSkipToPrevious = useCallback(async () => {
 
             <View style={tw`flex-1 items-center justify-start mt-28`}>
               <Image
-                source={track.cover ? { uri: track.cover } : require('../assets/song-cover.png')}
+                source={
+                  track?.cover
+                    ? { uri: track.cover }
+                    : currentSong?.cover
+                    ? { uri: currentSong.cover }
+                    : require('../assets/song-cover.png')
+                }
                 style={tw`w-65 h-65 rounded-2xl mb-6 border border-white/10`}
                 resizeMode="cover"
               />

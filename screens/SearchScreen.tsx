@@ -35,7 +35,7 @@ const SearchScreen = () => {
 
   useEffect(() => {
     filterSongs();
-  }, [searchTerm]);
+  }, [searchTerm, songs]);
 
   return (
     <Wrapper backgroundColor="#080809">

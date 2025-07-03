@@ -15,7 +15,6 @@ import StackNavigator from './navigators/StackNavigator';
 import Wrapper from './components/Wrapper';
 import { setupPlayerIfNeeded } from './services/trackPlayerSetup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-//teste
 import { getAllSongs } from './services/MusicScanner';
 
 const App = () => {
@@ -69,7 +68,6 @@ const App = () => {
     }
   }, []);
 
-  //teste
   useEffect(() => {
     async function loadSongs() {
       const songs = await getAllSongs();

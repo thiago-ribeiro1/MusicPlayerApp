@@ -13,6 +13,7 @@ import {useFavourties} from '../hooks/useFavourites';
 const FavouritesScreen = () => {
   const {songs} = useSongs();
   const {favourites} = useFavourties();
+
   return (
     <Wrapper backgroundColor="#080809">
       <ScrollView>
@@ -38,8 +39,8 @@ const FavouritesScreen = () => {
             estimatedItemSize={100}
           />
         </View>
-      </ScrollView>
 
+      </ScrollView>
       <Player />
     </Wrapper>
   );

@@ -8,31 +8,41 @@ import styles from '../styles/SplashScreenStyle';
 
 export default function SplashScreen() {
   const navigation = useNavigation();
-  const { getSongs } = useSongs();
+  const { loadMoreSongs } = useSongs();
   const { getFavourites } = useFavourties();
+  const { songs } = useSongs();
 
   useEffect(() => {
-    getSongs().then(res => {
-      if (res) {
+    const init = async () => {
+      const res = await loadMoreSongs(); 
+      if (res.length > 0) {
         getFavourites();
-        TrackPlayer.add(res).then(() => {
-          TrackPlayer.setRepeatMode(RepeatMode.Queue).then(() => {
-            // @ts-ignore
-            navigation.replace('Tabs');
-          });
-        });
+        await TrackPlayer.reset();
+        await TrackPlayer.add(res.map(song => ({
+          id: song.id,
+          url: song.url,
+          title: song.title,
+          artist: song.artist,
+          artwork: song.cover || require('../assets/song-cover.png'),
+          duration: song.duration,
+        })));
+        // @ts-ignore
+        navigation.replace('Tabs');
       }
-    });
+    };
+    init();
   }, []);
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#080809" barStyle="light-content" />
+
       {/* Background */}
       <ImageBackground
         source={require('../assets/bg-1.png')}
         style={styles.background}
       >
+        
         {/* Gradiente preto no topo */}
         <View style={styles.gradientTop} />
 

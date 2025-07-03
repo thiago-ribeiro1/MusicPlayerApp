@@ -3,6 +3,7 @@ import { NativeModules } from 'react-native';
 const { MusicScanner } = NativeModules;
 
 export type Song = {
+  id: string; 
   title: string;
   artist: string;
   duration: number;
@@ -19,3 +20,14 @@ export async function getAllSongs(): Promise<Song[]> {
     return [];
   }
 }
+
+export async function getSongsPaginated(offset: number, limit: number): Promise<Song[]> {
+  try {
+    const songs: Song[] = await MusicScanner.getSongsPaginated(offset, limit);
+    return songs;
+  } catch (error) {
+    console.error('Erro ao buscar músicas paginadas:', error);
+    return [];
+  }
+}
+

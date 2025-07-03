@@ -1,4 +1,4 @@
 module.exports = async function () {
-  // This service needs to be registered for the module to work
-  // but it will be used later in the "Receiving Events" section
+  // esse serviço é um exemplo de como criar um serviço que pode ser usado para receber eventos do servidor
+  // e enviar eventos para o servidor. Ele não faz nada por enquanto
 };

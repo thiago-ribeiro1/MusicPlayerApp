@@ -71,6 +71,55 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
         promise.resolve(songList)
     }
 
+    @ReactMethod
+    fun getSongsPaginated(offset: Int, limit: Int, promise: Promise) {
+        val songList = Arguments.createArray()
+        val contentResolver = reactContext.contentResolver
+
+        val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+        val projection = arrayOf(
+            MediaStore.Audio.Media._ID,
+            MediaStore.Audio.Media.TITLE,
+            MediaStore.Audio.Media.ARTIST,
+            MediaStore.Audio.Media.DURATION,
+            MediaStore.Audio.Media.DATA
+        )
+        val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
+        val sortOrder = "${MediaStore.Audio.Media.DATE_ADDED} DESC"
+        val cursor: Cursor? = contentResolver.query(uri, projection, selection, null, sortOrder)
+
+        cursor?.use {
+            if (offset >= it.count) {
+                promise.resolve(songList)
+                return
+            }
+
+            it.moveToPosition(offset - 1)
+            var count = 0
+            while (it.moveToNext() && count < limit) {
+                val id = it.getLong(it.getColumnIndexOrThrow(MediaStore.Audio.Media._ID))
+                val title = it.getString(it.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE))
+                val artist = it.getString(it.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
+                val duration = it.getLong(it.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
+                val data = it.getString(it.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+                val songUri = ContentUris.withAppendedId(uri, id)
+
+                val song = Arguments.createMap()
+                song.putString("id", songUri.toString())
+                song.putString("title", title)
+                song.putString("artist", artist)
+                song.putDouble("duration", duration.toDouble())
+                song.putString("uri", songUri.toString())
+                song.putString("cover", getEmbeddedAlbumArt(data))
+
+                songList.pushMap(song)
+                count++
+            }
+        }
+
+        promise.resolve(songList)
+    }
+
     private fun getEmbeddedAlbumArt(filePath: String?): String? {
         if (filePath == null) return null
         val retriever = MediaMetadataRetriever()

@@ -16,11 +16,14 @@ import MarqueeView from 'react-native-marquee-view';
 import type {SongType} from '../types';
 import {useFavourties} from '../hooks/useFavourites';
 import {FontsStyle} from '../styles/FontsStyle';
+import { useSongs } from '../hooks/useSongs';
 
 const SongCard = ({song, index}: {song: SongType; index: number}) => {
   const {favourites, setFavourites} = useFavourties();
   const activeTrack = useActiveTrack();
   const playbackState = usePlaybackState();
+
+  const { songs } = useSongs(); 
   
   const [isManuallyPlaying, setIsManuallyPlaying] = useState(false);
 
@@ -34,7 +37,7 @@ const SongCard = ({song, index}: {song: SongType; index: number}) => {
   }, [activeTrack?.url, playbackState.state]);
   
   const addToFavourites = useCallback(async () => {
-    const newFavourites = [...favourites, {...song}];
+  const newFavourites = [...favourites, {...song}];
 
     await setFavourites(newFavourites);
   }, [song, favourites]);
@@ -58,15 +61,39 @@ const SongCard = ({song, index}: {song: SongType; index: number}) => {
   }, []);
 
   const handlePlay = useCallback(async () => {
-    setIsManuallyPlaying(true); // troca ícone imediatamente
-    const currentTrack = await TrackPlayer.getActiveTrackIndex();
-    if (currentTrack === index) {
-      await TrackPlayer.play();
-    } else {
-      await TrackPlayer.skip(index);
-      await TrackPlayer.play();
+  setIsManuallyPlaying(true);
+
+  try {
+    const index = songs.findIndex(s => s.url === song.url);
+    if (index === -1) {
+      console.warn('Música não encontrada em useSongs');
+      return;
     }
-  }, [index]);
+
+    const currentQueue = await TrackPlayer.getQueue();
+    const alreadyQueued = currentQueue.length === songs.length;
+
+    if (!alreadyQueued) {
+      await TrackPlayer.reset(); // limpa fila antiga
+
+      await TrackPlayer.add(
+        songs.map(s => ({
+          id: s.id,
+          url: s.url,
+          title: s.title,
+          artist: s.artist,
+          artwork: s.cover || require('../assets/song-cover.png'),
+          duration: s.duration,
+        }))
+      );
+    }
+
+    await TrackPlayer.skip(index);
+    await TrackPlayer.play();
+  } catch (error) {
+    console.error('Erro ao tocar música:', error);
+  }
+}, [songs, song]);
   
   const handlePause = useCallback(async () => {
     await TrackPlayer.pause();
