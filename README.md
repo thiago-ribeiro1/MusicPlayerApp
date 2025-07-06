@@ -36,12 +36,12 @@ Com uma interface moderna e fluida, o usuário pode navegar pelas músicas e ouv
 
 ---
 
-## 🧠 Funcionalidades Técnicas
+## Funcionalidades Técnicas
 
-- 🔄 **Paginação nativa**: Carrega 10 músicas por vez, com suporte a carregamento incremental, melhorando a performance.
-- 🧠 **Hook centralizado (`useSongs`)**: Gerencia a lista de músicas, offset, loading state e integração com TrackPlayer.
-- 🖼️ **Conversão de capa embutida**: Imagens em base64 extraídas de arquivos MP3 são salvas em disco (`CachesDirectoryPath`) com nomes únicos por ID.
-- 🎛️ **Player funcional**:
+- **Paginação nativa**: Carrega 10 músicas por vez, com suporte a carregamento incremental, melhorando a performance.
+- **Hook centralizado (`useSongs`)**: Gerencia a lista de músicas, offset, loading state e integração com TrackPlayer.
+- **Conversão de capa embutida**: Imagens em base64 extraídas de arquivos MP3 são salvas em disco (`CachesDirectoryPath`) com nomes únicos por ID.
+- **Player funcional**:
   - Play/Pause
   - Skip (próxima e anterior)
   - Shuffle e Repeat com estado visual
@@ -50,7 +50,7 @@ Com uma interface moderna e fluida, o usuário pode navegar pelas músicas e ouv
 
 ---
 
-## 🚀 Como Executar no Android
+## Como Executar no Android
 
 ### Pré-requisitos:
 
@@ -66,14 +66,15 @@ Com uma interface moderna e fluida, o usuário pode navegar pelas músicas e ouv
 ```bash
 npm install
 ```
-#### 2 - Build (APK)
+#### 2 - Build Gerar o APK (modo debug)
 ```bash
 cd android
 ./gradlew assembleDebug
 ```
-#### 3 - Executar
+#### 3 - Executar no dispositivo/emulador - Esse comando instala e inicia o app no emulador ou dispositivo físico conectado via USB.
+Ele também inicia o Metro, caso não esteja rodando ainda.
 ```bash
 cd ..
 npx react-native run-android
 ```
-#### Aguarde o carregamento do app
+#### Aguarde o carregamento do app no dispositivo
