@@ -66,15 +66,19 @@ Com uma interface moderna e fluida, o usuário pode navegar pelas músicas e ouv
 ```bash
 npm install
 ```
-#### 2 - Build Gerar o APK (modo debug)
-```bash
-cd android
-./gradlew assembleDebug
-```
-#### 3 - Executar no dispositivo/emulador - Esse comando instala e inicia o app no emulador ou dispositivo físico conectado via USB.
-Ele também inicia o Metro, caso não esteja rodando ainda.
+#### 2 - Executar no dispositivo/emulador
+Este comando:
+- Gera e instala o APK em modo debug
+- Inicia o app no emulador/dispositivo conectado
+- Também inicia o Metro bundler, caso não esteja rodando
 ```bash
 cd ..
 npx react-native run-android
 ```
 #### Aguarde o carregamento do app no dispositivo
+####⚠️ Em caso de erro na build, tente limpar o projeto:
+```bash
+cd android
+./gradlew clean
+```
+
