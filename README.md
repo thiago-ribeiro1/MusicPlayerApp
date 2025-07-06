@@ -75,7 +75,7 @@ Este comando:
 npx react-native run-android
 ```
 #### Aguarde o carregamento do app no dispositivo
-####⚠️ Em caso de erro na build, tente limpar o projeto:
+#### ⚠️ Em caso de erro na build, tente limpar o projeto:
 ```bash
 cd android
 ./gradlew clean
