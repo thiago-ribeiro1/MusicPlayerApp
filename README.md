@@ -72,7 +72,6 @@ Este comando:
 - Inicia o app no emulador/dispositivo conectado
 - Também inicia o Metro bundler, caso não esteja rodando
 ```bash
-cd ..
 npx react-native run-android
 ```
 #### Aguarde o carregamento do app no dispositivo
