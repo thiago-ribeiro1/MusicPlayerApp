@@ -4,7 +4,10 @@ function sanitizeFileName(fileName: string): string {
   return fileName.replace(/[^a-zA-Z0-9_\-]/g, '_'); // mantém apenas letras, números, _ e -
 }
 
-export async function saveBase64ToFile(base64String: string, fileName: string): Promise<string> {
+export async function saveBase64ToFile(
+  base64String: string,
+  fileName: string,
+): Promise<string> {
   const safeName = sanitizeFileName(fileName);
   const path = `${RNFS.CachesDirectoryPath}/${safeName}.png`;
 

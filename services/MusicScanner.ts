@@ -1,14 +1,16 @@
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 
-const { MusicScanner } = NativeModules;
+const {MusicScanner} = NativeModules;
 
 export type Song = {
-  id: string; 
+  id: string;
   title: string;
   artist: string;
   duration: number;
   uri: string;
   cover?: string; // base64 image
+  album?: string;
+  folder?: string; // path to the folder
 };
 
 export async function getAllSongs(): Promise<Song[]> {
@@ -21,7 +23,10 @@ export async function getAllSongs(): Promise<Song[]> {
   }
 }
 
-export async function getSongsPaginated(offset: number, limit: number): Promise<Song[]> {
+export async function getSongsPaginated(
+  offset: number,
+  limit: number,
+): Promise<Song[]> {
   try {
     const songs: Song[] = await MusicScanner.getSongsPaginated(offset, limit);
     return songs;
@@ -30,4 +35,3 @@ export async function getSongsPaginated(offset: number, limit: number): Promise<
     return [];
   }
 }
-

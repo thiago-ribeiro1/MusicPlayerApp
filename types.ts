@@ -7,4 +7,5 @@ export type SongType = {
   duration: number;
   genre: string;
   cover: string;
+  folder: string;
 };

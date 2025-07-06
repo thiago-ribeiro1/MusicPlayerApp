@@ -39,7 +39,6 @@ const FavouritesScreen = () => {
             estimatedItemSize={100}
           />
         </View>
-
       </ScrollView>
       <Player />
     </Wrapper>

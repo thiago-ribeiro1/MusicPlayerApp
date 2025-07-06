@@ -2,17 +2,15 @@ import {View, Text, TextInput, Pressable} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import tw from 'twrnc';
 import {FlashList} from '@shopify/flash-list';
-import {ChevronLeftIcon} from 'react-native-heroicons/solid';
-import {useNavigation} from '@react-navigation/native';
 import Wrapper from '../components/Wrapper';
 import {useSongs} from '../hooks/useSongs';
 import SongCard from '../components/SongCard';
-import { FontsStyle } from '../styles/FontsStyle';
+import {FontsStyle} from '../styles/FontsStyle';
 import styles from '../styles/SongsScreenStyle';
+import GoBackButton from '../components/GoBackButton';
 
 const SearchScreen = () => {
   const {songs} = useSongs();
-  const navigation = useNavigation();
 
   const [filteredSongs, setFilteredSongs] = useState(songs);
   const [searchTerm, setSearchTerm] = useState('');
@@ -40,9 +38,7 @@ const SearchScreen = () => {
   return (
     <Wrapper backgroundColor="#080809">
       <View style={tw`flex-row px-5 gap-x-3 items-center pt-2`}>
-        <Pressable onPress={navigation.goBack}>
-          <ChevronLeftIcon color={'white'} size={24} />
-        </Pressable>
+        <GoBackButton />
       </View>
 
       <View style={tw`px-5 mt-8`}>
@@ -57,7 +53,7 @@ const SearchScreen = () => {
       </View>
 
       <View style={tw`px-5 mt-8 gap-y-6 h-full`}>
-        <Text style={FontsStyle.matchingSongs} >Matching songs</Text>
+        <Text style={FontsStyle.matchingSongs}>Matching songs</Text>
 
         {filteredSongs.length === 0 && (
           <Text style={tw`text-white-500 text-center text-base font-medium`}>
@@ -69,10 +65,12 @@ const SearchScreen = () => {
           data={filteredSongs}
           keyExtractor={(_, i) => i.toString()}
           renderItem={({item, index}) => {
-            return <SongCard
-            song={item}
-            index={songs.findIndex(song => song.url === item.url)}
-          />          
+            return (
+              <SongCard
+                song={item}
+                index={songs.findIndex(song => song.url === item.url)}
+              />
+            );
           }}
           estimatedItemSize={100}
         />

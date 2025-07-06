@@ -10,6 +10,7 @@ import android.media.MediaMetadataRetriever
 import android.util.Base64
 import com.facebook.react.bridge.*
 import android.graphics.Bitmap
+import java.io.File
 
 
 import java.io.ByteArrayOutputStream
@@ -56,6 +57,15 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 val albumId = it.getLong(albumIdCol)
                 val data = it.getString(dataCol)
 
+                // Recupera metadados extras com MediaMetadataRetriever
+                val retriever = MediaMetadataRetriever()
+                retriever.setDataSource(data)
+                val album = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM) ?: ""
+                retriever.release()
+
+                // Pasta onde o arquivo está
+                val folder = File(data).parent ?: ""
+
                 val songUri: Uri = ContentUris.withAppendedId(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id)
 
                 song.putString("title", title)
@@ -63,6 +73,8 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 song.putDouble("duration", duration.toDouble())
                 song.putString("uri", songUri.toString())
                 song.putString("cover", getEmbeddedAlbumArt(data))
+                song.putString("album", album)
+                song.putString("folder", folder)
 
                 songList.pushMap(song)
             }
@@ -104,6 +116,14 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 val data = it.getString(it.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
                 val songUri = ContentUris.withAppendedId(uri, id)
 
+                // Extra: album e folder
+                val retriever = MediaMetadataRetriever()
+                retriever.setDataSource(data)
+                val album = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM) ?: ""
+                retriever.release()
+
+                val folder = File(data).parent ?: ""
+
                 val song = Arguments.createMap()
                 song.putString("id", songUri.toString())
                 song.putString("title", title)
@@ -111,6 +131,8 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 song.putDouble("duration", duration.toDouble())
                 song.putString("uri", songUri.toString())
                 song.putString("cover", getEmbeddedAlbumArt(data))
+                song.putString("album", album)
+                song.putString("folder", folder)
 
                 songList.pushMap(song)
                 count++

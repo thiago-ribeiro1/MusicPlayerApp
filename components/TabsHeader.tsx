@@ -1,23 +1,26 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 
 interface TabsHeaderProps {
-  active: 'SONGS' | 'ALBUMS' | 'PLAYLISTS' | 'FOLDERS';
+  active: 'SONGS' | 'ALBUMS' | 'FOLDERS';
   options: string[];
-  onSelect: (tab: 'SONGS' | 'ALBUMS' | 'PLAYLISTS' | 'FOLDERS') => void;
+  onSelect: (tab: 'SONGS' | 'ALBUMS' | 'FOLDERS') => void;
 }
 
-export const TabsHeader: React.FC<TabsHeaderProps> = ({ active, options, onSelect }) => {
+export const TabsHeader: React.FC<TabsHeaderProps> = ({
+  active,
+  options,
+  onSelect,
+}) => {
   return (
     <View style={styles.container}>
-      {options.map((option) => {
+      {options.map(option => {
         const isActive = active === option;
         return (
           <TouchableOpacity
             key={option}
             onPress={() => onSelect(option as any)}
-            style={styles.tab}
-          >
+            style={styles.tab}>
             <Text style={[styles.tabText, isActive && styles.activeTabText]}>
               {option}
             </Text>

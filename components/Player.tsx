@@ -1,5 +1,5 @@
-import { View, Text, Image, Pressable } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import {View, Text, Image, Pressable} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import tw from 'twrnc';
 import TrackPlayer, {
   State,
@@ -7,19 +7,21 @@ import TrackPlayer, {
   usePlaybackState,
 } from 'react-native-track-player';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import MarqueeView from 'react-native-marquee-view';
-import type { SongType } from '../types';
-import { useSongs } from '../hooks/useSongs';
+import type {SongType} from '../types';
+import {useSongs} from '../hooks/useSongs';
 import {FontsStyle} from '../styles/FontsStyle';
 
 const Player = () => {
   const activeTrack = useActiveTrack() as SongType;
   const playbackState = usePlaybackState();
   const navigation = useNavigation();
-  const { songs } = useSongs();
+  const {songs} = useSongs();
 
-  const currentSong = songs.find(s => s.url === activeTrack?.url || s.url === activeTrack?.id);
+  const currentSong = songs.find(
+    s => s.url === activeTrack?.url || s.url === activeTrack?.id,
+  );
 
   const [wasClicked, setWasClicked] = useState(false);
 
@@ -31,7 +33,7 @@ const Player = () => {
       return () => clearTimeout(timeout);
     }
   }, [wasClicked]);
-     
+
   const handlePlay = useCallback(async () => {
     setWasClicked(true);
     await TrackPlayer.play();
@@ -41,7 +43,7 @@ const Player = () => {
     setWasClicked(true);
     await TrackPlayer.pause();
   }, []);
-  
+
   const handleSkipToPrevious = useCallback(async () => {
     await TrackPlayer.skipToPrevious();
     await TrackPlayer.play();
@@ -51,7 +53,7 @@ const Player = () => {
     await TrackPlayer.skipToNext();
     await TrackPlayer.play();
   }, []);
-  
+
   if (!activeTrack) return null;
 
   const isPlaying = playbackState.state === State.Playing;
@@ -63,13 +65,12 @@ const Player = () => {
       onPress={() => {
         //@ts-ignore
         navigation.navigate('Song');
-      }}
-    >
+      }}>
       <View style={tw`flex-row items-center gap-x-3`}>
         <Image
           source={
             currentSong?.cover
-              ? { uri: currentSong.cover }
+              ? {uri: currentSong.cover}
               : require('../assets/song-cover.png')
           }
           style={tw`w-12 h-12 rounded-xl`}
@@ -77,12 +78,12 @@ const Player = () => {
 
         <View style={tw`gap-y-1`}>
           <MarqueeView style={tw`w-40`}>
-            <Text style={FontsStyle.songTitlePlayer}>
-              {activeTrack.title}
-            </Text>
+            <Text style={FontsStyle.songTitlePlayer}>{activeTrack.title}</Text>
           </MarqueeView>
           <Text style={tw`text-gray-400 text-xs max-w-48`}>
-            {activeTrack.artist !== '<unknown>' ? activeTrack.artist : 'Unknown'}
+            {activeTrack.artist !== '<unknown>'
+              ? activeTrack.artist
+              : 'Unknown'}
           </Text>
         </View>
       </View>

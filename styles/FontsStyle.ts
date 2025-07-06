@@ -39,4 +39,20 @@ export const FontsStyle = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'ClashGrotesk-Bold',     
   },
+  albumTitle: {
+    fontFamily: 'ClashGrotesk-Bold',
+    color: 'white',
+    fontSize: 15, 
+  },
+  folderTitle: {
+    fontFamily: 'ClashGrotesk-Bold',
+    color: 'white',
+    fontSize: 13,
+  },
+  titleGroup: {
+    fontFamily: 'ClashGrotesk-Bold',
+    color: 'white',
+    fontSize: 18,
+    marginBottom: 14,
+  },
 });

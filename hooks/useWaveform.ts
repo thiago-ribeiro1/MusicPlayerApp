@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getWaveform } from '../services/Soundwave';
+import {useEffect, useState} from 'react';
+import {getWaveform} from '../services/Soundwave';
 
 export function useWaveform(uri?: string | null) {
   const [waveform, setWaveform] = useState<number[]>([]);
@@ -36,5 +36,5 @@ export function useWaveform(uri?: string | null) {
     };
   }, [uri]);
 
-  return { waveform, loading };
+  return {waveform, loading};
 }

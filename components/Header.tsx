@@ -3,7 +3,6 @@ import React, {useCallback} from 'react';
 import tw from 'twrnc';
 import {
   Cog8ToothIcon,
-  ChevronLeftIcon,
   HeartIcon as FilledHeartIcon,
 } from 'react-native-heroicons/solid';
 import {HeartIcon as EmptyHeartIcon} from 'react-native-heroicons/outline';
@@ -13,6 +12,7 @@ import {useActiveTrack} from 'react-native-track-player';
 import {useFavourties} from '../hooks/useFavourites';
 import {SongType} from '../types';
 import {FontsStyle} from '../styles/FontsStyle';
+import GoBackButton from './GoBackButton';
 
 const Header = ({
   title,
@@ -51,9 +51,9 @@ const Header = ({
   return (
     <View style={tw`flex-row px-5 justify-between items-center pt-2`}>
       {showBackButton ? (
-        <Pressable onPress={navigation.goBack}>
-          <ChevronLeftIcon color={'white'} size={24} />
-        </Pressable>
+        <View style={{position: 'absolute', top: 48, left: 20, zIndex: 10}}>
+          <GoBackButton />
+        </View>
       ) : (
         <Text style={FontsStyle.headerTitle}>{title}</Text>
       )}

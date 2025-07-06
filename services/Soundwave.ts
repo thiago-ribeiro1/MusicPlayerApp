@@ -1,6 +1,6 @@
-import { NativeModules } from 'react-native';
+import {NativeModules} from 'react-native';
 
-const { Soundwave } = NativeModules;
+const {Soundwave} = NativeModules;
 
 export async function getWaveform(uri: string): Promise<number[]> {
   try {

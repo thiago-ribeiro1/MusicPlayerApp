@@ -6,6 +6,7 @@ import TabNavigator from './TabNavigator';
 import SongScreen from '../screens/SongScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import SearchScreen from '../screens/SearchScreen';
+import GroupSongsScreen from '../screens/GroupSongsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ const StackNavigator = () => {
       <Stack.Screen name="Song" component={SongScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
+      <Stack.Screen name="GroupSongsScreen" component={GroupSongsScreen} />
     </Stack.Navigator>
   );
 };

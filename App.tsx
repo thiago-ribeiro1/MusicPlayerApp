@@ -13,9 +13,9 @@ import tw from 'twrnc';
 import TrackPlayer from 'react-native-track-player';
 import StackNavigator from './navigators/StackNavigator';
 import Wrapper from './components/Wrapper';
-import { setupPlayerIfNeeded } from './services/trackPlayerSetup';
+import {setupPlayerIfNeeded} from './services/trackPlayerSetup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getAllSongs } from './services/MusicScanner';
+import {getAllSongs} from './services/MusicScanner';
 
 const App = () => {
   const [isPermissionGranted, setIsPermissionGranted] = useState(false);
