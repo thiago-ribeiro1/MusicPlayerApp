@@ -1,4 +1,4 @@
-import {View, Text, Pressable, ScrollView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import React from 'react';
 import tw from 'twrnc';
 import {FlashList} from '@shopify/flash-list';

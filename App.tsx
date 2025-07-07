@@ -5,38 +5,17 @@ import {
   Alert,
   BackHandler,
   Linking,
-  ActivityIndicator,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import tw from 'twrnc';
-import TrackPlayer from 'react-native-track-player';
 import StackNavigator from './navigators/StackNavigator';
 import Wrapper from './components/Wrapper';
 import {setupPlayerIfNeeded} from './services/trackPlayerSetup';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getAllSongs} from './services/MusicScanner';
 
 const App = () => {
-  const [isPermissionGranted, setIsPermissionGranted] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const setupTrackPlayer = useCallback(async () => {
-    await TrackPlayer.setupPlayer();
-  }, []);
-
-  const checkPermission = useCallback(async () => {
-    const permissionStatus = await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO,
-    );
-
-    if (permissionStatus) {
-      await setupTrackPlayer();
-      setIsPermissionGranted(true);
-    }
-
-    setIsLoading(false);
-  }, []);
+  const [appReady, setAppReady] = useState(false);
+  const [permissionDenied, setPermissionDenied] = useState(false);
 
   const getPermission = useCallback(async () => {
     const permissionStatus = await PermissionsAndroid.check(
@@ -44,65 +23,61 @@ const App = () => {
     );
 
     if (permissionStatus) {
-      await setupTrackPlayer();
-      setIsPermissionGranted(true);
+      setPermissionDenied(false);
+      initializeApp();
     } else {
-      const requestPermissionStatus = await PermissionsAndroid.request(
+      const request = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO,
       );
 
-      if (requestPermissionStatus === 'granted') {
-        setIsPermissionGranted(true);
+      if (request === PermissionsAndroid.RESULTS.GRANTED) {
+        setPermissionDenied(false);
+        initializeApp();
       } else {
-        Alert.alert('Error', 'This app needs media permission to work', [
-          {
-            text: 'Cancel',
-            onPress: BackHandler.exitApp,
-          },
-          {
-            text: 'Give Permission',
-            onPress: Linking.openSettings,
-          },
-        ]);
+        Alert.alert(
+          'Permissão necessária',
+          'Este app precisa de acesso aos seus arquivos de áudio',
+          [
+            {
+              text: 'Cancelar',
+              onPress: BackHandler.exitApp,
+            },
+            {
+              text: 'Abrir configurações',
+              onPress: Linking.openSettings,
+            },
+          ],
+        );
       }
     }
   }, []);
 
-  useEffect(() => {
-    async function loadSongs() {
-      const songs = await getAllSongs();
-      console.log('🎵 Músicas carregadas:', songs.length);
-      console.log(songs.slice(0, 3)); // Exibe apenas as 3 primeiras no log
-    }
-    loadSongs();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      await setupPlayerIfNeeded();
-
-      const savedTrack = await AsyncStorage.getItem('lastTrack');
-      if (savedTrack) {
-        const track = JSON.parse(savedTrack);
-        await TrackPlayer.reset();
-        await TrackPlayer.add([track]);
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    checkPermission();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <Wrapper style={tw`items-center justify-center`}>
-        <ActivityIndicator color={'blue'} size={45} />
-      </Wrapper>
+  const initializeApp = useCallback(async () => {
+    const hasPermission = await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO,
     );
-  }
 
-  if (!isLoading && !isPermissionGranted) {
+    if (!hasPermission) {
+      setPermissionDenied(true);
+      return;
+    }
+
+    try {
+      await setupPlayerIfNeeded();
+    } catch (e) {
+      console.warn('⚠️ Erro ao iniciar app:', e);
+    }
+
+    setTimeout(() => {
+      setAppReady(true);
+    }, 4000);
+  }, []);
+
+  useEffect(() => {
+    initializeApp();
+  }, []);
+
+  if (permissionDenied) {
     return (
       <Wrapper style={tw`items-center justify-center gap-y-6`}>
         <Text style={tw`text-white-600 text-base font-medium`}>
@@ -119,9 +94,10 @@ const App = () => {
       </Wrapper>
     );
   }
+
   return (
     <NavigationContainer>
-      <StackNavigator />
+      <StackNavigator appReady={appReady} />
     </NavigationContainer>
   );
 };

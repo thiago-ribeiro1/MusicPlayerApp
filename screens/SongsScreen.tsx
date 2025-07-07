@@ -106,7 +106,7 @@ const SongsScreen = () => {
         return (
           <View style={styles.listContainer}>
             {songs.length === 0 ? (
-              <Text style={styles.placeholderText}>Nothing here.</Text>
+              <Text style={styles.placeholderText}>Nothing here</Text>
             ) : (
               <FlashList
                 data={songs}

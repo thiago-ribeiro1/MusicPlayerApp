@@ -14,7 +14,7 @@ import {useSongs} from '../hooks/useSongs';
 import {FontsStyle} from '../styles/FontsStyle';
 
 const Player = () => {
-  const activeTrack = useActiveTrack() as SongType;
+  const activeTrack = useActiveTrack() as SongType | null;
   const playbackState = usePlaybackState();
   const navigation = useNavigation();
   const {songs} = useSongs();
@@ -54,7 +54,7 @@ const Player = () => {
     await TrackPlayer.play();
   }, []);
 
-  if (!activeTrack) return null;
+  if (!activeTrack?.title) return null;
 
   const isPlaying = playbackState.state === State.Playing;
   const showPauseIcon = isPlaying || wasClicked;

@@ -4,6 +4,7 @@ const {MusicScanner} = NativeModules;
 
 export type Song = {
   id: string;
+  url: string;
   title: string;
   artist: string;
   duration: number;
