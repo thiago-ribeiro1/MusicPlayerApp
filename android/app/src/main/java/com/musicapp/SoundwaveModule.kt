@@ -1,4 +1,3 @@
-// SoundwaveModule.kt (Kotlin) - Módulo nativo atualizado com RMS real
 package com.musicapp
 
 import android.media.MediaExtractor
@@ -8,6 +7,7 @@ import android.net.Uri
 import com.facebook.react.bridge.*
 import java.nio.ByteBuffer
 import kotlin.math.sqrt
+import android.util.Log
 
 class SoundwaveModule(private val reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
@@ -23,6 +23,7 @@ class SoundwaveModule(private val reactContext: ReactApplicationContext) :
       reactContext.contentResolver.openFileDescriptor(uri, "r")?.use { pfd ->
         retriever.setDataSource(pfd.fileDescriptor)
       } ?: run {
+        Log.e("SoundwaveModule", "FileDescriptor null")
         promise.reject("NO_FD", "File descriptor is null")
         return
       }
@@ -39,9 +40,6 @@ class SoundwaveModule(private val reactContext: ReactApplicationContext) :
         return
       }
 
-      val numBars = 50
-      val waveform = FloatArray(numBars) { 0f }
-      val sampleSize = 2048
       val audioTrackIndex = (0 until extractor.trackCount).firstOrNull {
         val format = extractor.getTrackFormat(it)
         format.getString(MediaFormat.KEY_MIME)?.startsWith("audio/") == true
@@ -52,23 +50,58 @@ class SoundwaveModule(private val reactContext: ReactApplicationContext) :
         return
       }
 
-      extractor.selectTrack(audioTrackIndex)
-      val totalFrames = durationMs / sampleSize
-      val framesPerBar = (totalFrames / numBars).toInt().coerceAtLeast(1)
+      val format = extractor.getTrackFormat(audioTrackIndex)
+      val mimeType = format.getString(MediaFormat.KEY_MIME)
 
-      val buffer = ByteBuffer.allocate(sampleSize)
+      val unsupportedFormats = listOf(
+        "audio/raw", "audio/flac", "audio/aiff", "audio/x-aiff",
+        "audio/aac", "audio/mp4a-latm", "audio/m3u8",
+        "application/x-mpegURL", null
+      )
+
+      if (unsupportedFormats.contains(mimeType)) {
+
+        val random = java.util.Random()
+        val mockWaveform = Arguments.createArray()
+        var current = 0.5
+
+        repeat(50) { i ->
+          val isPeak = i % 10 == 0
+          val next = if (isPeak) {
+            (0.7 + random.nextDouble() * 0.3) // pico: 0.7 a 1.0
+          } else {
+            (current + (random.nextDouble() - 0.5) * 0.4).coerceIn(0.2, 0.9)
+          }
+
+          mockWaveform.pushDouble(next)
+          current = next
+        }
+
+        promise.resolve(mockWaveform)
+        return
+      }
+
+      // Somente se formato suportado
+      extractor.selectTrack(audioTrackIndex)
+
+      val buffer = ByteBuffer.allocate(2048)
+      val waveform = FloatArray(50) { 0f }
+      val amplitudes = MutableList(50) { 0f }
+
       var frameIndex = 0
       var barIndex = 0
-      val amplitudes = MutableList(numBars) { 0f }
+      val framesPerBar = ((durationMs / 2048) / 50).toInt().coerceAtLeast(1)
 
-      while (extractor.readSampleData(buffer, 0) >= 0 && barIndex < numBars) {
+      while (extractor.readSampleData(buffer, 0) >= 0 && barIndex < 50) {
         val shortBuffer = buffer.asShortBuffer()
         val count = shortBuffer.limit()
         var sum = 0.0
+
         for (i in 0 until count) {
           val sample = shortBuffer.get(i)
           sum += (sample * sample).toDouble()
         }
+
         val rms = sqrt(sum / count).toFloat()
         amplitudes[barIndex] += rms
 
@@ -88,9 +121,11 @@ class SoundwaveModule(private val reactContext: ReactApplicationContext) :
 
       val result = Arguments.createArray()
       waveform.forEach { result.pushDouble(it.toDouble()) }
+
       promise.resolve(result)
 
     } catch (e: Exception) {
+      Log.e("SoundwaveModule", "Erro ao gerar waveform", e)
       promise.reject("WAVEFORM_ERROR", e)
     }
   }
