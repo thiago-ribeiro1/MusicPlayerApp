@@ -79,7 +79,9 @@ const App = () => {
 
   if (permissionDenied) {
     return (
-      <Wrapper style={tw`items-center justify-center gap-y-6`}>
+      <Wrapper
+        backgroundColor="#080809"
+        style={tw`items-center justify-center gap-y-6`}>
         <Text style={tw`text-white-600 text-base font-medium`}>
           This app needs media permission to work
         </Text>
