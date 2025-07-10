@@ -33,6 +33,7 @@ const SongsScreen = () => {
     loadMoreSongs(); // Carrega os primeiros 10 paginação
   }, []);
 
+  // Filtra e agrupa as músicas por álbum
   const albums = songs.reduce((acc, song) => {
     if (song.album) {
       if (!acc[song.album]) acc[song.album] = [];
@@ -41,6 +42,16 @@ const SongsScreen = () => {
     return acc;
   }, {} as Record<string, SongType[]>);
 
+  // Ordena cada grupo por trackNumber
+  Object.keys(albums).forEach(album => {
+    albums[album].sort((a, b) => {
+      if (!a.trackNumber) return 1;
+      if (!b.trackNumber) return -1;
+      return a.trackNumber - b.trackNumber;
+    });
+  });
+
+  // Filtra e agrupa as músicas por pasta
   const folders = songs.reduce((acc, song) => {
     if (song.folder) {
       if (!acc[song.folder]) acc[song.folder] = [];
@@ -48,6 +59,14 @@ const SongsScreen = () => {
     }
     return acc;
   }, {} as Record<string, SongType[]>);
+
+  Object.keys(folders).forEach(folder => {
+    folders[folder].sort((a, b) => {
+      if (!a.trackNumber) return 1;
+      if (!b.trackNumber) return -1;
+      return a.trackNumber - b.trackNumber;
+    });
+  });
 
   const handleSearch = (text: string) => {
     setSearchText(text);
@@ -100,6 +119,11 @@ const SongsScreen = () => {
     </Pressable>
   );
 
+  // Agrupamento em lista única respeitando ordem dos álbuns
+  const orderedByAlbum: SongType[] = Object.entries(albums)
+    .sort((a, b) => a[0].localeCompare(b[0])) // ordena os álbuns por nome
+    .flatMap(([_, songs]) => songs);
+
   const renderContent = () => {
     switch (activeTab) {
       case 'SONGS':
@@ -109,10 +133,14 @@ const SongsScreen = () => {
               <Text style={styles.placeholderText}>Nothing here</Text>
             ) : (
               <FlashList
-                data={songs}
+                data={orderedByAlbum}
                 keyExtractor={(_, i) => i.toString()}
                 renderItem={({item, index}) => (
-                  <SongCard song={item} index={index} />
+                  <SongCard
+                    song={item}
+                    index={index}
+                    allSongs={orderedByAlbum}
+                  />
                 )}
                 estimatedItemSize={80}
                 showsVerticalScrollIndicator={false}

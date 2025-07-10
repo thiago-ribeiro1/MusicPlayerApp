@@ -69,6 +69,7 @@ const SearchScreen = () => {
               <SongCard
                 song={item}
                 index={songs.findIndex(song => song.url === item.url)}
+                allSongs={songs}
               />
             );
           }}

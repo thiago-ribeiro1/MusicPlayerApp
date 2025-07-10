@@ -11,7 +11,8 @@ export type Song = {
   uri: string;
   cover?: string; // base64 image
   album?: string;
-  folder?: string; // path to the folder
+  folder?: string;
+  trackNumber?: number;
 };
 
 export async function getAllSongs(): Promise<Song[]> {

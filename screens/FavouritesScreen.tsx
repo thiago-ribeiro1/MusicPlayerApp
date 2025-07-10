@@ -2,7 +2,6 @@ import {View, Text, ScrollView} from 'react-native';
 import React from 'react';
 import tw from 'twrnc';
 import {FlashList} from '@shopify/flash-list';
-
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import SongCard from '../components/SongCard';
@@ -33,6 +32,7 @@ const FavouritesScreen = () => {
                 <SongCard
                   song={item}
                   index={songs.findIndex(song => song.url === item.url)}
+                  allSongs={songs}
                 />
               );
             }}

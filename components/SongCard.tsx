@@ -16,13 +16,19 @@ import MarqueeView from 'react-native-marquee-view';
 import type {SongType} from '../types';
 import {useFavourties} from '../hooks/useFavourites';
 import {FontsStyle} from '../styles/FontsStyle';
-import {useSongs} from '../hooks/useSongs';
 
-const SongCard = ({song, index}: {song: SongType; index: number}) => {
+const SongCard = ({
+  song,
+  index,
+  allSongs,
+}: {
+  song: SongType;
+  index: number;
+  allSongs: SongType[];
+}) => {
   const {favourites, setFavourites} = useFavourties();
   const activeTrack = useActiveTrack();
   const playbackState = usePlaybackState();
-  const {songs} = useSongs();
   const [isManuallyPlaying, setIsManuallyPlaying] = useState(false);
 
   useEffect(() => {
@@ -36,7 +42,6 @@ const SongCard = ({song, index}: {song: SongType; index: number}) => {
 
   const addToFavourites = useCallback(async () => {
     const newFavourites = [...favourites, {...song}];
-
     await setFavourites(newFavourites);
   }, [song, favourites]);
 
@@ -44,13 +49,11 @@ const SongCard = ({song, index}: {song: SongType; index: number}) => {
     const newFavourites = favourites.filter(
       favourite => favourite.url !== song.url,
     );
-
     await setFavourites(newFavourites);
-  }, [activeTrack, favourites]);
+  }, [song, favourites]);
 
   const parseDuration = useCallback((value: number) => {
     const seconds = value / 1000;
-
     return `${Math.floor(seconds / 60)}:${
       Math.ceil(seconds % 60).toString().length === 1
         ? '0' + Math.ceil(seconds % 60).toString()
@@ -62,20 +65,20 @@ const SongCard = ({song, index}: {song: SongType; index: number}) => {
     setIsManuallyPlaying(true);
 
     try {
-      const index = songs.findIndex(s => s.url === song.url);
+      const index = allSongs.findIndex(s => s.url === song.url);
       if (index === -1) {
-        console.warn('Música não encontrada em useSongs');
+        console.warn('Música não encontrada na lista atual');
         return;
       }
 
       const currentQueue = await TrackPlayer.getQueue();
-      const alreadyQueued = currentQueue.length === songs.length;
+      const alreadyQueued = currentQueue.length === allSongs.length;
 
       if (!alreadyQueued) {
-        await TrackPlayer.reset(); // limpa fila antiga
+        await TrackPlayer.reset();
 
         await TrackPlayer.add(
-          songs.map(s => ({
+          allSongs.map(s => ({
             id: s.id,
             url: s.url,
             title: s.title,
@@ -91,7 +94,7 @@ const SongCard = ({song, index}: {song: SongType; index: number}) => {
     } catch (error) {
       console.error('Erro ao tocar música:', error);
     }
-  }, [songs, song]);
+  }, [allSongs, song]);
 
   const handlePause = useCallback(async () => {
     await TrackPlayer.pause();
@@ -107,11 +110,7 @@ const SongCard = ({song, index}: {song: SongType; index: number}) => {
       <View style={tw`flex-row items-center gap-x-5`}>
         <Image
           source={
-            song.cover
-              ? {
-                  uri: song.cover,
-                }
-              : require('../assets/song-cover.png')
+            song.cover ? {uri: song.cover} : require('../assets/song-cover.png')
           }
           style={tw`w-16 h-16 rounded-xl`}
         />
@@ -120,10 +119,7 @@ const SongCard = ({song, index}: {song: SongType; index: number}) => {
             <Text style={FontsStyle.songTitle}>{song.title}</Text>
           </MarqueeView>
           <View style={tw`flex-col max-w-40`}>
-            <Text
-              style={tw`text-gray-300 text-xs`}
-              numberOfLines={2} // permite quebrar
-            >
+            <Text style={tw`text-gray-300 text-xs`} numberOfLines={2}>
               {song.artist !== '<unknown>' ? song.artist : 'Unknown'} /{' '}
               {parseDuration(song.duration)}
             </Text>
@@ -132,24 +128,22 @@ const SongCard = ({song, index}: {song: SongType; index: number}) => {
       </View>
 
       <View style={tw`flex-row gap-x-4 items-center`}>
-        <>
-          {favourites.map(favourite => favourite.url).includes(song.url) ? (
-            <Pressable onPress={removeFromFavourites}>
-              <FilledHeartIcon color={'white'} size={22} fill={'#40B0EB'} />
-            </Pressable>
-          ) : (
-            <Pressable onPress={addToFavourites}>
-              <EmptyHeartIcon color={'white'} size={22} />
-            </Pressable>
-          )}
-        </>
+        {favourites.some(f => f.url === song.url) ? (
+          <Pressable onPress={removeFromFavourites}>
+            <FilledHeartIcon color="white" size={22} fill="#40B0EB" />
+          </Pressable>
+        ) : (
+          <Pressable onPress={addToFavourites}>
+            <EmptyHeartIcon color="white" size={22} />
+          </Pressable>
+        )}
         <Pressable
           style={[tw`rounded-full p-2`, {backgroundColor: '#1684D9'}]}
           onPress={showPauseIcon ? handlePause : handlePlay}>
           {showPauseIcon ? (
-            <PauseIcon color={'white'} size={24} />
+            <PauseIcon color="white" size={24} />
           ) : (
-            <PlayIcon color={'white'} size={24} />
+            <PlayIcon color="white" size={24} />
           )}
         </Pressable>
       </View>

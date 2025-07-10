@@ -34,7 +34,8 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.ALBUM_ID,
-            MediaStore.Audio.Media.DATA
+            MediaStore.Audio.Media.DATA,
+            MediaStore.Audio.Media.TRACK
         )
         val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
         val cursor: Cursor? = contentResolver.query(uri, projection, selection, null, null)
@@ -61,6 +62,9 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 val retriever = MediaMetadataRetriever()
                 retriever.setDataSource(data)
                 val album = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM) ?: ""
+                val track = it.getInt(it.getColumnIndexOrThrow(MediaStore.Audio.Media.TRACK))
+                val trackNumber = if (track > 0) track % 1000 else 0
+
                 retriever.release()
 
                 // Pasta onde o arquivo está
@@ -75,6 +79,7 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 song.putString("cover", getEmbeddedAlbumArt(data))
                 song.putString("album", album)
                 song.putString("folder", folder)
+                song.putInt("trackNumber", trackNumber)
 
                 songList.pushMap(song)
             }
@@ -94,7 +99,8 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
             MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.DATA
+            MediaStore.Audio.Media.DATA,
+            MediaStore.Audio.Media.TRACK
         )
         val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
         val sortOrder = "${MediaStore.Audio.Media.DATE_ADDED} DESC"
@@ -114,6 +120,8 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 val artist = it.getString(it.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST))
                 val duration = it.getLong(it.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION))
                 val data = it.getString(it.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA))
+                val track = it.getInt(it.getColumnIndexOrThrow(MediaStore.Audio.Media.TRACK))
+                val trackNumber = if (track > 0) track % 1000 else 0
                 val songUri = ContentUris.withAppendedId(uri, id)
 
                 // Extra: album e folder
@@ -133,6 +141,7 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 song.putString("cover", getEmbeddedAlbumArt(data))
                 song.putString("album", album)
                 song.putString("folder", folder)
+                song.putInt("trackNumber", trackNumber)
 
                 songList.pushMap(song)
                 count++

@@ -8,4 +8,5 @@ export type SongType = {
   genre: string;
   cover: string;
   folder: string;
+  trackNumber?: number;
 };

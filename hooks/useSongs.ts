@@ -47,6 +47,7 @@ export const useSongs = create<UseSongsType>((set, get) => ({
           duration: song.duration || 0,
           genre: '',
           cover: coverPath, // Caminho do arquivo salvo
+          trackNumber: song.trackNumber || 0,
         };
       }),
     );
