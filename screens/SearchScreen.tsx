@@ -1,4 +1,4 @@
-import {View, Text, TextInput, Pressable} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import tw from 'twrnc';
 import {FlashList} from '@shopify/flash-list';

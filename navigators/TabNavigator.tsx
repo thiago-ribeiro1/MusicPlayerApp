@@ -1,4 +1,3 @@
-import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {HeartIcon, MusicalNoteIcon} from 'react-native-heroicons/solid';
 

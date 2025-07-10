@@ -1,4 +1,3 @@
-// utils/orderByAlbum.ts
 import type {SongType} from '../types';
 
 export function orderSongsByAlbum(songs: SongType[]): SongType[] {

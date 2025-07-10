@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const FontsStyle = StyleSheet.create({
   songTitle: {
     fontFamily: 'ClashGrotesk-Bold',
     color: 'white',
-    fontSize: 15, 
+    fontSize: 15,
   },
   headerTitle: {
     fontFamily: 'ClashGrotesk-Bold',
@@ -17,32 +17,32 @@ export const FontsStyle = StyleSheet.create({
   },
   musicTitle: {
     color: 'white',
-    fontSize: 18,         
-    marginBottom: 4,        
-    textAlign: 'center',    
-    fontFamily: 'ClashGrotesk-Bold', 
+    fontSize: 18,
+    marginBottom: 4,
+    textAlign: 'center',
+    fontFamily: 'ClashGrotesk-Bold',
   },
   matchingSongs: {
-    color: '#FFFFFF',    
-    fontSize: 18,          
+    color: '#FFFFFF',
+    fontSize: 18,
     fontFamily: 'ClashGrotesk-Bold',
   },
   settingsTitle: {
-    paddingTop: 16,        
-    color: '#FFFFFF',     
-    fontSize: 24,          
-    textAlign: 'center',   
+    paddingTop: 16,
+    color: '#FFFFFF',
+    fontSize: 24,
+    textAlign: 'center',
     fontFamily: 'ClashGrotesk-Bold',
   },
   removeAllFavorites: {
-    color: '#FFFFFF',  
+    color: '#FFFFFF',
     fontSize: 16,
-    fontFamily: 'ClashGrotesk-Bold',     
+    fontFamily: 'ClashGrotesk-Bold',
   },
   albumTitle: {
     fontFamily: 'ClashGrotesk-Bold',
     color: 'white',
-    fontSize: 15, 
+    fontSize: 15,
   },
   folderTitle: {
     fontFamily: 'ClashGrotesk-Bold',
@@ -54,5 +54,13 @@ export const FontsStyle = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     marginBottom: 14,
+  },
+  limitModalTitle: {
+    fontFamily: 'ClashGrotesk-Bold',
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 10,
   },
 });

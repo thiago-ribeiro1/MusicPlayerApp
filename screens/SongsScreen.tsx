@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   ScrollView,
@@ -27,7 +27,9 @@ const SongsScreen = () => {
   const [activeTab, setActiveTab] = useState<'SONGS' | 'ALBUMS' | 'FOLDERS'>(
     'SONGS',
   );
-  const {songs, loadMoreSongs, isLoading} = useSongs();
+  const {songs, loadMoreSongs, isLoading, limitExceeded} = useSongs();
+  const [hasShownLimitModal, setHasShownLimitModal] = useState(false);
+  const hasDismissedLimitModal = useRef(false);
 
   useEffect(() => {
     loadMoreSongs(); // Carrega os primeiros 10 paginação
@@ -123,6 +125,13 @@ const SongsScreen = () => {
   const orderedByAlbum: SongType[] = Object.entries(albums)
     .sort((a, b) => a[0].localeCompare(b[0])) // ordena os álbuns por nome
     .flatMap(([_, songs]) => songs);
+
+  useEffect(() => {
+    if (limitExceeded && !hasDismissedLimitModal.current) {
+      setHasShownLimitModal(true);
+      hasDismissedLimitModal.current = true;
+    }
+  }, [limitExceeded]);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -228,6 +237,46 @@ const SongsScreen = () => {
           {renderContent()}
         </ScrollView>
       </View>
+
+      {hasShownLimitModal && (
+        <View
+          style={{
+            position: 'absolute',
+            top: 120,
+            left: 30,
+            right: 30,
+            padding: 20,
+            backgroundColor: '#111827',
+            borderRadius: 12,
+            borderWidth: 1,
+            borderColor: '#1684D9',
+            zIndex: 999,
+            elevation: 10,
+          }}>
+          <Text style={[FontsStyle.limitModalTitle]}>Song limit exceeded</Text>
+          <Text
+            style={{
+              color: '#9CA3AF',
+              fontSize: 14,
+              textAlign: 'center',
+            }}>
+            Only loading 100 songs
+          </Text>
+          <Pressable
+            onPress={() => setHasShownLimitModal(false)}
+            style={{
+              marginTop: 15,
+              backgroundColor: '#1684D9',
+              borderRadius: 8,
+              paddingVertical: 8,
+            }}>
+            <Text
+              style={{color: 'white', textAlign: 'center', fontWeight: 'bold'}}>
+              OK
+            </Text>
+          </Pressable>
+        </View>
+      )}
 
       {/* MiniPlayer */}
       <Player />
