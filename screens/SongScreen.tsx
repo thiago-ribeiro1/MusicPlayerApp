@@ -13,7 +13,6 @@ import TrackPlayer, {
   State,
   useProgress,
   RepeatMode,
-  Track,
 } from 'react-native-track-player';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import tw from 'twrnc';

@@ -12,6 +12,7 @@ import tw from 'twrnc';
 import StackNavigator from './navigators/StackNavigator';
 import Wrapper from './components/Wrapper';
 import {setupPlayerIfNeeded} from './services/trackPlayerSetup';
+import {setupTrackPlayerService} from './services/track-player.service';
 
 const App = () => {
   const [appReady, setAppReady] = useState(false);
@@ -64,8 +65,9 @@ const App = () => {
 
     try {
       await setupPlayerIfNeeded();
+      await setupTrackPlayerService();
     } catch (e) {
-      console.warn('⚠️ Erro ao iniciar app:', e);
+      console.warn('Erro ao iniciar app:', e);
     }
 
     setTimeout(() => {

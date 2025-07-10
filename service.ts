@@ -1,4 +1,24 @@
+import TrackPlayer, {Event} from 'react-native-track-player';
+
 module.exports = async function () {
-  // esse serviço é um exemplo de como criar um serviço que pode ser usado para receber eventos do servidor
-  // e enviar eventos para o servidor. Ele não faz nada por enquanto
+  TrackPlayer.addEventListener(Event.RemotePlay, () => {
+    TrackPlayer.play();
+  });
+
+  TrackPlayer.addEventListener(Event.RemotePause, () => {
+    TrackPlayer.pause();
+  });
+
+  TrackPlayer.addEventListener(Event.RemoteNext, () => {
+    TrackPlayer.skipToNext();
+  });
+
+  TrackPlayer.addEventListener(Event.RemotePrevious, () => {
+    TrackPlayer.skipToPrevious();
+  });
+
+  TrackPlayer.addEventListener(Event.RemoteStop, () => {
+    TrackPlayer.stop();
+  });
 };
+//
