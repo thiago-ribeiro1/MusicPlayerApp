@@ -1,10 +1,11 @@
-import type {SongType} from '../types';
+import {SongType} from '../types';
 
-export function orderSongsByAlbum(songs: SongType[]): SongType[] {
+export function getOrderedSongsByAlbum(songs: SongType[]): SongType[] {
   const albums = songs.reduce((acc, song) => {
-    const album = song.album || `single-${song.id}`; // singles separados
-    if (!acc[album]) acc[album] = [];
-    acc[album].push(song);
+    if (song.album) {
+      if (!acc[song.album]) acc[song.album] = [];
+      acc[song.album].push(song);
+    }
     return acc;
   }, {} as Record<string, SongType[]>);
 
@@ -16,10 +17,7 @@ export function orderSongsByAlbum(songs: SongType[]): SongType[] {
     });
   });
 
-  const ordered: SongType[] = [];
-  Object.values(albums).forEach(albumSongs => {
-    ordered.push(...albumSongs);
-  });
-
-  return ordered;
+  return Object.entries(albums)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .flatMap(([_, songs]) => songs);
 }
