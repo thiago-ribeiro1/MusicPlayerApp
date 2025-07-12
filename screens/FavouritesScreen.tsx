@@ -8,10 +8,14 @@ import SongCard from '../components/SongCard';
 import Player from '../components/Player';
 import {useSongs} from '../hooks/useSongs';
 import {useFavourties} from '../hooks/useFavourites';
+import {getOrderedSongsByAlbum} from '../components/orderByAlbum';
 
 const FavouritesScreen = () => {
   const {songs} = useSongs();
   const {favourites} = useFavourties();
+
+  const orderedFavourites = getOrderedSongsByAlbum(favourites);
+  const orderedSongs = getOrderedSongsByAlbum(songs);
 
   return (
     <Wrapper backgroundColor="#080809">
@@ -25,17 +29,15 @@ const FavouritesScreen = () => {
             </Text>
           )}
           <FlashList
-            data={favourites}
+            data={orderedFavourites}
             keyExtractor={(_, i) => i.toString()}
-            renderItem={({item}) => {
-              return (
-                <SongCard
-                  song={item}
-                  index={songs.findIndex(song => song.url === item.url)}
-                  allSongs={songs}
-                />
-              );
-            }}
+            renderItem={({item}) => (
+              <SongCard
+                song={item}
+                index={orderedSongs.findIndex(song => song.url === item.url)}
+                allSongs={orderedSongs}
+              />
+            )}
             estimatedItemSize={100}
           />
         </View>
