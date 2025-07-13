@@ -100,12 +100,17 @@ const SongCard = ({
   return (
     <View style={styles.container}>
       <View style={styles.leftSection}>
-        <Image
-          source={
-            song.cover ? {uri: song.cover} : require('../assets/song-cover.png')
-          }
-          style={styles.cover}
-        />
+        <View style={styles.coverContainer}>
+          <Image
+            source={
+              song.cover
+                ? {uri: song.cover}
+                : require('../assets/song-cover.png')
+            }
+            style={styles.cover}
+            resizeMode="cover"
+          />
+        </View>
         <View style={styles.textContainer}>
           <MarqueeView style={styles.marquee}>
             <Text style={styles.title}>{song.title}</Text>
@@ -162,10 +167,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: scaleSize(16),
   },
-  cover: {
+  coverContainer: {
     width: scaleSize(64),
     height: scaleSize(64),
     borderRadius: scaleSize(12),
+    overflow: 'hidden',
+  },
+  cover: {
+    width: '100%',
+    height: '100%',
   },
   textContainer: {
     flexDirection: 'column',

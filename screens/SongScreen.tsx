@@ -6,6 +6,7 @@ import {
   Pressable,
   Dimensions,
   StatusBar,
+  StyleSheet,
 } from 'react-native';
 import TrackPlayer, {
   useActiveTrack,
@@ -22,6 +23,7 @@ import {useSongs} from '../hooks/useSongs';
 import {useWaveform} from '../hooks/useWaveform';
 import {FontsStyle} from '../styles/FontsStyle';
 import GoBackButton from '../components/GoBackButton';
+import {scaleSize} from '../utils/scale';
 
 const {width} = Dimensions.get('window');
 
@@ -162,17 +164,19 @@ const SongScreen = () => {
             </View>
 
             <View style={tw`flex-1 items-center justify-start mt-28`}>
-              <Image
-                source={
-                  track?.cover
-                    ? {uri: track.cover}
-                    : currentSong?.cover
-                    ? {uri: currentSong.cover}
-                    : require('../assets/song-cover.png')
-                }
-                style={tw`w-65 h-65 rounded-2xl mb-6 border border-white/10`}
-                resizeMode="cover"
-              />
+              <View style={styles.coverWrapper}>
+                <Image
+                  source={
+                    track?.cover
+                      ? {uri: track.cover}
+                      : currentSong?.cover
+                      ? {uri: currentSong.cover}
+                      : require('../assets/song-cover.png')
+                  }
+                  style={styles.coverImage}
+                  resizeMode="cover"
+                />
+              </View>
 
               <Text style={FontsStyle.musicTitle}>{track.title}</Text>
               <Text style={tw`text-gray-400 text-base mb-6 text-center`}>
@@ -260,5 +264,22 @@ const SongScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  coverWrapper: {
+    width: scaleSize(260),
+    height: scaleSize(260),
+    borderRadius: scaleSize(24),
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+    marginBottom: scaleSize(24),
+    alignSelf: 'center',
+  },
+  coverImage: {
+    width: '100%',
+    height: '100%',
+  },
+});
 
 export default SongScreen;

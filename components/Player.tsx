@@ -1,4 +1,4 @@
-import {View, Text, Image, Pressable} from 'react-native';
+import {View, Text, Image, Pressable, StyleSheet} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import tw from 'twrnc';
 import TrackPlayer, {
@@ -12,6 +12,7 @@ import MarqueeView from 'react-native-marquee-view';
 import type {SongType} from '../types';
 import {useSongs} from '../hooks/useSongs';
 import {FontsStyle} from '../styles/FontsStyle';
+import {scaleSize} from '../utils/scale';
 
 const Player = () => {
   const activeTrack = useActiveTrack() as SongType | null;
@@ -67,14 +68,17 @@ const Player = () => {
         navigation.navigate('Song');
       }}>
       <View style={tw`flex-row items-center gap-x-3`}>
-        <Image
-          source={
-            currentSong?.cover
-              ? {uri: currentSong.cover}
-              : require('../assets/song-cover.png')
-          }
-          style={tw`w-12 h-12 rounded-xl`}
-        />
+        <View style={styles.coverWrapper}>
+          <Image
+            source={
+              currentSong?.cover
+                ? {uri: currentSong.cover}
+                : require('../assets/song-cover.png')
+            }
+            style={styles.coverImage}
+            resizeMode="cover"
+          />
+        </View>
 
         <View style={tw`gap-y-1`}>
           <MarqueeView style={tw`w-40`}>
@@ -108,5 +112,18 @@ const Player = () => {
     </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  coverWrapper: {
+    width: scaleSize(48),
+    height: scaleSize(48),
+    borderRadius: scaleSize(12),
+    overflow: 'hidden',
+  },
+  coverImage: {
+    width: '100%',
+    height: '100%',
+  },
+});
 
 export default Player;
