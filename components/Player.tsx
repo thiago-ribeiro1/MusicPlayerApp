@@ -84,7 +84,10 @@ const Player = () => {
           <MarqueeView style={tw`w-40`}>
             <Text style={FontsStyle.songTitlePlayer}>{activeTrack.title}</Text>
           </MarqueeView>
-          <Text style={tw`text-gray-400 text-xs max-w-48`}>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={tw`text-gray-400 text-xs w-40`}>
             {activeTrack.artist !== '<unknown>'
               ? activeTrack.artist
               : 'Unknown'}
