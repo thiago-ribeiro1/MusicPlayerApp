@@ -4,6 +4,8 @@ Aplicativo de música para Android desenvolvido com **React Native CLI** e backe
 
 ---
 
+<img width="3500" height="1969" alt="Image" src="https://github.com/user-attachments/assets/b3b5d885-bfd8-4ae3-b8e8-d7d51a5ebdb4" />
+
 ## 📱 Sobre o App
 
 O **Music Player** escaneia automaticamente o armazenamento do dispositivo e carrega todas as músicas locais com metadados reais, incluindo:
