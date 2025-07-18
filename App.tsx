@@ -36,15 +36,15 @@ const App = () => {
         initializeApp();
       } else {
         Alert.alert(
-          'Permissão necessária',
-          'Este app precisa de acesso aos seus arquivos de áudio',
+          'Permission required',
+          'This app needs access to your audio files to work properly',
           [
             {
-              text: 'Cancelar',
+              text: 'Cancel',
               onPress: BackHandler.exitApp,
             },
             {
-              text: 'Abrir configurações',
+              text: 'Open Settings',
               onPress: Linking.openSettings,
             },
           ],
