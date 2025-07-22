@@ -64,6 +64,24 @@ const SongCard = ({
       const index = allSongs.findIndex(s => s.url === song.url);
       if (index === -1) return;
 
+      // Verifica se só há uma música no grupo (álbum ou pasta)
+      if (allSongs.length === 1) {
+        await TrackPlayer.reset();
+        await TrackPlayer.add([
+          {
+            id: song.id,
+            url: song.url,
+            title: song.title,
+            artist: song.artist,
+            artwork: song.cover || require('../assets/song-cover.png'),
+            duration: song.duration,
+          },
+        ]);
+        await TrackPlayer.play();
+        return;
+      }
+
+      // Lógica padrão para múltiplas músicas
       const currentQueue = await TrackPlayer.getQueue();
       const alreadyQueued = currentQueue.length === allSongs.length;
 
