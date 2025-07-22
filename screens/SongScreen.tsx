@@ -24,6 +24,7 @@ import {useWaveform} from '../hooks/useWaveform';
 import {FontsStyle} from '../styles/FontsStyle';
 import GoBackButton from '../components/GoBackButton';
 import {scaleSize} from '../utils/scale';
+import {AutoMarqueeTitle} from '../components/AutoMarqueeTitle';
 
 const {width} = Dimensions.get('window');
 
@@ -178,7 +179,11 @@ const SongScreen = () => {
                 />
               </View>
 
-              <Text style={FontsStyle.musicTitle}>{track.title}</Text>
+              <AutoMarqueeTitle
+                title={track.title}
+                textStyle={[FontsStyle.musicTitle, {textAlign: 'center'}]}
+              />
+
               <Text style={tw`text-gray-400 text-base mb-6 text-center`}>
                 {track.artist !== '<unknown>' ? track.artist : 'Unknown Artist'}
               </Text>
