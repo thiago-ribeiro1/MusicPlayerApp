@@ -14,7 +14,6 @@ const Wrapper = ({
   return (
     <>
       <View style={[tw`flex-1`, {backgroundColor}, style]}>{children}</View>
-      <StatusBar backgroundColor={backgroundColor} barStyle={'light-content'} />
     </>
   );
 };
