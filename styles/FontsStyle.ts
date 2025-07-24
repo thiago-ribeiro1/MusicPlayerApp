@@ -38,6 +38,7 @@ export const FontsStyle = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     fontFamily: 'ClashGrotesk-Bold',
+    marginTop: 15,
   },
   albumTitle: {
     fontFamily: 'ClashGrotesk-Bold',

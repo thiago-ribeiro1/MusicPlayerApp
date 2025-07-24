@@ -10,6 +10,7 @@ import {
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {FlashList} from '@shopify/flash-list';
 import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
@@ -20,6 +21,7 @@ import {TabsHeader} from '../components/TabsHeader';
 import styles from '../styles/SongsScreenStyle';
 import {FontsStyle} from '../styles/FontsStyle';
 import {SongType} from '../types';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const SongsScreen = () => {
   const navigation = useNavigation<any>();
@@ -30,6 +32,7 @@ const SongsScreen = () => {
   const {songs, loadMoreSongs, isLoading, limitExceeded} = useSongs();
   const [hasShownLimitModal, setHasShownLimitModal] = useState(false);
   const hasDismissedLimitModal = useRef(false);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     loadMoreSongs(); // Carrega os primeiros 10 paginação
@@ -204,83 +207,90 @@ const SongsScreen = () => {
   };
 
   return (
-    <Wrapper backgroundColor="#080809">
-      <View style={styles.container}>
-        <StatusBar backgroundColor="#080809" barStyle="light-content" />
-        <ScrollView contentContainerStyle={{paddingBottom: 100}}>
-          <Header title="Music Player" />
+    <SafeAreaView style={{flex: 1, backgroundColor: '#080809'}} edges={['top']}>
+      <Wrapper backgroundColor="#080809">
+        <View style={[styles.container, {paddingTop: insets.top || 24}]}>
+          <StatusBar backgroundColor="#080809" barStyle="light-content" />
+          <ScrollView contentContainerStyle={{paddingBottom: 100}}>
+            <Header title="Music Player" />
 
-          {/* SearchBar */}
-          <Pressable
-            style={styles.searchSection}
-            onPress={() => navigation.navigate('Search')}>
-            <TextInput
-              style={styles.searchInput}
-              placeholder="search"
-              placeholderTextColor="#A1A1AA"
-              editable={false}
-              value={searchText}
-              onChangeText={handleSearch}
-            />
-          </Pressable>
+            {/* SearchBar */}
+            <Pressable
+              style={styles.searchSection}
+              onPress={() => navigation.navigate('Search')}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder="search"
+                placeholderTextColor="#A1A1AA"
+                editable={false}
+                value={searchText}
+                onChangeText={handleSearch}
+              />
+            </Pressable>
 
-          {/* TabsHeader */}
-          <View style={styles.tabsSection}>
-            <TabsHeader
-              active={activeTab}
-              options={['SONGS', 'ALBUMS', 'FOLDERS']}
-              onSelect={tab => setActiveTab(tab as any)}
-            />
-          </View>
+            {/* TabsHeader */}
+            <View style={styles.tabsSection}>
+              <TabsHeader
+                active={activeTab}
+                options={['SONGS', 'ALBUMS', 'FOLDERS']}
+                onSelect={tab => setActiveTab(tab as any)}
+              />
+            </View>
 
-          {/* Songs list */}
-          {renderContent()}
-        </ScrollView>
-      </View>
-
-      {hasShownLimitModal && (
-        <View
-          style={{
-            position: 'absolute',
-            top: 120,
-            left: 30,
-            right: 30,
-            padding: 20,
-            backgroundColor: '#111827',
-            borderRadius: 12,
-            borderWidth: 1,
-            borderColor: '#1684D9',
-            zIndex: 999,
-            elevation: 10,
-          }}>
-          <Text style={[FontsStyle.limitModalTitle]}>Song limit exceeded</Text>
-          <Text
-            style={{
-              color: '#9CA3AF',
-              fontSize: 14,
-              textAlign: 'center',
-            }}>
-            Only loading 100 songs
-          </Text>
-          <Pressable
-            onPress={() => setHasShownLimitModal(false)}
-            style={{
-              marginTop: 15,
-              backgroundColor: '#1684D9',
-              borderRadius: 8,
-              paddingVertical: 8,
-            }}>
-            <Text
-              style={{color: 'white', textAlign: 'center', fontWeight: 'bold'}}>
-              OK
-            </Text>
-          </Pressable>
+            {/* Songs list */}
+            {renderContent()}
+          </ScrollView>
         </View>
-      )}
 
-      {/* MiniPlayer */}
-      <Player />
-    </Wrapper>
+        {hasShownLimitModal && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 120,
+              left: 30,
+              right: 30,
+              padding: 20,
+              backgroundColor: '#111827',
+              borderRadius: 12,
+              borderWidth: 1,
+              borderColor: '#1684D9',
+              zIndex: 999,
+              elevation: 10,
+            }}>
+            <Text style={[FontsStyle.limitModalTitle]}>
+              Song limit exceeded
+            </Text>
+            <Text
+              style={{
+                color: '#9CA3AF',
+                fontSize: 14,
+                textAlign: 'center',
+              }}>
+              Only loading 100 songs
+            </Text>
+            <Pressable
+              onPress={() => setHasShownLimitModal(false)}
+              style={{
+                marginTop: 15,
+                backgroundColor: '#1684D9',
+                borderRadius: 8,
+                paddingVertical: 8,
+              }}>
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}>
+                OK
+              </Text>
+            </Pressable>
+          </View>
+        )}
+
+        <Player />
+      </Wrapper>
+    </SafeAreaView>
   );
 };
 

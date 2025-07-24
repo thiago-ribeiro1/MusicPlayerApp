@@ -5,6 +5,7 @@ import {SongType} from '../types';
 import SongCard from '../components/SongCard';
 import {FontsStyle} from '../styles/FontsStyle';
 import GoBackButton from '../components/GoBackButton';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 type GroupSongsRouteParams = {
   title: string;
@@ -24,26 +25,34 @@ export default function GroupSongsScreen() {
   });
 
   return (
-    <View style={{flex: 1, backgroundColor: '#080809', padding: 16}}>
-      <StatusBar backgroundColor="#080809" barStyle="light-content" />
+    <SafeAreaView
+      style={{flex: 1, backgroundColor: '#080809'}}
+      edges={['top', 'bottom']}>
+      <View style={{flex: 1, backgroundColor: '#080809', padding: 16}}>
+        <StatusBar backgroundColor="#080809" barStyle="light-content" />
 
-      {/* Go Back */}
-      <View
-        style={{flexDirection: 'row', alignItems: 'center', marginBottom: 10}}>
-        <GoBackButton />
-      </View>
+        {/* Go Back */}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 10,
+          }}>
+          <GoBackButton />
+        </View>
 
-      {/* Conteúdo */}
-      <View style={{marginTop: 12, flex: 1}}>
-        <Text style={FontsStyle.titleGroup}>{title}</Text>
-        <FlatList
-          data={orderedSongs}
-          keyExtractor={(_, index) => index.toString()}
-          renderItem={({item, index}) => (
-            <SongCard song={item} index={index} allSongs={orderedSongs} />
-          )}
-        />
+        {/* Conteúdo */}
+        <View style={{marginTop: 12, flex: 1}}>
+          <Text style={FontsStyle.titleGroup}>{title}</Text>
+          <FlatList
+            data={orderedSongs}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={({item, index}) => (
+              <SongCard song={item} index={index} allSongs={orderedSongs} />
+            )}
+          />
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
