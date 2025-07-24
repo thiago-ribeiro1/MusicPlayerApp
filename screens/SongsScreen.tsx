@@ -207,11 +207,22 @@ const SongsScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#080809'}} edges={['top']}>
-      <Wrapper backgroundColor="#080809">
-        <View style={[styles.container, {paddingTop: insets.top || 24}]}>
-          <StatusBar backgroundColor="#080809" barStyle="light-content" />
-          <ScrollView contentContainerStyle={{paddingBottom: 100}}>
+    <>
+      <StatusBar
+        backgroundColor="#080809"
+        barStyle="light-content"
+        translucent={false}
+      />
+      <SafeAreaView
+        style={{flex: 1, backgroundColor: '#080809'}}
+        edges={['top']}>
+        <Wrapper backgroundColor="#080809">
+          <ScrollView
+            contentContainerStyle={{
+              paddingTop: insets.top,
+              paddingBottom: 100,
+              paddingHorizontal: 20,
+            }}>
             <Header title="Music Player" />
 
             {/* SearchBar */}
@@ -240,57 +251,57 @@ const SongsScreen = () => {
             {/* Songs list */}
             {renderContent()}
           </ScrollView>
-        </View>
 
-        {hasShownLimitModal && (
-          <View
-            style={{
-              position: 'absolute',
-              top: 120,
-              left: 30,
-              right: 30,
-              padding: 20,
-              backgroundColor: '#111827',
-              borderRadius: 12,
-              borderWidth: 1,
-              borderColor: '#1684D9',
-              zIndex: 999,
-              elevation: 10,
-            }}>
-            <Text style={[FontsStyle.limitModalTitle]}>
-              Song limit exceeded
-            </Text>
-            <Text
+          {hasShownLimitModal && (
+            <View
               style={{
-                color: '#9CA3AF',
-                fontSize: 14,
-                textAlign: 'center',
+                position: 'absolute',
+                top: 120,
+                left: 30,
+                right: 30,
+                padding: 20,
+                backgroundColor: '#111827',
+                borderRadius: 12,
+                borderWidth: 1,
+                borderColor: '#1684D9',
+                zIndex: 999,
+                elevation: 10,
               }}>
-              Only loading 100 songs
-            </Text>
-            <Pressable
-              onPress={() => setHasShownLimitModal(false)}
-              style={{
-                marginTop: 15,
-                backgroundColor: '#1684D9',
-                borderRadius: 8,
-                paddingVertical: 8,
-              }}>
+              <Text style={[FontsStyle.limitModalTitle]}>
+                Song limit exceeded
+              </Text>
               <Text
                 style={{
-                  color: 'white',
+                  color: '#9CA3AF',
+                  fontSize: 14,
                   textAlign: 'center',
-                  fontWeight: 'bold',
                 }}>
-                OK
+                Only loading 100 songs
               </Text>
-            </Pressable>
-          </View>
-        )}
+              <Pressable
+                onPress={() => setHasShownLimitModal(false)}
+                style={{
+                  marginTop: 15,
+                  backgroundColor: '#1684D9',
+                  borderRadius: 8,
+                  paddingVertical: 8,
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontWeight: 'bold',
+                  }}>
+                  OK
+                </Text>
+              </Pressable>
+            </View>
+          )}
 
-        <Player />
-      </Wrapper>
-    </SafeAreaView>
+          <Player />
+        </Wrapper>
+      </SafeAreaView>
+    </>
   );
 };
 
