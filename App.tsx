@@ -13,6 +13,10 @@ import StackNavigator from './navigators/StackNavigator';
 import Wrapper from './components/Wrapper';
 import {setupPlayerIfNeeded} from './services/trackPlayerSetup';
 import {setupTrackPlayerService} from './services/track-player.service';
+import {
+  SafeAreaProvider,
+  initialWindowMetrics,
+} from 'react-native-safe-area-context';
 
 const App = () => {
   const [appReady, setAppReady] = useState(false);
@@ -100,9 +104,11 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer>
-      <StackNavigator appReady={appReady} />
-    </NavigationContainer>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+      <NavigationContainer>
+        <StackNavigator appReady={appReady} />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 

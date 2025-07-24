@@ -10,9 +10,8 @@ import {
   Image,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {FlashList} from '@shopify/flash-list';
-import Wrapper from '../components/Wrapper';
 import Header from '../components/Header';
 import SongCard from '../components/SongCard';
 import Player from '../components/Player';
@@ -21,7 +20,6 @@ import {TabsHeader} from '../components/TabsHeader';
 import styles from '../styles/SongsScreenStyle';
 import {FontsStyle} from '../styles/FontsStyle';
 import {SongType} from '../types';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const SongsScreen = () => {
   const navigation = useNavigation<any>();
@@ -208,99 +206,106 @@ const SongsScreen = () => {
 
   return (
     <>
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: insets.top,
+          backgroundColor: '#080809',
+          zIndex: 10,
+        }}
+      />
       <StatusBar
         backgroundColor="#080809"
         barStyle="light-content"
         translucent={false}
       />
-      <SafeAreaView
-        style={{flex: 1, backgroundColor: '#080809'}}
-        edges={['top']}>
-        <Wrapper backgroundColor="#080809">
-          <ScrollView
-            contentContainerStyle={{
-              paddingTop: insets.top,
-              paddingBottom: 100,
-              paddingHorizontal: 20,
+      <View style={{flex: 1, backgroundColor: '#080809'}}>
+        <ScrollView
+          contentContainerStyle={{
+            paddingTop: insets.top,
+            paddingBottom: 100,
+            paddingHorizontal: 20,
+          }}>
+          <Header title="Music Player" />
+
+          {/* SearchBar */}
+          <Pressable
+            style={styles.searchSection}
+            onPress={() => navigation.navigate('Search')}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="search"
+              placeholderTextColor="#A1A1AA"
+              editable={false}
+              value={searchText}
+              onChangeText={handleSearch}
+            />
+          </Pressable>
+
+          {/* TabsHeader */}
+          <View style={styles.tabsSection}>
+            <TabsHeader
+              active={activeTab}
+              options={['SONGS', 'ALBUMS', 'FOLDERS']}
+              onSelect={tab => setActiveTab(tab as any)}
+            />
+          </View>
+
+          {/* Songs list */}
+          {renderContent()}
+        </ScrollView>
+
+        {hasShownLimitModal && (
+          <View
+            style={{
+              position: 'absolute',
+              top: 120,
+              left: 30,
+              right: 30,
+              padding: 20,
+              backgroundColor: '#111827',
+              borderRadius: 12,
+              borderWidth: 1,
+              borderColor: '#1684D9',
+              zIndex: 999,
+              elevation: 10,
             }}>
-            <Header title="Music Player" />
-
-            {/* SearchBar */}
-            <Pressable
-              style={styles.searchSection}
-              onPress={() => navigation.navigate('Search')}>
-              <TextInput
-                style={styles.searchInput}
-                placeholder="search"
-                placeholderTextColor="#A1A1AA"
-                editable={false}
-                value={searchText}
-                onChangeText={handleSearch}
-              />
-            </Pressable>
-
-            {/* TabsHeader */}
-            <View style={styles.tabsSection}>
-              <TabsHeader
-                active={activeTab}
-                options={['SONGS', 'ALBUMS', 'FOLDERS']}
-                onSelect={tab => setActiveTab(tab as any)}
-              />
-            </View>
-
-            {/* Songs list */}
-            {renderContent()}
-          </ScrollView>
-
-          {hasShownLimitModal && (
-            <View
+            <Text style={[FontsStyle.limitModalTitle]}>
+              Song limit exceeded
+            </Text>
+            <Text
               style={{
-                position: 'absolute',
-                top: 120,
-                left: 30,
-                right: 30,
-                padding: 20,
-                backgroundColor: '#111827',
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: '#1684D9',
-                zIndex: 999,
-                elevation: 10,
+                color: '#9CA3AF',
+                fontSize: 14,
+                textAlign: 'center',
               }}>
-              <Text style={[FontsStyle.limitModalTitle]}>
-                Song limit exceeded
-              </Text>
+              Only loading 100 songs
+            </Text>
+            <Pressable
+              onPress={() => setHasShownLimitModal(false)}
+              style={{
+                marginTop: 15,
+                backgroundColor: '#1684D9',
+                borderRadius: 8,
+                paddingVertical: 8,
+              }}>
               <Text
                 style={{
-                  color: '#9CA3AF',
-                  fontSize: 14,
+                  color: 'white',
                   textAlign: 'center',
+                  fontWeight: 'bold',
                 }}>
-                Only loading 100 songs
+                OK
               </Text>
-              <Pressable
-                onPress={() => setHasShownLimitModal(false)}
-                style={{
-                  marginTop: 15,
-                  backgroundColor: '#1684D9',
-                  borderRadius: 8,
-                  paddingVertical: 8,
-                }}>
-                <Text
-                  style={{
-                    color: 'white',
-                    textAlign: 'center',
-                    fontWeight: 'bold',
-                  }}>
-                  OK
-                </Text>
-              </Pressable>
-            </View>
-          )}
+            </Pressable>
+          </View>
+        )}
 
-          <Player />
-        </Wrapper>
-      </SafeAreaView>
+        <Player />
+      </View>
     </>
   );
 };
