@@ -36,7 +36,7 @@ const SettingsScreen = () => {
 
         <View style={tw`px-5 pt-4`}>
           <Text style={tw`text-white text-lg font-medium`}>Music Player</Text>
-          <Text style={tw`text-white text-xs`}>Version 1.0.0</Text>
+          <Text style={tw`text-white text-xs`}>Version 1.0.1</Text>
         </View>
       </Wrapper>
     </SafeAreaView>
