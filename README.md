@@ -52,34 +52,12 @@ Com uma interface moderna e fluida, o usuário pode navegar pelas músicas e ouv
 
 ---
 
-## Como Executar no Android
+## 📄 Observações
 
-### Pré-requisitos:
+Este repositório é disponibilizado **apenas para fins de leitura e análise de código**.  
+Não contém arquivos sensíveis como `keystore.properties` ou `local.properties`, nem outros arquivos privados necessários para compilar e assinar o aplicativo.  
+Por esse motivo, **o projeto não pode ser compilado ou publicado diretamente** a partir deste código.
 
-1. Tenha o ambiente do **React Native CLI** já configurado ([Guia oficial](https://reactnative.dev/docs/environment-setup))  
-2. Use um **dispositivo Android com modo desenvolvedor ativado**  
-3. Habilite a **depuração USB** no celular  
-4. Conecte o aparelho via **cabo USB** ao computador  
-5. Permita a autorização do PC no celular
+O app oficial está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.yotunes.app)
 
-### Passos para executar:
-
-#### 1 - Instale as dependências
-```bash
-npm install
-```
-#### 2 - Executar no dispositivo/emulador
-Este comando:
-- Gera e instala o APK em modo debug
-- Inicia o app no emulador/dispositivo conectado
-- Também inicia o Metro bundler, caso não esteja rodando
-```bash
-npx react-native run-android
-```
-#### Aguarde o carregamento do app no dispositivo
-#### ⚠️ Em caso de erro na build, tente limpar o projeto:
-```bash
-cd android
-./gradlew clean
-```
-
+---
