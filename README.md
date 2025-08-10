@@ -4,9 +4,13 @@ Aplicativo de música para Android desenvolvido com **React Native CLI** e backe
 
 ---
 
-<img width="3500" height="1969" alt="Image" src="https://github.com/user-attachments/assets/b3b5d885-bfd8-4ae3-b8e8-d7d51a5ebdb4" />
+<img width="3500" height="1969" alt="Image" src="https://github.com/user-attachments/assets/b3b5d885-bfd8-4ae3-b8e8-d7d51a5ebdb4" /> <br>
+
+---
 
 O app está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.musicplayerapp&pcampaignid=web_share)
+
+---
 
 ## 📱 Sobre o App
 
