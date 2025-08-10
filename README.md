@@ -6,6 +6,8 @@ Aplicativo de música para Android desenvolvido com **React Native CLI** e backe
 
 <img width="3500" height="1969" alt="Image" src="https://github.com/user-attachments/assets/b3b5d885-bfd8-4ae3-b8e8-d7d51a5ebdb4" />
 
+O app está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.musicplayerapp&pcampaignid=web_share)
+
 ## 📱 Sobre o App
 
 O **Music Player** escaneia automaticamente o armazenamento do dispositivo e carrega todas as músicas locais com metadados reais, incluindo:
@@ -54,10 +56,10 @@ Com uma interface moderna e fluida, o usuário pode navegar pelas músicas e ouv
 
 ## 📄 Observações
 
-Este repositório é disponibilizado **apenas para fins de leitura e análise de código**.  
-Não contém arquivos sensíveis como `keystore.properties` ou `local.properties`, nem outros arquivos privados necessários para compilar e assinar o aplicativo.  
-Por esse motivo, **o projeto não pode ser compilado ou publicado diretamente** a partir deste código.
+Este repositório é disponibilizado **apenas para fins de leitura, análise de código e portfólio**.  
+Não contém arquivos sensíveis, nem outros arquivos privados necessários para compilar e assinar o aplicativo.  
+Por esse motivo, **o projeto não pode ser compilado** a partir deste código.
 
-O app oficial está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.yotunes.app)
+O app oficial está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.musicplayerapp&pcampaignid=web_share)
 
 ---
