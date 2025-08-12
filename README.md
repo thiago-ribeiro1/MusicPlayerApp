@@ -60,7 +60,7 @@ Com uma interface moderna e fluida, o usuário pode navegar pelas músicas e ouv
 
 ## 📄 Observações
 
-Este repositório é disponibilizado **apenas para fins de leitura, análise de código e portfólio**.  
+Este repositório é disponibilizado **apenas para fins de leitura, análise de código, portfólio e backup**.  
 Não contém arquivos sensíveis, nem outros arquivos privados necessários para compilar e assinar o aplicativo.  
 Por esse motivo, **o projeto não pode ser compilado** a partir deste código.
 
