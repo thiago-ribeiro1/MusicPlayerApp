@@ -17,12 +17,22 @@ export default function GroupSongsScreen() {
     useRoute<RouteProp<{params: GroupSongsRouteParams}, 'params'>>();
   const {title, songs} = route.params;
 
-  // Ordenação por trackNumber
-  const orderedSongs = [...songs].sort((a, b) => {
-    if (!a.trackNumber) return 1;
-    if (!b.trackNumber) return -1;
-    return a.trackNumber - b.trackNumber;
-  });
+  // ordenação memorizada (evita recalcular e estabiliza assinatura)
+  const orderedSongs = React.useMemo(() => {
+    const copy = [...songs];
+    copy.sort((a, b) => {
+      if (!a.trackNumber) return 1;
+      if (!b.trackNumber) return -1;
+      return a.trackNumber - b.trackNumber;
+    });
+    return copy;
+  }, [songs]);
+
+  // chave única do grupo atual (força remount da FlatList + evita reaproveitamento errado)
+  const groupKey = React.useMemo(
+    () => `${title}::${orderedSongs.map(s => s.url ?? s.id).join('|')}`,
+    [title, orderedSongs],
+  );
 
   return (
     <SafeAreaView
@@ -45,10 +55,16 @@ export default function GroupSongsScreen() {
         <View style={{marginTop: 12, flex: 1}}>
           <Text style={FontsStyle.titleGroup}>{title}</Text>
           <FlatList
+            key={groupKey}
             data={orderedSongs}
-            keyExtractor={(_, index) => index.toString()}
+            keyExtractor={item => String(item.url ?? item.id)}
             renderItem={({item, index}) => (
-              <SongCard song={item} index={index} allSongs={orderedSongs} />
+              <SongCard
+                song={item}
+                index={index}
+                allSongs={orderedSongs}
+                playContext={{groupKey, list: orderedSongs}}
+              />
             )}
           />
         </View>

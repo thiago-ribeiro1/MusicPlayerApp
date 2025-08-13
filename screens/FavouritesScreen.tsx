@@ -18,6 +18,11 @@ const FavouritesScreen = () => {
   const orderedFavourites = getOrderedSongsByAlbum(favourites);
   const orderedSongs = getOrderedSongsByAlbum(songs);
 
+  const favGroupKey = React.useMemo(
+    () => `favorites::${orderedFavourites.map(s => s.url ?? s.id).join('|')}`,
+    [orderedFavourites],
+  );
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#080809'}} edges={['top']}>
       <Wrapper backgroundColor="#080809">
@@ -31,14 +36,17 @@ const FavouritesScreen = () => {
                 Nothing here
               </Text>
             )}
+
             <FlashList
+              key={favGroupKey}
               data={orderedFavourites}
-              keyExtractor={(_, i) => i.toString()}
-              renderItem={({item}) => (
+              keyExtractor={item => String(item.url ?? item.id)}
+              renderItem={({item, index}) => (
                 <SongCard
                   song={item}
-                  index={orderedSongs.findIndex(song => song.url === item.url)}
-                  allSongs={orderedSongs}
+                  index={index}
+                  allSongs={orderedFavourites}
+                  playContext={{groupKey: favGroupKey, list: orderedFavourites}}
                 />
               )}
               estimatedItemSize={100}

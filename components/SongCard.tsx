@@ -16,14 +16,24 @@ import type {SongType} from '../types';
 import {useFavourties} from '../hooks/useFavourites';
 import {scaleFont, scaleSize} from '../utils/scale';
 
+// garantir file:// quando a capa vier em base64
+import {saveBase64ToFile} from '../services/saveBase64ToFile';
+
+type PlayContext = {
+  groupKey: string;
+  list: SongType[];
+};
+
 const SongCard = ({
   song,
   index,
   allSongs,
+  playContext,
 }: {
   song: SongType;
   index: number;
   allSongs: SongType[];
+  playContext?: PlayContext;
 }) => {
   const {favourites, setFavourites} = useFavourties();
   const activeTrack = useActiveTrack();
@@ -37,19 +47,19 @@ const SongCard = ({
     if (isCurrent && isActuallyPlaying) {
       setTimeout(() => setIsManuallyPlaying(false), 300);
     }
-  }, [activeTrack?.url, playbackState.state]);
+  }, [activeTrack?.url, playbackState.state, song.url]);
 
   const addToFavourites = useCallback(async () => {
     const newFavourites = [...favourites, {...song}];
     await setFavourites(newFavourites);
-  }, [song, favourites]);
+  }, [song, favourites, setFavourites]);
 
   const removeFromFavourites = useCallback(async () => {
     const newFavourites = favourites.filter(
       favourite => favourite.url !== song.url,
     );
     await setFavourites(newFavourites);
-  }, [song, favourites]);
+  }, [song.url, favourites, setFavourites]);
 
   const parseDuration = useCallback((value: number) => {
     const seconds = value / 1000;
@@ -58,53 +68,79 @@ const SongCard = ({
       .padStart(2, '0')}`;
   }, []);
 
+  // resolve artwork seguro (file:// quando base64, ou http/file, senão fallback)
+  const buildTracks = useCallback(async (list: SongType[]) => {
+    return Promise.all(
+      list.map(async s => {
+        let artworkSource: any = require('../assets/song-cover.png');
+        const cover = s.cover;
+
+        if (cover) {
+          if (cover.startsWith('file://') || cover.startsWith('http')) {
+            artworkSource = {uri: cover};
+          } else if (cover.startsWith('data:image')) {
+            const base64 = cover.replace(/^data:image\/\w+;base64,/, '');
+            const uri = await saveBase64ToFile(base64, `${s.id || 'cover'}`);
+            if (uri) artworkSource = {uri};
+          } else {
+            artworkSource = {uri: cover};
+          }
+        }
+
+        return {
+          id: s.id,
+          url: s.url,
+          title: s.title,
+          artist: s.artist,
+          artwork: artworkSource,
+          duration: s.duration,
+        };
+      }),
+    );
+  }, []);
+
   const handlePlay = useCallback(async () => {
     setIsManuallyPlaying(true);
     try {
-      const index = allSongs.findIndex(s => s.url === song.url);
-      if (index === -1) return;
+      const targetList = playContext?.list ?? allSongs;
 
-      // Verifica se só há uma música no grupo (álbum ou pasta)
-      if (allSongs.length === 1) {
+      const idx = targetList.findIndex(s => s.url === song.url);
+      if (idx === -1) return;
+
+      // Lista com 1 música — fila mínima limpa
+      if (targetList.length === 1) {
         await TrackPlayer.reset();
-        await TrackPlayer.add([
-          {
-            id: song.id,
-            url: song.url,
-            title: song.title,
-            artist: song.artist,
-            artwork: song.cover || require('../assets/song-cover.png'),
-            duration: song.duration,
-          },
-        ]);
+        const tracks = await buildTracks([song]);
+        await TrackPlayer.add(tracks);
         await TrackPlayer.play();
         return;
       }
 
-      // Lógica padrão para múltiplas músicas
+      // Verifica fila atual
       const currentQueue = await TrackPlayer.getQueue();
-      const alreadyQueued = currentQueue.length === allSongs.length;
 
-      if (!alreadyQueued) {
-        await TrackPlayer.reset();
-        await TrackPlayer.add(
-          allSongs.map(s => ({
-            id: s.id,
-            url: s.url,
-            title: s.title,
-            artist: s.artist,
-            artwork: s.cover || require('../assets/song-cover.png'),
-            duration: s.duration,
-          })),
-        );
+      // Compara identidade/ordem por URL (não só length)
+      const sameLength = currentQueue.length === targetList.length;
+      let sameIdentity = false;
+
+      if (sameLength) {
+        const currentUrls = currentQueue.map(t => t.url);
+        const targetUrls = targetList.map(t => t.url);
+        sameIdentity = currentUrls.every((u, i) => u === targetUrls[i]);
       }
 
-      await TrackPlayer.skip(index);
+      if (!sameLength || !sameIdentity) {
+        await TrackPlayer.reset();
+        const tracks = await buildTracks(targetList);
+        await TrackPlayer.add(tracks);
+      }
+
+      await TrackPlayer.skip(idx);
       await TrackPlayer.play();
     } catch (error) {
       console.error('Erro ao tocar música:', error);
     }
-  }, [allSongs, song]);
+  }, [allSongs, song, playContext, buildTracks]);
 
   const handlePause = useCallback(async () => {
     await TrackPlayer.pause();
