@@ -28,6 +28,33 @@ import {AutoMarqueeTitle} from '../components/AutoMarqueeTitle';
 
 const {width} = Dimensions.get('window');
 
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const CONTAINER_W = (SCREEN_WIDTH * 11) / 12; // largura Tailwind w-11/12
+
+// Ajustes responsivos
+const GAP_MIN = scaleSize(1);
+const GAP_MAX = scaleSize(6);
+const BAR_MIN = scaleSize(1);
+const BAR_MAX = scaleSize(3);
+const BAR_THIN = scaleSize(2);
+const GAP = scaleSize(2);
+
+// Função para reamostrar o array de forma linear
+function resampleLinear(values: number[], target: number) {
+  if (!values?.length || target <= 0) return [];
+  if (values.length === target) return values.slice();
+  const out: number[] = new Array(target);
+  const last = values.length - 1;
+  for (let i = 0; i < target; i++) {
+    const pos = (i / (target - 1)) * last;
+    const i0 = Math.floor(pos);
+    const i1 = Math.min(last, i0 + 1);
+    const t = pos - i0;
+    out[i] = values[i0] * (1 - t) + values[i1] * t;
+  }
+  return out;
+}
+
 const SongScreen = () => {
   const {songs} = useSongs();
   const activeTrack = useActiveTrack() as SongType;
@@ -48,7 +75,7 @@ const SongScreen = () => {
     return activeTrack || localTrack;
   }, [activeTrack, localTrack, isSwappingQueue]);
 
-  const {waveform} = useWaveform(track?.url);
+  const {waveform} = useWaveform(track?.url, {bars: 180});
 
   const handlePlay = useCallback(async () => {
     await TrackPlayer.play();
@@ -103,15 +130,6 @@ const SongScreen = () => {
       await TrackPlayer.play();
     }
   }, [shuffleMode, songs]);
-
-  const handleSeekTo = useCallback(async (value: number) => {
-    await TrackPlayer.seekTo(value);
-  }, []);
-
-  const handleWaveformPress = async (index: number) => {
-    const position = (index / waveform.length) * (progress.duration || 1);
-    await TrackPlayer.seekTo(position);
-  };
 
   const toggleShuffle = useCallback(() => {
     setShuffleMode(prev => !prev);
@@ -189,25 +207,48 @@ const SongScreen = () => {
               </Text>
 
               <View style={tw`flex-row items-end h-16 w-11/12 justify-center`}>
-                {waveform.map((value, index) => {
-                  const isPlayed =
-                    index <
-                    ((progress.position || 0) / (progress.duration || 1)) *
-                      waveform.length;
-                  return (
-                    <Pressable
-                      key={index}
-                      onPress={() => handleWaveformPress(index)}
-                      style={{
-                        width: 5,
-                        height: 20 + value * 40,
-                        marginHorizontal: 1,
-                        borderRadius: 2,
-                        backgroundColor: isPlayed ? '#40B0EB' : '#ccc',
-                      }}
-                    />
-                  );
-                })}
+                {(() => {
+                  // barras visuais soundwave
+                  const TARGET_BARS = 95;
+
+                  // upsample do array original para TARGET_BARS
+                  const wave = resampleLinear(waveform, TARGET_BARS);
+                  const n = wave.length || 1;
+
+                  // Tenta manter barra fina e ajustar gap
+                  let barWidth = BAR_THIN;
+                  let gap = n > 1 ? (CONTAINER_W - barWidth * n) / (n - 1) : 0;
+
+                  if (!(gap >= GAP_MIN && gap <= GAP_MAX)) {
+                    gap = Math.max(GAP_MIN, Math.min(GAP_MAX, gap));
+                    const totalGaps = gap * Math.max(0, n - 1);
+                    const widthForBars = Math.max(0, CONTAINER_W - totalGaps);
+                    barWidth = n > 0 ? Math.floor(widthForBars / n) : BAR_THIN;
+                    barWidth = Math.max(BAR_MIN, Math.min(BAR_MAX, barWidth));
+                  }
+
+                  return wave.map((value, index) => {
+                    const isPlayed =
+                      index <
+                      ((progress.position || 0) / (progress.duration || 1)) * n;
+
+                    const goTo = ((index + 0.5) / n) * (progress.duration || 0);
+
+                    return (
+                      <Pressable
+                        key={index}
+                        onPress={() => TrackPlayer.seekTo(goTo)} // seek ao tocar na barra
+                        style={{
+                          width: barWidth,
+                          height: scaleSize(20) + value * scaleSize(40),
+                          marginRight: index === n - 1 ? 0 : gap,
+                          borderRadius: scaleSize(2),
+                          backgroundColor: isPlayed ? '#40B0EB' : '#E6E6E6',
+                        }}
+                      />
+                    );
+                  });
+                })()}
               </View>
 
               <View style={tw`flex-row justify-between w-11/12 mt-3 mb-6`}>

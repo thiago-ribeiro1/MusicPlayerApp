@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react';
 import {getWaveform} from '../services/Soundwave';
 
-export function useWaveform(uri?: string | null) {
+type Options = {bars?: number};
+
+export function useWaveform(uri?: string | null, options: Options = {}) {
   const [waveform, setWaveform] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
-
+  const bars = options.bars ?? 160;
   useEffect(() => {
     let mounted = true;
 
@@ -14,27 +16,21 @@ export function useWaveform(uri?: string | null) {
     }
 
     setLoading(true);
-    getWaveform(uri)
+    getWaveform(uri, bars)
       .then(data => {
-        if (mounted) {
-          setWaveform(data);
-        }
+        if (mounted) setWaveform(data);
       })
       .catch(() => {
-        if (mounted) {
-          setWaveform([]);
-        }
+        if (mounted) setWaveform([]);
       })
       .finally(() => {
-        if (mounted) {
-          setLoading(false);
-        }
+        if (mounted) setLoading(false);
       });
 
     return () => {
       mounted = false;
     };
-  }, [uri]);
+  }, [uri, bars]);
 
   return {waveform, loading};
 }
