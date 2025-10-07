@@ -3,13 +3,14 @@ apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
+
 // Loads the keystore properties from a file
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file("../android/keystore.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 } else {
-    throw new GradleException("keystore.properties não encontrado")
+    throw new RuntimeException("keystore.properties não encontrado")
 }
 
 /**
@@ -93,8 +94,8 @@ android {
         applicationId "com.musicplayerapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 4  
-        versionName "1.1.0"
+        versionCode 5 
+        versionName "1.1.5"
     }
     signingConfigs {
         debug {
