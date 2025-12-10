@@ -8,15 +8,19 @@ import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import androidx.core.view.WindowCompat
+
 
 class MainActivity : ReactActivity() {
 
   override fun getMainComponentName(): String = "MusicApp"
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    WindowCompat.setDecorFitsSystemWindows(window, false)
     adjustDensity(this)
     super.onCreate(null)
-  }
+}
+
 
   private fun adjustDensity(activity: Activity, designWidthDp: Float = 360f) {
     val metrics = DisplayMetrics()

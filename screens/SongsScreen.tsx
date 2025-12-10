@@ -206,21 +206,10 @@ const SongsScreen = () => {
 
   return (
     <>
-      <View
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: insets.top,
-          backgroundColor: '#080809',
-          zIndex: 10,
-        }}
-      />
       <StatusBar
-        backgroundColor="#080809"
+        backgroundColor="transparent"
         barStyle="light-content"
-        translucent={false}
+        translucent
       />
       <View style={{flex: 1, backgroundColor: '#080809'}}>
         <ScrollView
