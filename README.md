@@ -1,16 +1,10 @@
 # 🎵 Music Player
 
-Aplicativo de música para Android desenvolvido com **React Native CLI** e backend nativo em **Kotlin**, projetado para quem quer ouvir suas **músicas baixadas diretamente no dispositivo**.
+Aplicativo de música para Android desenvolvido com **React Native CLI** e backend nativo em **Kotlin**, projetado para quem quer ouvir suas **músicas baixadas diretamente no dispositivo**, sem depender de serviços de streaming pagos.
 
 ---
 
-<img width="3500" height="1969" alt="Image" src="https://github.com/user-attachments/assets/b3b5d885-bfd8-4ae3-b8e8-d7d51a5ebdb4" /> <br>
-
----
-
-O app está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.musicplayerapp&pcampaignid=web_share)
-
----
+<img width="3500" height="1969" alt="Image" src="https://github.com/user-attachments/assets/b3b5d885-bfd8-4ae3-b8e8-d7d51a5ebdb4" />
 
 ## 📱 Sobre o App
 
@@ -60,10 +54,10 @@ Com uma interface moderna e fluida, o usuário pode navegar pelas músicas e ouv
 
 ## 📄 Observações
 
-Este repositório é disponibilizado **apenas para fins de leitura, análise de código, portfólio e backup**.  
-Não contém arquivos sensíveis, nem outros arquivos privados necessários para compilar e assinar o aplicativo.  
-Por esse motivo, **o projeto não pode ser compilado** a partir deste código.
+Este repositório é disponibilizado **apenas para fins de leitura e análise de código**.  
+Não contém arquivos sensíveis como `keystore.properties` ou `local.properties`, nem outros arquivos privados necessários para compilar e assinar o aplicativo.  
+Por esse motivo, **o projeto não pode ser compilado ou publicado diretamente** a partir deste código.
 
-O app oficial está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.musicplayerapp&pcampaignid=web_share)
+O app oficial está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.yotunes.app)
 
 ---

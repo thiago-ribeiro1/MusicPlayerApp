@@ -37,10 +37,7 @@ export const useSongs = create<UseSongsType>((set, get) => ({
         let coverPath = '';
         if (song.cover) {
           try {
-            coverPath = await saveBase64ToFile(
-              song.cover.trim(),
-              `${song.id}_${Date.now()}`,
-            );
+            coverPath = await saveBase64ToFile(song.cover.trim(), song.id);
           } catch (err) {
             console.warn(`Erro ao salvar capa da música ${song.title}:`, err);
           }

@@ -5,17 +5,14 @@ import {FlashList} from '@shopify/flash-list';
 import Header from '../components/Header';
 import SongCard from '../components/SongCard';
 import Player from '../components/Player';
-import {useSongs} from '../hooks/useSongs';
 import {useFavourties} from '../hooks/useFavourites';
 import {getOrderedSongsByAlbum} from '../components/orderByAlbum';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const FavouritesScreen = () => {
-  const {songs} = useSongs();
   const {favourites} = useFavourties();
 
   const orderedFavourites = getOrderedSongsByAlbum(favourites);
-  const orderedSongs = getOrderedSongsByAlbum(songs);
 
   const favGroupKey = React.useMemo(
     () => `favorites::${orderedFavourites.map(s => s.url ?? s.id).join('|')}`,
@@ -26,6 +23,19 @@ const FavouritesScreen = () => {
 
   return (
     <>
+      <View
+        pointerEvents="none"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: insets.top + 5,
+          backgroundColor: 'rgba(0,0,0,0.45)',
+          zIndex: 5,
+        }}
+      />
+
       <StatusBar
         backgroundColor="transparent"
         barStyle="light-content"
