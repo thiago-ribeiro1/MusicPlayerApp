@@ -1,19 +1,14 @@
 import {View, Text, Image, Pressable, StyleSheet} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback} from 'react';
 import {
   PlayIcon,
   PauseIcon,
   HeartIcon as FilledHeartIcon,
 } from 'react-native-heroicons/solid';
 import {HeartIcon as EmptyHeartIcon} from 'react-native-heroicons/outline';
-import TrackPlayer, {
-  usePlaybackState,
-  State,
-  useActiveTrack,
-} from 'react-native-track-player';
+import TrackPlayer from 'react-native-track-player';
 import MarqueeView from 'react-native-marquee-view';
 import type {SongType} from '../types';
-import {useFavourties} from '../hooks/useFavourites';
 import {scaleFont, scaleSize} from '../utils/scale';
 
 // garantir file:// quando a capa vier em base64
@@ -24,43 +19,32 @@ type PlayContext = {
   list: SongType[];
 };
 
-const SongCard = ({
-  song,
-  index,
-  allSongs,
-  playContext,
-}: {
+type SongCardProps = {
+  // PROPS PRINCIPAIS PARA CADA ITEM
   song: SongType;
   index: number;
   allSongs: SongType[];
   playContext?: PlayContext;
-}) => {
-  const {favourites, setFavourites} = useFavourties();
-  const activeTrack = useActiveTrack();
-  const playbackState = usePlaybackState();
-  const [isManuallyPlaying, setIsManuallyPlaying] = useState(false);
 
-  useEffect(() => {
-    const isCurrent = song.url === activeTrack?.url;
-    const isActuallyPlaying = playbackState.state === State.Playing;
+  // PERFORMANCE (vem da tela; 1 assinatura por tela, não por item)
+  activeUrl: string | null;
+  isPlaying: boolean;
 
-    if (isCurrent && isActuallyPlaying) {
-      setTimeout(() => setIsManuallyPlaying(false), 300);
-    }
-  }, [activeTrack?.url, playbackState.state, song.url]);
+  // FAVORITOS (não depende de metadados; vem da tela para evitar re-render global)
+  isFavourite: boolean;
+  onToggleFavourite: (song: SongType) => Promise<void> | void;
+};
 
-  const addToFavourites = useCallback(async () => {
-    const newFavourites = [...favourites, {...song}];
-    await setFavourites(newFavourites);
-  }, [song, favourites, setFavourites]);
-
-  const removeFromFavourites = useCallback(async () => {
-    const newFavourites = favourites.filter(
-      favourite => favourite.url !== song.url,
-    );
-    await setFavourites(newFavourites);
-  }, [song.url, favourites, setFavourites]);
-
+const SongCard = ({
+  song,
+  index, // mantido (sem refatorar; pode estar sendo usado em telas)
+  allSongs,
+  playContext,
+  activeUrl,
+  isPlaying,
+  isFavourite,
+  onToggleFavourite,
+}: SongCardProps) => {
   const parseDuration = useCallback((value: number) => {
     const seconds = value / 1000;
     return `${Math.floor(seconds / 60)}:${Math.ceil(seconds % 60)
@@ -100,7 +84,6 @@ const SongCard = ({
   }, []);
 
   const handlePlay = useCallback(async () => {
-    setIsManuallyPlaying(true);
     try {
       const targetList = playContext?.list ?? allSongs;
 
@@ -144,12 +127,11 @@ const SongCard = ({
 
   const handlePause = useCallback(async () => {
     await TrackPlayer.pause();
-    setIsManuallyPlaying(false);
   }, []);
 
-  const isCurrent = song.url === activeTrack?.url;
-  const isPlaying = playbackState.state === State.Playing;
-  const showPauseIcon = isCurrent && (isPlaying || isManuallyPlaying);
+  // PADRAO UNICO (sem timers, sem estado intermediario)
+  const isCurrent = song.url === activeUrl;
+  const showPauseIcon = isCurrent && isPlaying;
 
   return (
     <View style={styles.container}>
@@ -177,13 +159,8 @@ const SongCard = ({
       </View>
 
       <View style={styles.rightSection}>
-        <Pressable
-          onPress={
-            favourites.some(f => f.url === song.url)
-              ? removeFromFavourites
-              : addToFavourites
-          }>
-          {favourites.some(f => f.url === song.url) ? (
+        <Pressable onPress={() => onToggleFavourite(song)}>
+          {isFavourite ? (
             <FilledHeartIcon
               color="white"
               size={scaleSize(22)}
@@ -259,4 +236,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SongCard;
+// PERFORMANCE: memo para render previsivel
+export default React.memo(SongCard, (prev, next) => {
+  return (
+    prev.song.url === next.song.url &&
+    prev.song.title === next.song.title &&
+    prev.song.artist === next.song.artist &&
+    prev.song.cover === next.song.cover &&
+    prev.activeUrl === next.activeUrl &&
+    prev.isPlaying === next.isPlaying &&
+    prev.isFavourite === next.isFavourite
+  );
+});

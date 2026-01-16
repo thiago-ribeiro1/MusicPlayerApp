@@ -9,6 +9,12 @@ import {
   ActivityIndicator,
   Image,
 } from 'react-native';
+import {
+  State,
+  useActiveTrack,
+  usePlaybackState,
+} from 'react-native-track-player';
+import {useFavourties} from '../hooks/useFavourites';
 import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {FlashList} from '@shopify/flash-list';
@@ -31,6 +37,40 @@ const SongsScreen = () => {
   const [hasShownLimitModal, setHasShownLimitModal] = useState(false);
   const hasDismissedLimitModal = useRef(false);
   const insets = useSafeAreaInsets();
+
+  const {favourites, setFavourites} = useFavourties();
+  const favouritesRef = useRef<SongType[]>(favourites);
+  useEffect(() => {
+    favouritesRef.current = favourites;
+  }, [favourites]);
+
+  // 1x por tela (performance)
+  const activeTrack = useActiveTrack();
+  const playbackState = usePlaybackState();
+  const activeUrl = activeTrack?.url ?? null;
+  const isPlaying = playbackState.state === State.Playing;
+
+  // Set de favoritos (rápido e estável)
+  const favSet = React.useMemo(
+    () => new Set(favourites.map(f => f.url)),
+    [favourites],
+  );
+
+  const onToggleFavourite = React.useCallback(
+    async (song: SongType) => {
+      if (!song.url) return;
+
+      const current = favouritesRef.current;
+      const exists = current.some(f => f.url === song.url);
+
+      const next = exists
+        ? current.filter(f => f.url !== song.url)
+        : [...current, song];
+
+      await setFavourites(next);
+    },
+    [setFavourites],
+  );
 
   useEffect(() => {
     loadMoreSongs(); // Carrega os primeiros 10 paginação
@@ -150,6 +190,10 @@ const SongsScreen = () => {
                     song={item}
                     index={index}
                     allSongs={orderedByAlbum}
+                    activeUrl={activeUrl}
+                    isPlaying={isPlaying}
+                    isFavourite={favSet.has(item.url)}
+                    onToggleFavourite={onToggleFavourite}
                   />
                 )}
                 estimatedItemSize={80}
