@@ -1,5 +1,5 @@
 import {View, Text, TextInput} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import tw from 'twrnc';
 import {FlashList} from '@shopify/flash-list';
 import Wrapper from '../components/Wrapper';
@@ -9,12 +9,53 @@ import {FontsStyle} from '../styles/FontsStyle';
 import styles from '../styles/SongsScreenStyle';
 import GoBackButton from '../components/GoBackButton';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {
+  State,
+  useActiveTrack,
+  usePlaybackState,
+} from 'react-native-track-player';
+import {useFavourties} from '../hooks/useFavourites';
+import type {SongType} from '../types';
 
 const SearchScreen = () => {
   const {songs} = useSongs();
 
   const [filteredSongs, setFilteredSongs] = useState(songs);
   const [searchTerm, setSearchTerm] = useState('');
+
+  const {favourites, setFavourites} = useFavourties();
+  const favouritesRef = useRef<SongType[]>(favourites);
+  useEffect(() => {
+    favouritesRef.current = favourites;
+  }, [favourites]);
+
+  // 1x por tela (performance)
+  const activeTrack = useActiveTrack();
+  const playbackState = usePlaybackState();
+  const activeUrl = activeTrack?.url ?? null;
+  const isPlaying = playbackState.state === State.Playing;
+
+  // Set de favoritos (rápido e estável)
+  const favSet = React.useMemo(
+    () => new Set(favourites.map(f => f.url)),
+    [favourites],
+  );
+
+  const onToggleFavourite = React.useCallback(
+    async (song: SongType) => {
+      if (!song.url) return;
+
+      const current = favouritesRef.current;
+      const exists = current.some(f => f.url === song.url);
+
+      const next = exists
+        ? current.filter(f => f.url !== song.url)
+        : [...current, song];
+
+      await setFavourites(next);
+    },
+    [setFavourites],
+  );
 
   const filterSongs = useCallback(() => {
     if (searchTerm === '') {
@@ -65,13 +106,18 @@ const SearchScreen = () => {
 
           <FlashList
             data={filteredSongs}
-            keyExtractor={(_, i) => i.toString()}
+            keyExtractor={item => String(item.url ?? item.id)}
+            extraData={{favourites, activeUrl, isPlaying}} // resolve bug de pressable não atualizar
             renderItem={({item, index}) => {
               return (
                 <SongCard
                   song={item}
                   index={songs.findIndex(song => song.url === item.url)}
                   allSongs={songs}
+                  activeUrl={activeUrl}
+                  isPlaying={isPlaying}
+                  isFavourite={favSet.has(item.url)}
+                  onToggleFavourite={onToggleFavourite}
                 />
               );
             }}

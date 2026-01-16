@@ -13,6 +13,7 @@ export type Song = {
   album?: string;
   folder?: string;
   trackNumber?: number;
+  fileName?: string;
 };
 
 export async function getAllSongs(): Promise<Song[]> {

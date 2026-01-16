@@ -35,9 +35,18 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.ALBUM_ID,
             MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.TRACK
+            MediaStore.Audio.Media.TRACK,
+            MediaStore.Audio.Media.IS_NOTIFICATION,
+            MediaStore.Audio.Media.IS_RINGTONE,
+            MediaStore.Audio.Media.IS_ALARM
         )
-        val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
+        val selection = """
+        ${MediaStore.Audio.Media.DURATION} > 0
+        AND ${MediaStore.Audio.Media.IS_NOTIFICATION} = 0
+        AND ${MediaStore.Audio.Media.IS_RINGTONE} = 0
+        AND ${MediaStore.Audio.Media.IS_ALARM} = 0
+        """.trimIndent().replace("\n", " ")
+
         val cursor: Cursor? = contentResolver.query(uri, projection, selection, null, null)
 
         cursor?.use {
@@ -57,6 +66,8 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 val duration = it.getLong(durationCol)
                 val albumId = it.getLong(albumIdCol)
                 val data = it.getString(dataCol)
+
+                val fileName = File(data).nameWithoutExtension
 
                 // Recupera metadados extras com MediaMetadataRetriever
                 val retriever = MediaMetadataRetriever()
@@ -81,6 +92,9 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 song.putString("folder", folder)
                 song.putInt("trackNumber", trackNumber)
 
+                song.putString("id", songUri.toString())
+                song.putString("fileName", fileName)
+
                 songList.pushMap(song)
             }
         }
@@ -100,9 +114,18 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.DATA,
-            MediaStore.Audio.Media.TRACK
+            MediaStore.Audio.Media.TRACK,
+            MediaStore.Audio.Media.IS_NOTIFICATION,
+            MediaStore.Audio.Media.IS_RINGTONE,
+            MediaStore.Audio.Media.IS_ALARM
         )
-        val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
+        val selection = """
+        ${MediaStore.Audio.Media.DURATION} > 0
+        AND ${MediaStore.Audio.Media.IS_NOTIFICATION} = 0
+        AND ${MediaStore.Audio.Media.IS_RINGTONE} = 0
+        AND ${MediaStore.Audio.Media.IS_ALARM} = 0
+        """.trimIndent().replace("\n", " ")
+
         val sortOrder = "${MediaStore.Audio.Media.DATE_ADDED} DESC"
         val cursor: Cursor? = contentResolver.query(uri, projection, selection, null, sortOrder)
 
@@ -123,6 +146,7 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 val track = it.getInt(it.getColumnIndexOrThrow(MediaStore.Audio.Media.TRACK))
                 val trackNumber = if (track > 0) track % 1000 else 0
                 val songUri = ContentUris.withAppendedId(uri, id)
+                val fileName = File(data).nameWithoutExtension
 
                 // Extra: album e folder
                 val retriever = MediaMetadataRetriever()
@@ -142,6 +166,7 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 song.putString("album", album)
                 song.putString("folder", folder)
                 song.putInt("trackNumber", trackNumber)
+                song.putString("fileName", fileName)
 
                 songList.pushMap(song)
                 count++

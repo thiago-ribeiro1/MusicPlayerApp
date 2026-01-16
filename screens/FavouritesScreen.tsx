@@ -1,16 +1,26 @@
 import {StatusBar, View, Text, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
+import {
+  State,
+  useActiveTrack,
+  usePlaybackState,
+} from 'react-native-track-player';
+import {useFavourties} from '../hooks/useFavourites';
+import type {SongType} from '../types';
 import tw from 'twrnc';
 import {FlashList} from '@shopify/flash-list';
 import Header from '../components/Header';
 import SongCard from '../components/SongCard';
 import Player from '../components/Player';
-import {useFavourties} from '../hooks/useFavourites';
 import {getOrderedSongsByAlbum} from '../components/orderByAlbum';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const FavouritesScreen = () => {
-  const {favourites} = useFavourties();
+  const {favourites, setFavourites} = useFavourties();
+  const favouritesRef = useRef<SongType[]>(favourites);
+  useEffect(() => {
+    favouritesRef.current = favourites;
+  }, [favourites]);
 
   const orderedFavourites = getOrderedSongsByAlbum(favourites);
 
@@ -20,6 +30,34 @@ const FavouritesScreen = () => {
   );
 
   const insets = useSafeAreaInsets();
+
+  // 1x por tela (performance)
+  const activeTrack = useActiveTrack();
+  const playbackState = usePlaybackState();
+  const activeUrl = activeTrack?.url ?? null;
+  const isPlaying = playbackState.state === State.Playing;
+
+  // Set de favoritos (rápido e estável)
+  const favSet = React.useMemo(
+    () => new Set(favourites.map(f => f.url)),
+    [favourites],
+  );
+
+  const onToggleFavourite = React.useCallback(
+    async (song: SongType) => {
+      if (!song.url) return;
+
+      const current = favouritesRef.current;
+      const exists = current.some(f => f.url === song.url);
+
+      const next = exists
+        ? current.filter(f => f.url !== song.url)
+        : [...current, song];
+
+      await setFavourites(next);
+    },
+    [setFavourites],
+  );
 
   return (
     <>
@@ -70,6 +108,10 @@ const FavouritesScreen = () => {
                     groupKey: favGroupKey,
                     list: orderedFavourites,
                   }}
+                  activeUrl={activeUrl}
+                  isPlaying={isPlaying}
+                  isFavourite={favSet.has(item.url)}
+                  onToggleFavourite={onToggleFavourite}
                 />
               )}
               estimatedItemSize={100}

@@ -43,13 +43,37 @@ export const useSongs = create<UseSongsType>((set, get) => ({
           }
         }
 
+        const isMissing = (v?: string | null) => {
+          if (!v) return true;
+          const t = String(v).trim();
+          return (
+            t.length === 0 ||
+            t.toLowerCase() === '<unknown>' ||
+            t.toLowerCase() === 'unknown'
+          );
+        };
+
+        const clean = (v?: string | null) => (v ? String(v).trim() : '');
+
+        const safeAlbum = isMissing(song.album) ? 'Unknown' : clean(song.album);
+        const safeArtist = isMissing(song.artist)
+          ? 'Unknown Artist'
+          : clean(song.artist);
+
+        // title: prefer title válido; senão fileName; senão Unknown
+        const safeTitle = !isMissing(song.title)
+          ? clean(song.title)
+          : !isMissing((song as any).fileName)
+          ? clean((song as any).fileName)
+          : 'Unknown';
+
         return {
           id: song.id,
           url: song.uri,
-          title: song.title || 'Unknown',
-          album: song.album || '',
-          folder: song.folder || '',
-          artist: song.artist || 'Unknown',
+          title: safeTitle,
+          album: safeAlbum,
+          folder: song.folder ? song.folder : '',
+          artist: safeArtist,
           duration: song.duration || 0,
           genre: '',
           cover: coverPath,
