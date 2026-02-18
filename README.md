@@ -63,6 +63,6 @@ Este repositório é disponibilizado **apenas para fins de leitura e análise de
 Não contém arquivos sensíveis como `keystore.properties` ou `local.properties`, nem outros arquivos privados necessários para compilar e assinar o aplicativo.  
 Por esse motivo, **o projeto não pode ser compilado ou publicado diretamente** a partir deste código.
 
-O app oficial está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.yotunes.app)
+O app oficial está disponível na Google Play Store: [**Music Player**](https://play.google.com/store/apps/details?id=com.musicplayerapp)
 
 ---
