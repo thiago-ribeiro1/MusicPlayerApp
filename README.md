@@ -2,7 +2,7 @@
 
 ![Platform](https://img.shields.io/badge/platform-Android-green)
 ![React Native](https://img.shields.io/badge/React%20Native-mobile-blue)
-![Backend](https://img.shields.io/badge/language-Kotlin-7F52FF)
+![Kotlin](https://img.shields.io/badge/language-Kotlin-7F52FF)
 ![Status](https://img.shields.io/badge/status-Active-success)
 
 Aplicativo de música para Android desenvolvido com **React Native CLI** e backend nativo em **Kotlin**, projetado para quem quer ouvir suas **músicas baixadas diretamente no dispositivo**, sem depender de serviços de streaming pagos.
