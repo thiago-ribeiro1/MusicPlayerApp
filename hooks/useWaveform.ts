@@ -1,36 +1,50 @@
 import {useEffect, useState} from 'react';
 import {getWaveform} from '../services/Soundwave';
 
-type Options = {bars?: number};
+type Options = {
+  bars?: number;
+  cacheKey?: string;
+};
 
 export function useWaveform(uri?: string | null, options: Options = {}) {
   const [waveform, setWaveform] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
-  const bars = options.bars ?? 160;
+
+  const bars = options.bars ?? 95;
+  const cacheKey = options.cacheKey ?? '';
+
   useEffect(() => {
     let mounted = true;
 
-    if (!uri) {
+    if (!uri || !cacheKey) {
       setWaveform([]);
+      setLoading(false);
       return;
     }
 
+    setWaveform([]);
     setLoading(true);
-    getWaveform(uri, bars)
+
+    setLoading(true);
+
+    getWaveform(uri, bars, cacheKey)
       .then(data => {
-        if (mounted) setWaveform(data);
+        if (!mounted) return;
+        setWaveform(Array.isArray(data) ? data : []);
       })
       .catch(() => {
-        if (mounted) setWaveform([]);
+        if (!mounted) return;
+        setWaveform([]);
       })
       .finally(() => {
-        if (mounted) setLoading(false);
+        if (!mounted) return;
+        setLoading(false);
       });
 
     return () => {
       mounted = false;
     };
-  }, [uri, bars]);
+  }, [uri, bars, cacheKey]);
 
   return {waveform, loading};
 }

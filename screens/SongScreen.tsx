@@ -25,6 +25,7 @@ import {FontsStyle} from '../styles/FontsStyle';
 import GoBackButton from '../components/GoBackButton';
 import {scaleSize} from '../utils/scale';
 import {AutoMarqueeTitle} from '../components/AutoMarqueeTitle';
+import {buildWaveformCacheKey} from '../utils/waveform';
 
 const {width} = Dimensions.get('window');
 
@@ -38,22 +39,6 @@ const BAR_MIN = scaleSize(1);
 const BAR_MAX = scaleSize(3);
 const BAR_THIN = scaleSize(2);
 const GAP = scaleSize(2);
-
-// Função para reamostrar o array de forma linear
-function resampleLinear(values: number[], target: number) {
-  if (!values?.length || target <= 0) return [];
-  if (values.length === target) return values.slice();
-  const out: number[] = new Array(target);
-  const last = values.length - 1;
-  for (let i = 0; i < target; i++) {
-    const pos = (i / (target - 1)) * last;
-    const i0 = Math.floor(pos);
-    const i1 = Math.min(last, i0 + 1);
-    const t = pos - i0;
-    out[i] = values[i0] * (1 - t) + values[i1] * t;
-  }
-  return out;
-}
 
 const SongScreen = () => {
   const {songs} = useSongs();
@@ -75,7 +60,14 @@ const SongScreen = () => {
     return activeTrack || localTrack;
   }, [activeTrack, localTrack, isSwappingQueue]);
 
-  const {waveform} = useWaveform(track?.url, {bars: 180});
+  const TARGET_BARS = 95;
+  const waveformSource = currentSong ?? track;
+  const waveformCacheKey = buildWaveformCacheKey(waveformSource, TARGET_BARS);
+
+  const {waveform, loading} = useWaveform(track?.url, {
+    bars: TARGET_BARS,
+    cacheKey: waveformCacheKey,
+  });
 
   const handlePlay = useCallback(async () => {
     await TrackPlayer.play();
@@ -209,10 +201,21 @@ const SongScreen = () => {
               <View style={tw`flex-row items-end h-16 w-11/12 justify-center`}>
                 {(() => {
                   // barras visuais soundwave
-                  const TARGET_BARS = 95;
+                  const loadingWave = Array.from(
+                    {length: TARGET_BARS},
+                    () => 0.035,
+                  );
+                  const fallbackWave = Array.from(
+                    {length: TARGET_BARS},
+                    () => 0.12,
+                  );
 
-                  // upsample do array original para TARGET_BARS
-                  const wave = resampleLinear(waveform, TARGET_BARS);
+                  const isRealWaveReady = waveform.length === TARGET_BARS;
+                  const wave = isRealWaveReady
+                    ? waveform
+                    : loading
+                    ? loadingWave
+                    : fallbackWave;
                   const n = wave.length || 1;
 
                   // Tenta manter barra fina e ajustar gap
@@ -234,16 +237,25 @@ const SongScreen = () => {
 
                     const goTo = ((index + 0.5) / n) * (progress.duration || 0);
 
+                    const baseHeight = loading ? scaleSize(6) : scaleSize(20);
+                    const extraHeight = loading
+                      ? value * scaleSize(10)
+                      : value * scaleSize(40);
+
                     return (
                       <Pressable
                         key={index}
-                        onPress={() => TrackPlayer.seekTo(goTo)} // seek ao tocar na barra
+                        onPress={() => TrackPlayer.seekTo(goTo)}
                         style={{
                           width: barWidth,
-                          height: scaleSize(20) + value * scaleSize(40),
+                          height: baseHeight + extraHeight,
                           marginRight: index === n - 1 ? 0 : gap,
                           borderRadius: scaleSize(2),
-                          backgroundColor: isPlayed ? '#40B0EB' : '#E6E6E6',
+                          backgroundColor: isPlayed
+                            ? '#40B0EB'
+                            : loading
+                            ? 'rgba(230,230,230,0.45)'
+                            : '#E6E6E6',
                         }}
                       />
                     );

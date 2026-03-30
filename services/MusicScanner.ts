@@ -14,6 +14,8 @@ export type Song = {
   folder?: string;
   trackNumber?: number;
   fileName?: string;
+  lastModified?: number;
+  fileSize?: number;
 };
 
 export async function getAllSongs(): Promise<Song[]> {

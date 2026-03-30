@@ -35,6 +35,12 @@ export default function SplashScreen() {
               artist: song.artist,
               artwork: song.cover || require('../assets/song-cover.png'),
               duration: song.duration,
+              album: song.album,
+              folder: song.folder,
+              trackNumber: song.trackNumber,
+              lastModified: song.lastModified,
+              fileSize: song.fileSize,
+              cover: song.cover,
             })),
           );
         }

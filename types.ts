@@ -9,4 +9,6 @@ export type SongType = {
   cover: string;
   folder: string;
   trackNumber?: number;
+  lastModified?: number;
+  fileSize?: number;
 };
