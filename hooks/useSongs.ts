@@ -78,6 +78,8 @@ export const useSongs = create<UseSongsType>((set, get) => ({
           genre: '',
           cover: coverPath,
           trackNumber: song.trackNumber || 0,
+          lastModified: song.lastModified || 0,
+          fileSize: song.fileSize || 0,
         };
       }),
     );

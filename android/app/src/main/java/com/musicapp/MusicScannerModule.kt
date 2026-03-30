@@ -69,6 +69,10 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
 
                 val fileName = File(data).nameWithoutExtension
 
+                val file = File(data)
+                val lastModified = file.lastModified()
+                val fileSize = file.length()
+
                 // Recupera metadados extras com MediaMetadataRetriever
                 val retriever = MediaMetadataRetriever()
                 retriever.setDataSource(data)
@@ -94,6 +98,9 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
 
                 song.putString("id", songUri.toString())
                 song.putString("fileName", fileName)
+
+                song.putDouble("lastModified", lastModified.toDouble())
+                song.putDouble("fileSize", fileSize.toDouble())
 
                 songList.pushMap(song)
             }
@@ -148,6 +155,10 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 val songUri = ContentUris.withAppendedId(uri, id)
                 val fileName = File(data).nameWithoutExtension
 
+                val file = File(data)
+                val lastModified = file.lastModified()
+                val fileSize = file.length()
+
                 // Extra: album e folder
                 val retriever = MediaMetadataRetriever()
                 retriever.setDataSource(data)
@@ -167,6 +178,9 @@ class MusicScannerModule(private val reactContext: ReactApplicationContext) :
                 song.putString("folder", folder)
                 song.putInt("trackNumber", trackNumber)
                 song.putString("fileName", fileName)
+
+                song.putDouble("lastModified", lastModified.toDouble())
+                song.putDouble("fileSize", fileSize.toDouble())
 
                 songList.pushMap(song)
                 count++
