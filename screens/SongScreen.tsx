@@ -166,7 +166,7 @@ const SongScreen = () => {
           <View style={tw`absolute w-full h-full bg-black/30`} />
           <Wrapper backgroundColor="transparent">
             <StatusBar
-              backgroundColor="#000"
+              backgroundColor="transparent"
               barStyle="light-content"
               translucent
             />

@@ -5,12 +5,25 @@
         <!-- Mantém o background custom do EditText do RN -->
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
 
+        <!-- Fundo preto antes do React Native renderizar: evita flash cinza/branco
+             por trás da navigation bar transparente na primeira abertura -->
+        <item name="android:windowBackground">@android:color/black</item>
+
+        <!-- Ícones claros (brancos) nas barras desde o primeiro frame -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+
         <!-- Edge-to-edge moderno -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
 
         <!-- Para telas com notch / recortes -->
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+
+        <!-- Android 15 / API 35: impede o sistema de adicionar scrim cinza/preto
+             automático sobre StatusBar e navigation bar (contrast enforcement) -->
+        <item name="android:enforceNavigationBarContrast">false</item>
+        <item name="android:enforceStatusBarContrast">false</item>
     </style>
 
 </resources>

@@ -1,0 +1,599 @@
+diff --git a/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/VirtualView.java b/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/VirtualView.java
+index ad2a1ae..7846906 100644
+--- a/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/VirtualView.java
++++ b/node_modules/react-native-svg/android/src/main/java/com/horcrux/svg/VirtualView.java
+@@ -104,7 +104,7 @@ public abstract class VirtualView extends ReactViewGroup {
+   ArrayList<PathElement> elements;
+   PointerEvents mPointerEvents;
+ 
+-  void setPointerEvents(PointerEvents pointerEvents) {
++  public void setPointerEvents(PointerEvents pointerEvents) {
+     mPointerEvents = pointerEvents;
+   }
+ 
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGCircleManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGCircleManagerDelegate.java
+index da553fe..58a3515 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGCircleManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGCircleManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGCircleManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGCircleManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGCircleManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGCircleManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGCircleManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGClipPathManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGClipPathManagerDelegate.java
+index 4fa1fff..75f9ddc 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGClipPathManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGClipPathManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGClipPathManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGClipPathManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGClipPathManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGClipPathManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGClipPathManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGDefsManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGDefsManagerDelegate.java
+index 69c54d3..b10ffd8 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGDefsManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGDefsManagerDelegate.java
+@@ -9,13 +9,13 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGDefsManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGDefsManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGDefsManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGDefsManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGDefsManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGEllipseManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGEllipseManagerDelegate.java
+index dce4c82..e5ef16b 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGEllipseManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGEllipseManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGEllipseManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGEllipseManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGEllipseManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGEllipseManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGEllipseManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeColorMatrixManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeColorMatrixManagerDelegate.java
+index 4260b9e..63375a9 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeColorMatrixManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeColorMatrixManagerDelegate.java
+@@ -9,14 +9,14 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGFeColorMatrixManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGFeColorMatrixManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGFeColorMatrixManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGFeColorMatrixManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGFeColorMatrixManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeGaussianBlurManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeGaussianBlurManagerDelegate.java
+index f46db4f..b38a45e 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeGaussianBlurManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeGaussianBlurManagerDelegate.java
+@@ -9,13 +9,13 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGFeGaussianBlurManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGFeGaussianBlurManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGFeGaussianBlurManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGFeGaussianBlurManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGFeGaussianBlurManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeMergeManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeMergeManagerDelegate.java
+index 743133a..6d366c5 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeMergeManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeMergeManagerDelegate.java
+@@ -9,14 +9,14 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGFeMergeManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGFeMergeManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGFeMergeManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGFeMergeManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGFeMergeManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeOffsetManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeOffsetManagerDelegate.java
+index 6458442..6de1eae 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeOffsetManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFeOffsetManagerDelegate.java
+@@ -9,13 +9,13 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGFeOffsetManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGFeOffsetManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGFeOffsetManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGFeOffsetManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGFeOffsetManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFilterManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFilterManagerDelegate.java
+index 86d3dd7..cd2fdf7 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFilterManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGFilterManagerDelegate.java
+@@ -9,13 +9,13 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGFilterManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGFilterManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGFilterManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGFilterManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGFilterManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGForeignObjectManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGForeignObjectManagerDelegate.java
+index 14dda57..1cac085 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGForeignObjectManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGForeignObjectManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGForeignObjectManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGForeignObjectManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGForeignObjectManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGForeignObjectManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGForeignObjectManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGGroupManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGGroupManagerDelegate.java
+index 95516fa..21a86e4 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGGroupManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGGroupManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGGroupManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGGroupManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGGroupManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGGroupManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGGroupManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGImageManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGImageManagerDelegate.java
+index 27f537c..414d897 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGImageManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGImageManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGImageManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGImageManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGImageManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGImageManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGImageManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLineManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLineManagerDelegate.java
+index 4455723..47fdbf6 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLineManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLineManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGLineManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGLineManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGLineManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGLineManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGLineManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLinearGradientManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLinearGradientManagerDelegate.java
+index a49f599..c321bbc 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLinearGradientManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGLinearGradientManagerDelegate.java
+@@ -9,14 +9,14 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGLinearGradientManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGLinearGradientManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGLinearGradientManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGLinearGradientManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGLinearGradientManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMarkerManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMarkerManagerDelegate.java
+index 4f8bb57..3586e69 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMarkerManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMarkerManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGMarkerManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGMarkerManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGMarkerManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGMarkerManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGMarkerManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMaskManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMaskManagerDelegate.java
+index 42512da..7fb0d39 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMaskManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGMaskManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGMaskManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGMaskManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGMaskManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGMaskManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGMaskManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPathManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPathManagerDelegate.java
+index b363e94..7ec9a8c 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPathManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPathManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGPathManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGPathManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGPathManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGPathManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGPathManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPatternManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPatternManagerDelegate.java
+index 64a10d7..170039b 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPatternManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGPatternManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGPatternManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGPatternManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGPatternManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGPatternManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGPatternManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRadialGradientManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRadialGradientManagerDelegate.java
+index 5ba3370..6dabf03 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRadialGradientManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRadialGradientManagerDelegate.java
+@@ -9,14 +9,14 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGRadialGradientManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGRadialGradientManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGRadialGradientManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGRadialGradientManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGRadialGradientManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRectManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRectManagerDelegate.java
+index 95e57de..acd6ed9 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRectManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGRectManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGRectManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGRectManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGRectManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGRectManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGRectManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSvgViewAndroidManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSvgViewAndroidManagerDelegate.java
+index 5d8b614..a32abb3 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSvgViewAndroidManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSvgViewAndroidManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.ColorPropConverter;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGSvgViewAndroidManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGSvgViewAndroidManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGSvgViewAndroidManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGSvgViewAndroidManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGSvgViewAndroidManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSymbolManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSymbolManagerDelegate.java
+index 065f1ee..dd035f4 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSymbolManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGSymbolManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGSymbolManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGSymbolManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGSymbolManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGSymbolManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGSymbolManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTSpanManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTSpanManagerDelegate.java
+index d5b854e..c942a06 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTSpanManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTSpanManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGTSpanManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGTSpanManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGTSpanManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGTSpanManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGTSpanManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextManagerDelegate.java
+index b57cf8f..c7efa10 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGTextManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGTextManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGTextManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGTextManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGTextManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextPathManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextPathManagerDelegate.java
+index eec9f0a..68740b6 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextPathManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGTextPathManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGTextPathManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGTextPathManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGTextPathManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGTextPathManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGTextPathManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGUseManagerDelegate.java b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGUseManagerDelegate.java
+index 0f93e59..95d85ae 100644
+--- a/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGUseManagerDelegate.java
++++ b/node_modules/react-native-svg/android/src/paper/java/com/facebook/react/viewmanagers/RNSVGUseManagerDelegate.java
+@@ -9,15 +9,15 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.DynamicFromObject;
+ import com.facebook.react.bridge.ReadableArray;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class RNSVGUseManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & RNSVGUseManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class RNSVGUseManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & RNSVGUseManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public RNSVGUseManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
