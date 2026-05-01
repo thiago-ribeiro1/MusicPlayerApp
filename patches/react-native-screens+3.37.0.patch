@@ -1,0 +1,12 @@
+diff --git a/node_modules/react-native-screens/android/CMakeLists.txt b/node_modules/react-native-screens/android/CMakeLists.txt
+index 1111111..2222222 100644
+--- a/node_modules/react-native-screens/android/CMakeLists.txt
++++ b/node_modules/react-native-screens/android/CMakeLists.txt
+@@ -76,5 +76,7 @@ else()
+     target_link_libraries(rnscreens
+         ReactAndroid::jsi
+         android
+     )
+ endif()
++
++target_link_options(rnscreens PRIVATE "-Wl,-z,max-page-size=16384")

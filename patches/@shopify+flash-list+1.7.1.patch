@@ -1,0 +1,446 @@
+diff --git a/node_modules/@shopify/flash-list/android/.project b/node_modules/@shopify/flash-list/android/.project
+new file mode 100644
+index 0000000..8e08ef9
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/.project
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<projectDescription>
++	<name>shopify_flash-list</name>
++	<comment>Project shopify_flash-list created by Buildship.</comment>
++	<projects>
++	</projects>
++	<buildSpec>
++		<buildCommand>
++			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
++			<arguments>
++			</arguments>
++		</buildCommand>
++	</buildSpec>
++	<natures>
++		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
++	</natures>
++	<filteredResources>
++		<filter>
++			<id>1758309116274</id>
++			<name></name>
++			<type>30</type>
++			<matcher>
++				<id>org.eclipse.core.resources.regexFilterMatcher</id>
++				<arguments>node_modules|\.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
++			</matcher>
++		</filter>
++	</filteredResources>
++</projectDescription>
+diff --git a/node_modules/@shopify/flash-list/android/build/generated/source/buildConfig/debug/com/shopify/reactnative/flash_list/BuildConfig.java b/node_modules/@shopify/flash-list/android/build/generated/source/buildConfig/debug/com/shopify/reactnative/flash_list/BuildConfig.java
+new file mode 100644
+index 0000000..72cb7ad
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/generated/source/buildConfig/debug/com/shopify/reactnative/flash_list/BuildConfig.java
+@@ -0,0 +1,12 @@
++/**
++ * Automatically generated file. DO NOT MODIFY
++ */
++package com.shopify.reactnative.flash_list;
++
++public final class BuildConfig {
++  public static final boolean DEBUG = Boolean.parseBoolean("true");
++  public static final String LIBRARY_PACKAGE_NAME = "com.shopify.reactnative.flash_list";
++  public static final String BUILD_TYPE = "debug";
++  // Field from default config.
++  public static final boolean IS_NEW_ARCHITECTURE_ENABLED = false;
++}
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml b/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+new file mode 100644
+index 0000000..f949dbf
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.shopify.reactnative.flash_list" >
++
++    <uses-sdk android:minSdkVersion="24" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json b/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
+new file mode 100644
+index 0000000..26dc774
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output-metadata.json
+@@ -0,0 +1,18 @@
++{
++  "version": 3,
++  "artifactType": {
++    "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
++    "kind": "Directory"
++  },
++  "applicationId": "com.shopify.reactnative.flash_list",
++  "variantName": "debug",
++  "elements": [
++    {
++      "type": "SINGLE",
++      "filters": [],
++      "attributes": [],
++      "outputFile": "AndroidManifest.xml"
++    }
++  ],
++  "elementType": "File"
++}
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/AndroidManifest.xml b/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/AndroidManifest.xml
+new file mode 100644
+index 0000000..f949dbf
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/AndroidManifest.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.shopify.reactnative.flash_list" >
++
++    <uses-sdk android:minSdkVersion="24" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/output-metadata.json b/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/output-metadata.json
+new file mode 100644
+index 0000000..94f9e03
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/aapt_friendly_merged_manifests/release/processReleaseManifest/aapt/output-metadata.json
+@@ -0,0 +1,18 @@
++{
++  "version": 3,
++  "artifactType": {
++    "type": "AAPT_FRIENDLY_MERGED_MANIFESTS",
++    "kind": "Directory"
++  },
++  "applicationId": "com.shopify.reactnative.flash_list",
++  "variantName": "release",
++  "elements": [
++    {
++      "type": "SINGLE",
++      "filters": [],
++      "attributes": [],
++      "outputFile": "AndroidManifest.xml"
++    }
++  ],
++  "elementType": "File"
++}
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties b/node_modules/@shopify/flash-list/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties
+new file mode 100644
+index 0000000..1211b1e
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/aar_metadata/debug/writeDebugAarMetadata/aar-metadata.properties
+@@ -0,0 +1,6 @@
++aarFormatVersion=1.0
++aarMetadataVersion=1.0
++minCompileSdk=1
++minCompileSdkExtension=0
++minAndroidGradlePluginVersion=1.0.0
++coreLibraryDesugaringEnabled=false
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/aar_metadata/release/writeReleaseAarMetadata/aar-metadata.properties b/node_modules/@shopify/flash-list/android/build/intermediates/aar_metadata/release/writeReleaseAarMetadata/aar-metadata.properties
+new file mode 100644
+index 0000000..1211b1e
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/aar_metadata/release/writeReleaseAarMetadata/aar-metadata.properties
+@@ -0,0 +1,6 @@
++aarFormatVersion=1.0
++aarMetadataVersion=1.0
++minCompileSdk=1
++minCompileSdkExtension=0
++minAndroidGradlePluginVersion=1.0.0
++coreLibraryDesugaringEnabled=false
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json b/node_modules/@shopify/flash-list/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+new file mode 100644
+index 0000000..9e26dfe
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/annotation_processor_list/debug/javaPreCompileDebug/annotationProcessors.json
+@@ -0,0 +1 @@
++{}
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar b/node_modules/@shopify/flash-list/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar
+new file mode 100644
+index 0000000..60f2461
+Binary files /dev/null and b/node_modules/@shopify/flash-list/android/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar differ
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar b/node_modules/@shopify/flash-list/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar
+new file mode 100644
+index 0000000..60f2461
+Binary files /dev/null and b/node_modules/@shopify/flash-list/android/build/intermediates/compile_r_class_jar/release/generateReleaseRFile/R.jar differ
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt b/node_modules/@shopify/flash-list/android/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/compile_symbol_list/release/generateReleaseRFile/R.txt b/node_modules/@shopify/flash-list/android/build/intermediates/compile_symbol_list/release/generateReleaseRFile/R.txt
+new file mode 100644
+index 0000000..e69de29
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+new file mode 100644
+index 0000000..a4fe4a9
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Tue Apr 28 04:32:08 BRT 2026
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+new file mode 100644
+index 0000000..1d828cc
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/debug/packageDebugResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\debug\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\build\generated\res\resValues\debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\build\generated\res\resValues\debug"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/incremental/mergeDebugShaders/merger.xml b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+new file mode 100644
+index 0000000..3a56637
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/mergeDebugShaders/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\debug\shaders"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/incremental/packageDebugAssets/merger.xml b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+new file mode 100644
+index 0000000..d303737
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/packageDebugAssets/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\assets"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\debug\assets"/></dataSet><dataSet config="generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\build\intermediates\shader_assets\debug\compileDebugShaders\out"/></dataSet></merger>
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties
+new file mode 100644
+index 0000000..316f155
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/release/packageReleaseResources/compile-file-map.properties
+@@ -0,0 +1 @@
++#Tue Apr 28 00:45:49 BRT 2026
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/incremental/release/packageReleaseResources/merger.xml b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/release/packageReleaseResources/merger.xml
+new file mode 100644
+index 0000000..0ee385e
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/incremental/release/packageReleaseResources/merger.xml
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="utf-8"?>
++<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\release\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="release" generated-set="release$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\release\res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\build\generated\res\resValues\release"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\build\generated\res\resValues\release"/></dataSet><mergedItems/></merger>
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt b/node_modules/@shopify/flash-list/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+new file mode 100644
+index 0000000..78ac5b8
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt
+@@ -0,0 +1,2 @@
++R_DEF: Internal format may change without notice
++local
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/local_only_symbol_list/release/parseReleaseLocalResources/R-def.txt b/node_modules/@shopify/flash-list/android/build/intermediates/local_only_symbol_list/release/parseReleaseLocalResources/R-def.txt
+new file mode 100644
+index 0000000..78ac5b8
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/local_only_symbol_list/release/parseReleaseLocalResources/R-def.txt
+@@ -0,0 +1,2 @@
++R_DEF: Internal format may change without notice
++local
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt b/node_modules/@shopify/flash-list/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt
+new file mode 100644
+index 0000000..eca08c9
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt
+@@ -0,0 +1,7 @@
++1<?xml version="1.0" encoding="utf-8"?>
++2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++3    package="com.shopify.reactnative.flash_list" >
++4
++5    <uses-sdk android:minSdkVersion="24" />
++6
++7</manifest>
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/manifest_merge_blame_file/release/processReleaseManifest/manifest-merger-blame-release-report.txt b/node_modules/@shopify/flash-list/android/build/intermediates/manifest_merge_blame_file/release/processReleaseManifest/manifest-merger-blame-release-report.txt
+new file mode 100644
+index 0000000..eca08c9
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/manifest_merge_blame_file/release/processReleaseManifest/manifest-merger-blame-release-report.txt
+@@ -0,0 +1,7 @@
++1<?xml version="1.0" encoding="utf-8"?>
++2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++3    package="com.shopify.reactnative.flash_list" >
++4
++5    <uses-sdk android:minSdkVersion="24" />
++6
++7</manifest>
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml b/node_modules/@shopify/flash-list/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
+new file mode 100644
+index 0000000..f949dbf
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.shopify.reactnative.flash_list" >
++
++    <uses-sdk android:minSdkVersion="24" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml b/node_modules/@shopify/flash-list/android/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml
+new file mode 100644
+index 0000000..f949dbf
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/merged_manifest/release/processReleaseManifest/AndroidManifest.xml
+@@ -0,0 +1,7 @@
++<?xml version="1.0" encoding="utf-8"?>
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.shopify.reactnative.flash_list" >
++
++    <uses-sdk android:minSdkVersion="24" />
++
++</manifest>
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json b/node_modules/@shopify/flash-list/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
+new file mode 100644
+index 0000000..0637a08
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/navigation_json/debug/extractDeepLinksDebug/navigation.json
+@@ -0,0 +1 @@
++[]
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/navigation_json/release/extractDeepLinksRelease/navigation.json b/node_modules/@shopify/flash-list/android/build/intermediates/navigation_json/release/extractDeepLinksRelease/navigation.json
+new file mode 100644
+index 0000000..0637a08
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/navigation_json/release/extractDeepLinksRelease/navigation.json
+@@ -0,0 +1 @@
++[]
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt b/node_modules/@shopify/flash-list/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+new file mode 100644
+index 0000000..08f4ebe
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/nested_resources_validation_report/debug/generateDebugResources/nestedResourcesValidationReport.txt
+@@ -0,0 +1 @@
++0 Warning/Error
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/nested_resources_validation_report/release/generateReleaseResources/nestedResourcesValidationReport.txt b/node_modules/@shopify/flash-list/android/build/intermediates/nested_resources_validation_report/release/generateReleaseResources/nestedResourcesValidationReport.txt
+new file mode 100644
+index 0000000..08f4ebe
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/nested_resources_validation_report/release/generateReleaseResources/nestedResourcesValidationReport.txt
+@@ -0,0 +1 @@
++0 Warning/Error
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt b/node_modules/@shopify/flash-list/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+new file mode 100644
+index 0000000..4592df5
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt
+@@ -0,0 +1 @@
++com.shopify.reactnative.flash_list
+diff --git a/node_modules/@shopify/flash-list/android/build/intermediates/symbol_list_with_package_name/release/generateReleaseRFile/package-aware-r.txt b/node_modules/@shopify/flash-list/android/build/intermediates/symbol_list_with_package_name/release/generateReleaseRFile/package-aware-r.txt
+new file mode 100644
+index 0000000..4592df5
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/intermediates/symbol_list_with_package_name/release/generateReleaseRFile/package-aware-r.txt
+@@ -0,0 +1 @@
++com.shopify.reactnative.flash_list
+diff --git a/node_modules/@shopify/flash-list/android/build/kotlin/compileDebugKotlin/cacheable/dirty-sources.txt b/node_modules/@shopify/flash-list/android/build/kotlin/compileDebugKotlin/cacheable/dirty-sources.txt
+new file mode 100644
+index 0000000..a43722a
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/kotlin/compileDebugKotlin/cacheable/dirty-sources.txt
+@@ -0,0 +1,7 @@
++D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\kotlin\com\shopify\reactnative\flash_list\AutoLayoutViewManager.kt
++D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\kotlin\com\shopify\reactnative\flash_list\CellContainerImpl.kt
++D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\kotlin\com\shopify\reactnative\flash_list\FlashListPackage.kt
++D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\kotlin\com\shopify\reactnative\flash_list\AutoLayoutView.kt
++D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\kotlin\com\shopify\reactnative\flash_list\BlankAreaEvent.kt
++D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\kotlin\com\shopify\reactnative\flash_list\CellContainerManager.kt
++D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\kotlin\com\shopify\reactnative\flash_list\AutoLayoutShadow.kt
+\ No newline at end of file
+diff --git a/node_modules/@shopify/flash-list/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin b/node_modules/@shopify/flash-list/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin
+new file mode 100644
+index 0000000..3feb480
+Binary files /dev/null and b/node_modules/@shopify/flash-list/android/build/kotlin/compileDebugKotlin/local-state/build-history.bin differ
+diff --git a/node_modules/@shopify/flash-list/android/build/outputs/logs/manifest-merger-debug-report.txt b/node_modules/@shopify/flash-list/android/build/outputs/logs/manifest-merger-debug-report.txt
+new file mode 100644
+index 0000000..1fdcfbf
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/outputs/logs/manifest-merger-debug-report.txt
+@@ -0,0 +1,17 @@
++-- Merging decision tree log ---
++manifest
++ADDED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml:1:1-3:12
++INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml:1:1-3:12
++	package
++		ADDED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml:2:11-55
++		INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
++	xmlns:android
++		ADDED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml:1:11-69
++uses-sdk
++INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
++INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
++	android:targetSdkVersion
++		INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
++	android:minSdkVersion
++		INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
+diff --git a/node_modules/@shopify/flash-list/android/build/outputs/logs/manifest-merger-release-report.txt b/node_modules/@shopify/flash-list/android/build/outputs/logs/manifest-merger-release-report.txt
+new file mode 100644
+index 0000000..1fdcfbf
+--- /dev/null
++++ b/node_modules/@shopify/flash-list/android/build/outputs/logs/manifest-merger-release-report.txt
+@@ -0,0 +1,17 @@
++-- Merging decision tree log ---
++manifest
++ADDED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml:1:1-3:12
++INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml:1:1-3:12
++	package
++		ADDED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml:2:11-55
++		INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
++	xmlns:android
++		ADDED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml:1:11-69
++uses-sdk
++INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
++INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
++INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
++	android:targetSdkVersion
++		INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
++	android:minSdkVersion
++		INJECTED from D:\Thiago\Music Player App\Music-Player-App\node_modules\@shopify\flash-list\android\src\main\AndroidManifest.xml
+diff --git a/node_modules/@shopify/flash-list/android/src/paper/java/com/facebook/react/viewmanagers/AutoLayoutViewManagerDelegate.java b/node_modules/@shopify/flash-list/android/src/paper/java/com/facebook/react/viewmanagers/AutoLayoutViewManagerDelegate.java
+index 4c90807..fe6c17d 100644
+--- a/node_modules/@shopify/flash-list/android/src/paper/java/com/facebook/react/viewmanagers/AutoLayoutViewManagerDelegate.java
++++ b/node_modules/@shopify/flash-list/android/src/paper/java/com/facebook/react/viewmanagers/AutoLayoutViewManagerDelegate.java
+@@ -9,12 +9,12 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class AutoLayoutViewManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & AutoLayoutViewManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class AutoLayoutViewManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & AutoLayoutViewManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public AutoLayoutViewManagerDelegate(U viewManager) {
+     super(viewManager);
+   }
+diff --git a/node_modules/@shopify/flash-list/android/src/paper/java/com/facebook/react/viewmanagers/CellContainerManagerDelegate.java b/node_modules/@shopify/flash-list/android/src/paper/java/com/facebook/react/viewmanagers/CellContainerManagerDelegate.java
+index 2b64af7..0a2ae4a 100644
+--- a/node_modules/@shopify/flash-list/android/src/paper/java/com/facebook/react/viewmanagers/CellContainerManagerDelegate.java
++++ b/node_modules/@shopify/flash-list/android/src/paper/java/com/facebook/react/viewmanagers/CellContainerManagerDelegate.java
+@@ -9,12 +9,12 @@
+ 
+ package com.facebook.react.viewmanagers;
+ 
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+ 
+-public class CellContainerManagerDelegate<T extends View, U extends BaseViewManagerInterface<T> & CellContainerManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
++public class CellContainerManagerDelegate<T extends ViewGroup, U extends ViewGroupManager<T> & CellContainerManagerInterface<T>> extends BaseViewManagerDelegate<T, U> {
+   public CellContainerManagerDelegate(U viewManager) {
+     super(viewManager);
+   }

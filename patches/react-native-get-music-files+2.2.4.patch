@@ -1,0 +1,31 @@
+diff --git a/node_modules/react-native-get-music-files/android/src/main/java/com/turbosongs/TurboSongsModule.kt b/node_modules/react-native-get-music-files/android/src/main/java/com/turbosongs/TurboSongsModule.kt
+index d8fd4cb..6f49f04 100644
+--- a/node_modules/react-native-get-music-files/android/src/main/java/com/turbosongs/TurboSongsModule.kt
++++ b/node_modules/react-native-get-music-files/android/src/main/java/com/turbosongs/TurboSongsModule.kt
+@@ -100,7 +100,7 @@ class TurboSongsModule internal constructor(context: ReactApplicationContext) :
+       "$selection LIMIT $limit OFFSET $offset", bundleSelection, null
+     )
+
+-    val songList: ArrayList<Any> = createSongCursor(resultSet, options).toArrayList()
++    val songList: ArrayList<Any?> = createSongCursor(resultSet, options).toArrayList()
+
+     // manual sort
+     songList.sortWith(compareBy {
+@@ -210,7 +210,7 @@ class TurboSongsModule internal constructor(context: ReactApplicationContext) :
+       "$selection LIMIT $limit OFFSET $offset", bundleSelection, whereArgs
+     )
+
+-    val songList: ArrayList<Any> = createAlbumCursor(resultSet, options).toArrayList()
++    val songList: ArrayList<Any?> = createAlbumCursor(resultSet, options).toArrayList()
+
+     // manual sort
+     songList.sortWith(compareBy {
+@@ -324,7 +324,7 @@ class TurboSongsModule internal constructor(context: ReactApplicationContext) :
+       "$selection $query LIMIT $limit OFFSET $offset", bundleSelection, whereArgs
+     )
+
+-    val songList: ArrayList<Any> = createSongCursor(resultSet, options).toArrayList()
++    val songList: ArrayList<Any?> = createSongCursor(resultSet, options).toArrayList()
+
+     // manual sort
+     songList.sortWith(compareBy {

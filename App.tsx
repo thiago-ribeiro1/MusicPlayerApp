@@ -1,12 +1,13 @@
 import {
   Text,
+  StatusBar,
   PermissionsAndroid,
   Pressable,
   Alert,
   BackHandler,
   Linking,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import tw from 'twrnc';
 import StackNavigator from './navigators/StackNavigator';
@@ -21,6 +22,8 @@ import {
 const App = () => {
   const [appReady, setAppReady] = useState(false);
   const [permissionDenied, setPermissionDenied] = useState(false);
+  const mountedRef = useRef(true);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const getPermission = useCallback(async () => {
     const permissionStatus = await PermissionsAndroid.check(
@@ -74,32 +77,44 @@ const App = () => {
       console.warn('Erro ao iniciar app:', e);
     }
 
-    setTimeout(() => {
-      setAppReady(true);
+    timerRef.current = setTimeout(() => {
+      if (mountedRef.current) {
+        setAppReady(true);
+      }
     }, 4000);
   }, []);
 
   useEffect(() => {
+    mountedRef.current = true;
     initializeApp();
+    return () => {
+      mountedRef.current = false;
+      if (timerRef.current !== null) {
+        clearTimeout(timerRef.current);
+      }
+    };
   }, []);
 
   if (permissionDenied) {
     return (
-      <Wrapper
-        backgroundColor="#080809"
-        style={tw`items-center justify-center gap-y-6`}>
-        <Text style={tw`text-white-600 text-base font-medium`}>
-          This app needs media permission to work
-        </Text>
-
-        <Pressable
-          onPress={getPermission}
-          style={tw`bg-blue-600 p-4 rounded-xl`}>
-          <Text style={tw`text-white text-base font-medium`}>
-            Give Permission
+      <>
+        <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+        <Wrapper
+          backgroundColor="#080809"
+          style={tw`items-center justify-center gap-y-6`}>
+          <Text style={tw`text-white-600 text-base font-medium`}>
+            This app needs media permission to work
           </Text>
-        </Pressable>
-      </Wrapper>
+
+          <Pressable
+            onPress={getPermission}
+            style={tw`bg-blue-600 p-4 rounded-xl`}>
+            <Text style={tw`text-white text-base font-medium`}>
+              Give Permission
+            </Text>
+          </Pressable>
+        </Wrapper>
+      </>
     );
   }
 

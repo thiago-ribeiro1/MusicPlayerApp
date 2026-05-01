@@ -9,7 +9,7 @@ import type {RemoteDuckEvent} from 'react-native-track-player';
 export async function setupTrackPlayerService() {
   await TrackPlayer.updateOptions({
     android: {
-      appKilledPlaybackBehavior: AppKilledPlaybackBehavior.ContinuePlayback,
+      appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
       alwaysPauseOnInterruption: true,
     },
     capabilities: [

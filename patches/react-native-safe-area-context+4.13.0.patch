@@ -1,0 +1,52 @@
+diff --git a/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaProviderManager.kt b/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaProviderManager.kt
+index 1111111..2222222 100644
+--- a/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaProviderManager.kt
++++ b/node_modules/react-native-safe-area-context/android/src/main/java/com/th3rdwave/safeareacontext/SafeAreaProviderManager.kt
+@@ -11,8 +11,8 @@ import com.facebook.react.viewmanagers.RNCSafeAreaProviderManagerInterface
+ @ReactModule(name = SafeAreaProviderManager.REACT_CLASS)
+ class SafeAreaProviderManager :
+     ViewGroupManager<SafeAreaProvider>(), RNCSafeAreaProviderManagerInterface<SafeAreaProvider> {
+-  private val mDelegate = RNCSafeAreaProviderManagerDelegate(this)
++  private val mDelegate = RNCSafeAreaProviderManagerDelegate<SafeAreaProvider, SafeAreaProviderManager>(this)
+
+-  override fun getDelegate() = mDelegate
++  override fun getDelegate(): RNCSafeAreaProviderManagerDelegate<SafeAreaProvider, SafeAreaProviderManager> = mDelegate
+
+   override fun getName() = REACT_CLASS
+diff --git a/node_modules/react-native-safe-area-context/android/src/paper/java/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerDelegate.java b/node_modules/react-native-safe-area-context/android/src/paper/java/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerDelegate.java
+index 3333333..4444444 100644
+--- a/node_modules/react-native-safe-area-context/android/src/paper/java/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerDelegate.java
++++ b/node_modules/react-native-safe-area-context/android/src/paper/java/com/facebook/react/viewmanagers/RNCSafeAreaProviderManagerDelegate.java
+@@ -10,10 +10,10 @@ package com.facebook.react.viewmanagers;
+
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+
+ public class RNCSafeAreaProviderManagerDelegate<
+-        T extends View,
+-        U extends BaseViewManagerInterface<T> & RNCSafeAreaProviderManagerInterface<T>>
++        T extends ViewGroup,
++        U extends ViewGroupManager<T> & RNCSafeAreaProviderManagerInterface<T>>
+     extends BaseViewManagerDelegate<T, U> {
+diff --git a/node_modules/react-native-safe-area-context/android/src/paper/java/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerDelegate.java b/node_modules/react-native-safe-area-context/android/src/paper/java/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerDelegate.java
+index 5555555..6666666 100644
+--- a/node_modules/react-native-safe-area-context/android/src/paper/java/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerDelegate.java
++++ b/node_modules/react-native-safe-area-context/android/src/paper/java/com/facebook/react/viewmanagers/RNCSafeAreaViewManagerDelegate.java
+@@ -10,10 +10,10 @@ package com.facebook.react.viewmanagers;
+
+-import android.view.View;
++import android.view.ViewGroup;
+ import androidx.annotation.Nullable;
+ import com.facebook.react.bridge.ReadableMap;
+ import com.facebook.react.uimanager.BaseViewManagerDelegate;
+-import com.facebook.react.uimanager.BaseViewManagerInterface;
++import com.facebook.react.uimanager.ViewGroupManager;
+
+ public class RNCSafeAreaViewManagerDelegate<
+-        T extends View, U extends BaseViewManagerInterface<T> & RNCSafeAreaViewManagerInterface<T>>
++        T extends ViewGroup, U extends ViewGroupManager<T> & RNCSafeAreaViewManagerInterface<T>>
+     extends BaseViewManagerDelegate<T, U> {

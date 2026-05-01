@@ -12,21 +12,24 @@ const SPLASH_VIDEO = require('../assets/MusicPlayer_Motion_FX.mp4');
 
 export default function SplashScreen() {
   const navigation = useNavigation();
-  const {width, height} = useResponsiveScale();
   const {loadMoreSongs} = useSongs();
+  const {width, height} = useResponsiveScale();
   const {getFavourites} = useFavourties();
 
   const [initDone, setInitDone] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
   const navigatedRef = useRef(false);
 
   useEffect(() => {
+    let cancelled = false;
+
     (async () => {
       try {
         const res = await loadMoreSongs();
+        if (cancelled) return;
         if (res.length > 0) {
           getFavourites();
           await TrackPlayer.reset();
+          if (cancelled) return;
           await TrackPlayer.add(
             res.map(song => ({
               id: song.id,
@@ -47,34 +50,41 @@ export default function SplashScreen() {
       } catch {
         // erro não deve travar a splash
       } finally {
-        setInitDone(true);
+        if (!cancelled) {
+          setInitDone(true);
+        }
       }
     })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [getFavourites, loadMoreSongs]);
 
   useEffect(() => {
-    if (initDone && videoReady && !navigatedRef.current) {
+    if (initDone && !navigatedRef.current) {
       navigatedRef.current = true;
       // @ts-ignore
       navigation.replace('Tabs');
     }
-  }, [initDone, videoReady, navigation]);
+  }, [initDone, navigation]);
 
   return (
     <View style={[styles.container, {width, height}]}>
-      <StatusBar backgroundColor="#0F0817" barStyle="light-content" />
+      <StatusBar
+        backgroundColor="transparent"
+        barStyle="light-content"
+        translucent
+      />
       <Video
         source={SPLASH_VIDEO}
-        style={StyleSheet.absoluteFillObject} // ocupa toda a tela
+        style={{width, height}}
         resizeMode="cover"
         repeat
         muted
         controls={false}
         paused={false}
-        ignoreSilentSwitch="obey"
         playWhenInactive={false}
-        onReadyForDisplay={() => setVideoReady(true)}
-        onError={() => setVideoReady(true)}
       />
     </View>
   );
@@ -83,6 +93,7 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0F0817',
+    backgroundColor: '#080809',
+    overflow: 'hidden',
   },
 });

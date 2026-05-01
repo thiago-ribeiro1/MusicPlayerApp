@@ -89,13 +89,13 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.musicapp"
+    namespace "com.musicplayerapp"
     defaultConfig {
         applicationId "com.musicplayerapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "2.5.0"
+        versionCode 11
+        versionName "2.8.1"
     }
     signingConfigs {
         debug {
