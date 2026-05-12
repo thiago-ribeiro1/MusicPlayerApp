@@ -7,7 +7,7 @@
 
 Aplicativo de música para Android desenvolvido com **React Native CLI** e backend nativo em **Kotlin**, projetado para quem quer ouvir suas **músicas baixadas diretamente no dispositivo**, sem depender de serviços de streaming pagos.
 
-O app oficial está disponível na Google Play Store: [**Play Store**](https://play.google.com/store/apps/details?id=com.musicplayerapp)
+O app oficial está disponível na Google Play Store: [**Baixe Aqui**](https://play.google.com/store/apps/details?id=com.musicplayerapp)
 
 ---
 
