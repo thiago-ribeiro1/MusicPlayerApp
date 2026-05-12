@@ -6,7 +6,6 @@ import {
   TextInput,
   Pressable,
   StatusBar,
-  ActivityIndicator,
   Image,
 } from 'react-native';
 import {
@@ -22,6 +21,7 @@ import Header from '../components/Header';
 import SongCard from '../components/SongCard';
 import Player from '../components/Player';
 import {useSongs} from '../hooks/useSongs';
+import {SongCardSkeletonList} from '../components/SongCardSkeleton';
 import {TabsHeader} from '../components/TabsHeader';
 import styles from '../styles/SongsScreenStyle';
 import {FontsStyle} from '../styles/FontsStyle';
@@ -179,7 +179,9 @@ const SongsScreen = () => {
       case 'SONGS':
         return (
           <View style={styles.listContainer}>
-            {songs.length === 0 ? (
+            {songs.length === 0 && isLoading ? (
+              <SongCardSkeletonList count={7} />
+            ) : songs.length === 0 ? (
               <Text style={styles.placeholderText}>Nothing here</Text>
             ) : (
               <FlashList
@@ -201,13 +203,7 @@ const SongsScreen = () => {
                 onEndReached={loadMoreSongs}
                 onEndReachedThreshold={0.5}
                 ListFooterComponent={
-                  isLoading ? (
-                    <ActivityIndicator
-                      size="small"
-                      color="#aaa"
-                      style={{marginTop: 10}}
-                    />
-                  ) : null
+                  isLoading ? <SongCardSkeletonList count={4} /> : null
                 }
                 contentContainerStyle={{paddingBottom: 20}}
               />

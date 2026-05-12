@@ -50,13 +50,12 @@ const Header = ({
   }, [activeTrack, favourites]);
   return (
     <View style={tw`flex-row px-5 justify-between items-center pt-2`}>
-      {showBackButton ? (
+      {showBackButton && (
         <View style={{position: 'absolute', top: 48, left: 20, zIndex: 10}}>
           <GoBackButton />
         </View>
-      ) : (
-        <Text style={FontsStyle.headerTitle}>{title}</Text>
       )}
+      {title && <Text style={FontsStyle.headerTitle}>{title}</Text>}
 
       <View style={tw`flex-row gap-x-4 items-center`}>
         {showFavouritesButton && (

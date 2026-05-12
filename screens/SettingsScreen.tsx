@@ -19,7 +19,16 @@ const SettingsScreen = () => {
       <Wrapper backgroundColor="#080809">
         <Header showBackButton />
 
-        <Text style={FontsStyle.settingsTitle}>Settings</Text>
+        <Text
+          style={{
+            paddingTop: 16,
+            color: '#FFFFFF',
+            fontSize: 22,
+            fontFamily: 'ClashGrotesk-Bold',
+            textAlign: 'center',
+          }}>
+          Settings
+        </Text>
 
         <View style={tw`pt-7`}>
           <View style={tw`pb-4 flex-row justify-between items-center px-5`}>
@@ -36,7 +45,7 @@ const SettingsScreen = () => {
 
         <View style={tw`px-5 pt-4`}>
           <Text style={tw`text-white text-lg font-medium`}>Music Player</Text>
-          <Text style={tw`text-white text-xs`}>Version 2.8.1</Text>
+          <Text style={tw`text-white text-xs`}>Version 2.9.0</Text>
         </View>
       </Wrapper>
     </SafeAreaView>
