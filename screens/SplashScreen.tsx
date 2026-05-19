@@ -8,7 +8,7 @@ import {useSongs} from '../hooks/useSongs';
 import {useFavourties} from '../hooks/useFavourites';
 import {useResponsiveScale} from '../utils/scale';
 
-const SPLASH_VIDEO = require('../assets/MusicPlayer_Motion_FX.mp4');
+const SPLASH_VIDEO = require('../assets/Video_SplashScreen.mp4');
 
 export default function SplashScreen() {
   const navigation = useNavigation();

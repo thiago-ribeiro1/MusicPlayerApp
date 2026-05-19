@@ -94,8 +94,8 @@ android {
         applicationId "com.musicplayerapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 12
-        versionName "2.9.0"
+        versionCode 13
+        versionName "3.0.0"
     }
     signingConfigs {
         debug {
