@@ -7,6 +7,7 @@ import {
   Dimensions,
   StatusBar,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import TrackPlayer, {
   useActiveTrack,
@@ -31,6 +32,10 @@ const {width} = Dimensions.get('window');
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const CONTAINER_W = (SCREEN_WIDTH * 11) / 12; // largura Tailwind w-11/12
+
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+const IS_TABLET = SCREEN_HEIGHT > 900;
+const COVER_SIZE = IS_TABLET ? scaleSize(150) : scaleSize(260); // se for tablet usa 150, se não 260
 
 // Ajustes responsivos
 const GAP_MIN = scaleSize(1);
@@ -174,7 +179,15 @@ const SongScreen = () => {
               <GoBackButton />
             </View>
 
-            <View style={tw`flex-1 items-center justify-start mt-28`}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              scrollEnabled={true}
+              overScrollMode="always"
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={[
+                tw`items-center justify-start pb-8`,
+                {marginTop: IS_TABLET ? 16 : 112}, // 112 = mt-28 em px
+              ]}>
               <View style={styles.coverWrapper}>
                 <Image
                   source={
@@ -272,46 +285,94 @@ const SongScreen = () => {
                 </Text>
               </View>
 
-              <View style={tw`flex-row items-center justify-around w-11/12`}>
-                <Pressable onPress={toggleShuffle}>
+              <View style={styles.playerControls}>
+                <Pressable
+                  onPress={toggleRepeat}
+                  android_ripple={{color: 'transparent', borderless: false}}
+                  style={({pressed}) => [
+                    styles.sideControlButton,
+                    repeatMode && styles.sideControlActive,
+                    pressed && styles.controlPressed,
+                  ]}>
                   <Ionicons
-                    name="shuffle"
+                    name="repeat"
                     size={28}
-                    color={shuffleMode ? '#1684D9' : 'white'}
+                    color={repeatMode ? '#22C7FF' : '#FFFFFF'}
                   />
                 </Pressable>
-                <Pressable onPress={handleSkipToPrevious}>
-                  <Ionicons name="play-skip-back" size={28} color="white" />
+
+                <Pressable
+                  onPress={handleSkipToPrevious}
+                  android_ripple={{color: 'transparent', borderless: false}}
+                  style={({pressed}) => [
+                    styles.sideControlButton,
+                    pressed && styles.controlPressed,
+                  ]}>
+                  <Ionicons name="play-skip-back" size={28} color="#FFFFFF" />
                 </Pressable>
+
                 <Pressable
                   onPress={
                     playbackState.state === State.Playing
                       ? handlePause
                       : handlePlay
-                  }>
-                  <View
-                    style={tw`w-16 h-16 rounded-full bg-blue-500 items-center justify-center`}>
-                    <Ionicons
-                      name={
-                        playbackState.state === State.Playing ? 'pause' : 'play'
-                      }
-                      size={36}
-                      color="white"
-                    />
+                  }
+                  style={({pressed}) => [
+                    styles.mainControlButton,
+                    pressed && styles.mainControlPressed,
+                  ]}>
+                  <View style={styles.mainControlRingOne}>
+                    <View style={styles.mainControlRingTwo}>
+                      <View style={styles.mainControlInner}>
+                        <Ionicons
+                          name={
+                            playbackState.state === State.Playing
+                              ? 'pause'
+                              : 'play'
+                          }
+                          size={36}
+                          color="#FFFFFF"
+                          style={
+                            playbackState.state === State.Playing
+                              ? undefined
+                              : styles.playIconFix
+                          }
+                        />
+                      </View>
+                    </View>
                   </View>
                 </Pressable>
-                <Pressable onPress={handleSkipToNext}>
-                  <Ionicons name="play-skip-forward" size={28} color="white" />
-                </Pressable>
-                <Pressable onPress={toggleRepeat}>
+
+                <Pressable
+                  onPress={handleSkipToNext}
+                  android_ripple={{color: 'transparent', borderless: false}}
+                  style={({pressed}) => [
+                    styles.sideControlButton,
+                    pressed && styles.controlPressed,
+                  ]}>
                   <Ionicons
-                    name="repeat"
+                    name="play-skip-forward"
                     size={28}
-                    color={repeatMode ? '#1684D9' : 'white'}
+                    color="#FFFFFF"
+                  />
+                </Pressable>
+
+                <Pressable
+                  onPress={toggleShuffle}
+                  android_ripple={{color: 'transparent', borderless: false}}
+                  style={({pressed}) => [
+                    styles.sideControlButton,
+                    shuffleMode && styles.sideControlActive,
+                    pressed && styles.controlPressed,
+                  ]}>
+                  <Ionicons
+                    name="shuffle"
+                    size={28}
+                    color={shuffleMode ? '#22C7FF' : '#FFFFFF'}
                   />
                 </Pressable>
               </View>
-            </View>
+            </ScrollView>
           </Wrapper>
         </>
       ) : (
@@ -325,8 +386,8 @@ const SongScreen = () => {
 
 const styles = StyleSheet.create({
   coverWrapper: {
-    width: scaleSize(260),
-    height: scaleSize(260),
+    width: COVER_SIZE,
+    height: COVER_SIZE,
     borderRadius: scaleSize(24),
     overflow: 'hidden',
     borderWidth: 1,
@@ -337,6 +398,111 @@ const styles = StyleSheet.create({
   coverImage: {
     width: '100%',
     height: '100%',
+  },
+
+  playerControls: {
+    width: '91.666667%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    alignSelf: 'center',
+  },
+
+  sideControlButton: {
+    width: scaleSize(58),
+    height: scaleSize(58),
+    borderRadius: scaleSize(22),
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    backgroundColor: 'rgba(255,255,255,0.10)',
+
+    borderWidth: scaleSize(1.5),
+    borderColor: 'rgba(210,240,255,0.42)',
+
+    shadowColor: '#000000',
+    shadowOffset: {
+      width: 0,
+      height: scaleSize(8),
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: scaleSize(12),
+  },
+
+  sideControlActive: {
+    backgroundColor: 'rgba(34,199,255,0.16)',
+    borderColor: '#22C7FF',
+  },
+
+  mainControlButton: {
+    width: scaleSize(72),
+    height: scaleSize(72),
+    borderRadius: scaleSize(36),
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    backgroundColor: 'transparent',
+
+    shadowColor: '#18BFFF',
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.72,
+    shadowRadius: scaleSize(16),
+  },
+
+  mainControlRingOne: {
+    width: scaleSize(72),
+    height: scaleSize(72),
+    borderRadius: scaleSize(36),
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    backgroundColor: 'rgba(30,190,255,0.10)',
+
+    borderWidth: scaleSize(3),
+    borderColor: '#21C6FF',
+  },
+
+  mainControlRingTwo: {
+    width: scaleSize(62),
+    height: scaleSize(62),
+    borderRadius: scaleSize(31),
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    backgroundColor: 'rgba(255,255,255,0.05)',
+
+    borderWidth: scaleSize(2),
+    borderColor: 'rgba(95,215,255,0.72)',
+  },
+
+  mainControlInner: {
+    width: scaleSize(50),
+    height: scaleSize(50),
+    borderRadius: scaleSize(25),
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    backgroundColor: 'rgba(20,35,50,0.32)',
+
+    borderWidth: scaleSize(1),
+    borderColor: 'rgba(255,255,255,0.16)',
+  },
+
+  playIconFix: {
+    marginLeft: scaleSize(3),
+  },
+
+  controlPressed: {
+    transform: [{scale: 0.94}],
+    opacity: 0.9,
+  },
+
+  mainControlPressed: {
+    transform: [{scale: 0.93}],
+    opacity: 0.92,
   },
 });
 
