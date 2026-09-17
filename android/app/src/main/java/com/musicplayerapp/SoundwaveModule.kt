@@ -27,9 +27,9 @@ class SoundwaveModule(
   override fun getName(): String = "Soundwave"
 
   override fun onCatalystInstanceDestroy() {
-      super.onCatalystInstanceDestroy()
-      executor.shutdownNow()
-    }
+    super.onCatalystInstanceDestroy()
+    executor.shutdownNow()
+  }
 
   @ReactMethod
   fun getWaveform(uriString: String, bars: Int, cacheKey: String, promise: Promise) {

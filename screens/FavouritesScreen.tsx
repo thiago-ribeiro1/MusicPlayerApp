@@ -11,7 +11,9 @@ import tw from 'twrnc';
 import {FlashList} from '@shopify/flash-list';
 import Header from '../components/Header';
 import SongCard from '../components/SongCard';
-import Player from '../components/Player';
+import TabBarAwarePlayer from '../components/TabBarAwarePlayer';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {useTabBarScroll} from '../hooks/useTabBarScroll';
 import {getOrderedSongsByAlbum} from '../components/orderByAlbum';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -23,6 +25,9 @@ const FavouritesScreen = () => {
   }, [favourites]);
 
   const orderedFavourites = getOrderedSongsByAlbum(favourites);
+
+  const tabBarHeight = useBottomTabBarHeight();
+  const tabBarScroll = useTabBarScroll();
 
   const favGroupKey = React.useMemo(
     () => `favorites::${orderedFavourites.map(s => s.url ?? s.id).join('|')}`,
@@ -74,16 +79,13 @@ const FavouritesScreen = () => {
         }}
       />
 
-      <StatusBar
-        backgroundColor="transparent"
-        barStyle="light-content"
-        translucent
-      />
+      <StatusBar barStyle="light-content" translucent />
       <View style={{flex: 1, backgroundColor: '#080809'}}>
         <ScrollView
+          {...tabBarScroll}
           contentContainerStyle={{
             paddingTop: insets.top,
-            paddingBottom: 80,
+            paddingBottom: 80 + tabBarHeight,
           }}>
           <Header title="Favorites" />
 
@@ -118,7 +120,7 @@ const FavouritesScreen = () => {
             />
           </View>
         </ScrollView>
-        <Player />
+        <TabBarAwarePlayer />
       </View>
     </>
   );

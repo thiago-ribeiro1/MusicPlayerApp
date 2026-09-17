@@ -28,8 +28,6 @@ import {scaleSize} from '../utils/scale';
 import {AutoMarqueeTitle} from '../components/AutoMarqueeTitle';
 import {buildWaveformCacheKey} from '../utils/waveform';
 
-const {width} = Dimensions.get('window');
-
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const CONTAINER_W = (SCREEN_WIDTH * 11) / 12; // largura Tailwind w-11/12
 
@@ -43,7 +41,6 @@ const GAP_MAX = scaleSize(6);
 const BAR_MIN = scaleSize(1);
 const BAR_MAX = scaleSize(3);
 const BAR_THIN = scaleSize(2);
-const GAP = scaleSize(2);
 
 const SongScreen = () => {
   const {songs} = useSongs();
@@ -58,7 +55,7 @@ const SongScreen = () => {
   const [localTrack, setLocalTrack] = useState<SongType | null>(null);
   const [shuffleMode, setShuffleMode] = useState(false);
   const [repeatMode, setRepeatMode] = useState(false);
-  const [isSwappingQueue, setIsSwappingQueue] = useState(false);
+  const [isSwappingQueue] = useState(false);
 
   const track = useMemo(() => {
     if (isSwappingQueue && localTrack) return localTrack;

@@ -1,10 +1,9 @@
 import {Dimensions, PixelRatio, useWindowDimensions} from 'react-native';
 
-// Base usada no design (ex: Galaxy S20/S24)
 const BASE_WIDTH = 360;
 const BASE_HEIGHT = 800;
 
-const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get('window');
+const {width: SCREEN_WIDTH} = Dimensions.get('window');
 
 export function scaleSize(size: number) {
   return (SCREEN_WIDTH / BASE_WIDTH) * size;

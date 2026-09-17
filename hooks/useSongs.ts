@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {getSongsPaginated, Song as NativeSong} from '../services/MusicScanner';
+import {getSongsPaginated} from '../services/MusicScanner';
 import type {SongType} from '../types';
 import {saveBase64ToFile} from '../services/saveBase64ToFile';
 

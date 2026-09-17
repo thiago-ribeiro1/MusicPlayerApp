@@ -98,7 +98,11 @@ const App = () => {
   if (permissionDenied) {
     return (
       <>
-        <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle="light-content"
+        />
         <Wrapper
           backgroundColor="#080809"
           style={tw`items-center justify-center gap-y-6`}>

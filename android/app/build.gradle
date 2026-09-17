@@ -94,8 +94,8 @@ android {
         applicationId "com.musicplayerapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "3.2.0"
+        versionCode 16
+        versionName "3.3.0"
     }
     signingConfigs {
         debug {
@@ -134,8 +134,8 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
-    // Edge-to-edge / WindowCompat (se der erro de classe não encontrada)
     implementation "androidx.core:core-ktx:1.12.0"
+    implementation "androidx.activity:activity:1.10.1"
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

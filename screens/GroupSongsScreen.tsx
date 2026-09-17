@@ -79,7 +79,7 @@ export default function GroupSongsScreen() {
       style={{flex: 1, backgroundColor: '#080809'}}
       edges={['top', 'bottom']}>
       <View style={{flex: 1, backgroundColor: '#080809', padding: 16}}>
-        <StatusBar backgroundColor="#080809" barStyle="light-content" />
+        <StatusBar barStyle="light-content" translucent />
 
         {/* Go Back */}
         <View

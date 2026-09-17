@@ -18,7 +18,9 @@ import {
   RectangleStackIcon,
   AdjustmentsHorizontalIcon,
 } from 'react-native-heroicons/solid';
-import Player from '../components/Player';
+import TabBarAwarePlayer from '../components/TabBarAwarePlayer';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {useTabBarScroll} from '../hooks/useTabBarScroll';
 import {useSongs} from '../hooks/useSongs';
 import type {SongType} from '../types';
 
@@ -276,6 +278,8 @@ function calculateLibraryInsights(songs: SongType[]): LibraryInsights {
 
 const InsightsScreen = () => {
   const insets = useSafeAreaInsets();
+  const tabBarHeight = useBottomTabBarHeight();
+  const tabBarScroll = useTabBarScroll();
   const {songs} = useSongs();
 
   const insights = useMemo(() => calculateLibraryInsights(songs), [songs]);
@@ -309,17 +313,14 @@ const InsightsScreen = () => {
           zIndex: 5,
         }}
       />
-      <StatusBar
-        backgroundColor="transparent"
-        barStyle="light-content"
-        translucent
-      />
+      <StatusBar barStyle="light-content" translucent />
       <View style={{flex: 1, backgroundColor: BG_PRIMARY}}>
         <ScrollView
+          {...tabBarScroll}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingTop: insets.top,
-            paddingBottom: 100,
+            paddingBottom: 100 + tabBarHeight,
             paddingHorizontal: 20,
           }}>
           <View
@@ -475,7 +476,7 @@ const InsightsScreen = () => {
             </View>
           </View>
         </ScrollView>
-        <Player />
+        <TabBarAwarePlayer />
       </View>
     </>
   );

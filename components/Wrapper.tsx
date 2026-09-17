@@ -1,4 +1,4 @@
-import {View, StatusBar, StyleProp, ViewStyle} from 'react-native';
+import {View, StyleProp, ViewStyle} from 'react-native';
 import React from 'react';
 import tw from 'twrnc';
 

@@ -13,13 +13,6 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
 
-        <!-- Edge-to-edge moderno -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-
-        <!-- Para telas com notch / recortes -->
-        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
-
         <!-- Android 15 / API 35: impede o sistema de adicionar scrim cinza/preto
              automático sobre StatusBar e navigation bar (contrast enforcement) -->
         <item name="android:enforceNavigationBarContrast">false</item>

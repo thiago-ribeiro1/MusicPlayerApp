@@ -19,7 +19,9 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {FlashList} from '@shopify/flash-list';
 import Header from '../components/Header';
 import SongCard from '../components/SongCard';
-import Player from '../components/Player';
+import TabBarAwarePlayer from '../components/TabBarAwarePlayer';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {useTabBarScroll} from '../hooks/useTabBarScroll';
 import {useSongs} from '../hooks/useSongs';
 import {SongCardSkeletonList} from '../components/SongCardSkeleton';
 import {TabsHeader} from '../components/TabsHeader';
@@ -37,6 +39,9 @@ const SongsScreen = () => {
   const [hasShownLimitModal, setHasShownLimitModal] = useState(false);
   const hasDismissedLimitModal = useRef(false);
   const insets = useSafeAreaInsets();
+
+  const tabBarHeight = useBottomTabBarHeight();
+  const tabBarScroll = useTabBarScroll();
 
   const {favourites, setFavourites} = useFavourties();
   const favouritesRef = useRef<SongType[]>(favourites);
@@ -259,16 +264,13 @@ const SongsScreen = () => {
         }}
       />
 
-      <StatusBar
-        backgroundColor="transparent"
-        barStyle="light-content"
-        translucent
-      />
+      <StatusBar barStyle="light-content" translucent />
       <View style={{flex: 1, backgroundColor: '#080809'}}>
         <ScrollView
+          {...tabBarScroll}
           contentContainerStyle={{
             paddingTop: insets.top,
-            paddingBottom: 100,
+            paddingBottom: 100 + tabBarHeight,
             paddingHorizontal: 20,
           }}>
           <Header title="Music Player" />
@@ -346,7 +348,7 @@ const SongsScreen = () => {
           </View>
         )}
 
-        <Player />
+        <TabBarAwarePlayer />
       </View>
     </>
   );

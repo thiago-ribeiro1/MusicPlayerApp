@@ -1,4 +1,4 @@
-import {View, Text, TextInput} from 'react-native';
+import {View, Text, TextInput, Keyboard} from 'react-native';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import tw from 'twrnc';
 import {FlashList} from '@shopify/flash-list';
@@ -8,7 +8,7 @@ import SongCard from '../components/SongCard';
 import {FontsStyle} from '../styles/FontsStyle';
 import styles from '../styles/SongsScreenStyle';
 import GoBackButton from '../components/GoBackButton';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
   State,
   useActiveTrack,
@@ -19,6 +19,22 @@ import type {SongType} from '../types';
 
 const SearchScreen = () => {
   const {songs} = useSongs();
+
+  const insets = useSafeAreaInsets();
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const show = Keyboard.addListener('keyboardDidShow', e =>
+      setKeyboardHeight(e.endCoordinates.height),
+    );
+    const hide = Keyboard.addListener('keyboardDidHide', () =>
+      setKeyboardHeight(0),
+    );
+    return () => {
+      show.remove();
+      hide.remove();
+    };
+  }, []);
 
   const [filteredSongs, setFilteredSongs] = useState(songs);
   const [searchTerm, setSearchTerm] = useState('');
@@ -95,7 +111,7 @@ const SearchScreen = () => {
           />
         </View>
 
-        <View style={tw`px-5 mt-8 gap-y-6 h-full`}>
+        <View style={tw`px-5 mt-8 gap-y-6 flex-1`}>
           <Text style={FontsStyle.matchingSongs}>Matching songs</Text>
 
           {filteredSongs.length === 0 && (
@@ -108,7 +124,11 @@ const SearchScreen = () => {
             data={filteredSongs}
             keyExtractor={item => String(item.url ?? item.id)}
             extraData={{favourites, activeUrl, isPlaying}} // resolve bug de pressable não atualizar
-            renderItem={({item, index}) => {
+            contentContainerStyle={{
+              paddingBottom: keyboardHeight + insets.bottom + 16,
+            }}
+            keyboardShouldPersistTaps="handled"
+            renderItem={({item}) => {
               return (
                 <SongCard
                   song={item}

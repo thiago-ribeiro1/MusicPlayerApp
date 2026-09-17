@@ -1,0 +1,29 @@
+diff --git a/node_modules/react-native-video/android/src/main/java/com/brentvatne/exoplayer/ExoPlayerView.kt b/node_modules/react-native-video/android/src/main/java/com/brentvatne/exoplayer/ExoPlayerView.kt
+--- a/node_modules/react-native-video/android/src/main/java/com/brentvatne/exoplayer/ExoPlayerView.kt
++++ b/node_modules/react-native-video/android/src/main/java/com/brentvatne/exoplayer/ExoPlayerView.kt
+@@ -39,8 +39,10 @@
+     private val playerView = PlayerView(context).apply {
+         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+         setShutterBackgroundColor(Color.TRANSPARENT)
+-        useController = true
+-        controllerAutoShow = true
++        // Controles começam desligados; só são ativados quando a prop controls=true é aplicada.
++        // Com true aqui, o PlayerControlView aparece por um instante antes das props chegarem.
++        useController = false
++        controllerAutoShow = false
+         controllerHideOnTouch = true
+         controllerShowTimeoutMs = 5000
+         // Don't show subtitle button by default - will be enabled when tracks are available
+diff --git a/node_modules/react-native-video/android/src/main/java/com/brentvatne/exoplayer/ReactExoplayerView.java b/node_modules/react-native-video/android/src/main/java/com/brentvatne/exoplayer/ReactExoplayerView.java
+--- a/node_modules/react-native-video/android/src/main/java/com/brentvatne/exoplayer/ReactExoplayerView.java
++++ b/node_modules/react-native-video/android/src/main/java/com/brentvatne/exoplayer/ReactExoplayerView.java
+@@ -456,7 +456,8 @@
+     private void updateControllerVisibility() {
+         if (exoPlayerView == null) return;
+             
+-        exoPlayerView.setUseController(!controlsConfig.getHideFullscreen());
++        // Respeita a prop controls: com controls=false o controller nunca é ativado/exibido
++        exoPlayerView.setUseController(controls && !controlsConfig.getHideFullscreen());
+     }
+ 
+     private void openSettings() {
